@@ -1,0 +1,15 @@
+import clsx from 'clsx';
+
+export default function PatternP(props: {
+  text: string;
+  customClass?: string;
+}) {
+  // const { themeColor } = useThemeContext();
+  return (
+    <p
+      className={clsx('whitespace-pre-line py-2 px-4', props.customClass)}
+      >
+      {props.text}
+    </p>
+  )
+}
