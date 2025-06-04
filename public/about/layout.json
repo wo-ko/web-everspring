@@ -1,0 +1,17 @@
+[
+  {
+    "pattern": "img",
+    "img": "about-1"
+  },
+  {
+    "pattern": "img",
+    "img": "about-2"
+  },
+  {
+    "pattern": "p",
+    "text": "about-3"
+  },{
+    "pattern": "p",
+    "text": "about-4"
+  }
+]
