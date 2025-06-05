@@ -6,9 +6,9 @@ import SideImageLayout from "../components/side-Image-layout";
 import StackedImagesLayout from "../components/stacked-images-layout";
 
 export default function CompanyPage() {
-  const { themeLayout, themeContent } = useThemeContext();
+  const { themeLayout, themeContent, themeColor1 } = useThemeContext();
 
-  console.log("theme", themeContent);
+  console.log("themeColor", themeColor1);
   return (
     <div>
       <StackedImagesLayout
@@ -22,7 +22,7 @@ export default function CompanyPage() {
         imageSize="w-30 h-24"
         imageGapX="gap-x-10"
         imageGapY="gap-y-10"
-        titleColor="#fff"
+        titleColor={themeColor1}
         imagePosition="middle"
       />
 
@@ -55,7 +55,7 @@ export default function CompanyPage() {
         ]}
         imageSize="w-25 h-25"
         subContentFontSize="text-1xl"
-        subContentColor="#009646"
+        subContentColor={themeColor1}
         subContentBackground="border-only"
       />
 
@@ -66,7 +66,7 @@ export default function CompanyPage() {
           "https://www.arenasolutions.com/wp-content/uploads/what-is-iso-9001-compliance.png",
           "https://www.citrecolor.it/wp-content/uploads/2021/02/iso-14001.png",
         ]}
-        titleColor="#fff"
+        titleColor={themeColor1}
         imagePosition="middle"
       />
 

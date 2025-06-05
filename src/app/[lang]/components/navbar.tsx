@@ -60,10 +60,17 @@ export default function Navbar() {
     // <header className="w-full bg-white shadow-md">
     <header
       className="w-full shadow-md transition-colors duration-300"
-      style={{ backgroundColor: themeColor1 || "#ffffff" }} // fallback เป็นสีขาวถ้า undefined
+      style={{ backgroundColor: themeColor1 || "#ffffff" }}
     >
       <div className="max-w-screen-xl mx-auto flex justify-center px-8 py-4">
-        <nav className="flex gap-10 text-gray-800 font-medium text-[16px] tracking-wide relative">
+        <nav
+          className={`flex gap-10 font-medium text-[16px] tracking-wide relative ${
+            themeColor1?.toLowerCase() === "#d9d9d9" ||
+            themeColor1?.toLowerCase() === "white"
+              ? "text-black"
+              : "text-white"
+          }`}
+        >
           {menuItems.map((item, index) => (
             <div key={index} className="relative group">
               <Link
@@ -85,7 +92,7 @@ export default function Navbar() {
                       href={`/${lang}/${sub.path}`}
                       className="block px-6 py-3 text-gray-700 hover:bg-[var(--theme-color1)] hover:text-white whitespace-nowrap text-[15px]"
                       style={{
-                        ["--theme-color1" as any]: themeColor1 || "#323296",
+                        ["--theme-color1" as any]: themeColor1 || "#D9D9D9",
                       }}
                     >
                       {sub.name}
