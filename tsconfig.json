@@ -19,10 +19,14 @@
       }
     ],
     "paths": {
+<<<<<<< HEAD
       // "@/*": ["./src/*"],
       "@app/*": ["./src/app/*"]
       // "@context/*": ["./src/app/context/*"],
       // "@types/*": ["./src/app/types/*"]
+=======
+      "@/*": ["./src/*"]
+>>>>>>> 947afee (first commit)
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
