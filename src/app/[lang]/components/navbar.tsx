@@ -57,7 +57,11 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="w-full bg-white shadow-md">
+    // <header className="w-full bg-white shadow-md">
+    <header
+      className="w-full shadow-md transition-colors duration-300"
+      style={{ backgroundColor: themeColor1 || "#ffffff" }} // fallback เป็นสีขาวถ้า undefined
+    >
       <div className="max-w-screen-xl mx-auto flex justify-center px-8 py-4">
         <nav className="flex gap-10 text-gray-800 font-medium text-[16px] tracking-wide relative">
           {menuItems.map((item, index) => (

@@ -21,9 +21,21 @@ export default function Title() {
       <div className="flex justify-between items-center">
         <div>02-363-8560</div>
         <div className="grid grid-cols-3 gap-2 items-center align-middle justify-items-center">
-          <BtnColorPicker color={"#D9D9D9"} />
+          {/* <BtnColorPicker color={"#D9D9D9"} />
           <BtnColorPicker color="#323296" />
-          <BtnColorPicker color="#009646" />
+          <BtnColorPicker color="#009646" /> */}
+          <BtnColorPicker
+            color={"#D9D9D9"}
+            changeThemeColor={changeThemeColor1}
+          />
+          <BtnColorPicker
+            color="#323296"
+            changeThemeColor={changeThemeColor1}
+          />
+          <BtnColorPicker
+            color="#009646"
+            changeThemeColor={changeThemeColor1}
+          />
         </div>
         <div>
           <BtnChangeLanguage />

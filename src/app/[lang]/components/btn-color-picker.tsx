@@ -7,7 +7,8 @@ export default function BtnColorPicker({
   changeThemeColor,
 }: IBtnColorPickerProps) {
   const handleClick = () => {
-    // changeThemeColor();
+    //@ts-ignore
+    changeThemeColor(color);
   };
 
   return (
