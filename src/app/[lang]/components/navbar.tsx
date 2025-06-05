@@ -60,7 +60,7 @@ export default function Navbar() {
     // <header className="w-full bg-white shadow-md">
     <header
       className="w-full shadow-md transition-colors duration-300"
-      style={{ backgroundColor: themeColor1 || "#ffffff" }}
+      style={{ backgroundColor: themeColor1 || "#323296" }}
     >
       <div className="max-w-screen-xl mx-auto flex justify-center px-8 py-4">
         <nav
@@ -75,7 +75,7 @@ export default function Navbar() {
             <div key={index} className="relative group">
               <Link
                 href={`/${lang}/${item.path}`}
-                className="transition-all duration-200 flex items-center gap-1 hover:text-[var(--theme-color1)]"
+                className="transition-all duration-200 flex items-center gap-1 hover:text-white"
                 style={{ ["--theme-color1" as any]: themeColor1 || "#323296" }}
               >
                 {item.name}
@@ -90,9 +90,18 @@ export default function Navbar() {
                     <Link
                       key={subIndex}
                       href={`/${lang}/${sub.path}`}
-                      className="block px-6 py-3 text-gray-700 hover:bg-[var(--theme-color1)] hover:text-white whitespace-nowrap text-[15px]"
+                      className="block px-6 py-3 text-gray-700 whitespace-nowrap text-[15px] transition-all duration-200 rounded-md hover:text-white hover:font-bold"
                       style={{
-                        ["--theme-color1" as any]: themeColor1 || "#D9D9D9",
+                        ["--theme-color1" as any]: themeColor1 || "#323296",
+                        backgroundColor: "transparent",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = `${
+                          themeColor1 || "#3A3A9A"
+                        }`; // เพิ่มความโปร่งใส (hex 33 ≈ 20% opacity)
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = "transparent";
                       }}
                     >
                       {sub.name}
