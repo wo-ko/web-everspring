@@ -8,6 +8,7 @@ interface SideImageLayoutProps {
   reverse?: boolean;
   imageWidth?: string;
   imageHeight?: string;
+  className?: string;
 }
 
 export default function SideImageLayout({
@@ -18,12 +19,13 @@ export default function SideImageLayout({
   reverse = false,
   imageWidth = "w-full",
   imageHeight = "h-auto",
+  className = "",
 }: SideImageLayoutProps) {
   return (
     <div
-      className={`flex flex-wrap items-center gap-8 my-8 ${
+      className={`flex flex-wrap items-center gap-8 my-8 max-w-4xl mx-auto ${
         reverse ? "flex-row-reverse" : ""
-      }`}
+      } ${className}`}
     >
       <div className="flex-1 min-w-[250px]">
         <h2 className="text-2xl font-semibold mb-2">{title}</h2>
