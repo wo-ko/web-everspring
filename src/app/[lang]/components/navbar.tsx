@@ -25,7 +25,7 @@ import { useContext } from "react";
 import { ChevronDown } from "lucide-react";
 
 export default function Navbar() {
-  const { lang } = useContext(ThemeContext);
+  const { lang, themeColor1 } = useContext(ThemeContext);
 
   const menuItems = [
     { name: "หน้าหลัก", path: "" },
@@ -64,7 +64,8 @@ export default function Navbar() {
             <div key={index} className="relative group">
               <Link
                 href={`/${lang}/${item.path}`}
-                className="hover:text-blue-600 transition-all duration-200 flex items-center gap-1"
+                className="transition-all duration-200 flex items-center gap-1 hover:text-[var(--theme-color1)]"
+                style={{ ["--theme-color1" as any]: themeColor1 || "#323296" }}
               >
                 {item.name}
                 {item.submenu && (
@@ -78,7 +79,10 @@ export default function Navbar() {
                     <Link
                       key={subIndex}
                       href={`/${lang}/${sub.path}`}
-                      className="block px-6 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 whitespace-nowrap text-[15px]"
+                      className="block px-6 py-3 text-gray-700 hover:bg-[var(--theme-color1)] hover:text-white whitespace-nowrap text-[15px]"
+                      style={{
+                        ["--theme-color1" as any]: themeColor1 || "#323296",
+                      }}
                     >
                       {sub.name}
                     </Link>

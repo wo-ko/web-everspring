@@ -1,4 +1,4 @@
 export interface IBtnColorPickerProps {
   color: string;
-  changeThemeColor?: () => void
+  changeThemeColor?: () => void;
 }
