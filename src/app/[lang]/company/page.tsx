@@ -22,7 +22,7 @@ export default function CompanyPage() {
         imageSize="w-30 h-24"
         imageGapX="gap-x-10"
         imageGapY="gap-y-10"
-        titleColor="#1a73e8"
+        titleColor="#fff"
         imagePosition="middle"
       />
 
@@ -63,17 +63,14 @@ export default function CompanyPage() {
         title="คุณภาพบริษัท"
         content={`บริษัทเอเวอร์สปริง อโกรเคม จำกัด ผู้นำเข้าผลิตแบ่งบรรจุ \nสินค้าเคมีเกษตรที่ได้รับการรับรองมาตราฐาน ISO 9001 และ 14001`}
         images={[
-          "https://res.cloudinary.com/dyg6r8pec/image/upload/v1749102107/LINE_ALBUM_Ever_spring_250604_4-removebg-preview_ryv5np.png",
-          "https://res.cloudinary.com/dyg6r8pec/image/upload/v1749102107/LINE_ALBUM_Ever_spring_250604_3-removebg-preview_zgquer.png",
-          "https://res.cloudinary.com/dyg6r8pec/image/upload/v1749102107/LINE_ALBUM_Ever_spring_250604_5-removebg-preview_wbb6gc.png",
+          "https://www.arenasolutions.com/wp-content/uploads/what-is-iso-9001-compliance.png",
+          "https://www.citrecolor.it/wp-content/uploads/2021/02/iso-14001.png",
         ]}
-        imageSize="w-30 h-24"
-        imageGapX="gap-x-10"
-        imageGapY="gap-y-10"
-        titleColor="#1a73e8"
+        titleColor="#fff"
         imagePosition="middle"
       />
 
+      {/* //เนื้อหา ซ้ายหรือขวา */}
       <SideImageLayout
         imageSrc="https://lh3.googleusercontent.com/proxy/m-VEe3aIeFdjGFGgfviEdDNa9tLkjhRyyccb2lOjC5HDoVaQo2X09Va9xWNt-ftRpF0Kf_39vjAhm3eOpobN9Xx7nN0Vig"
         title="เนื้อหา"
