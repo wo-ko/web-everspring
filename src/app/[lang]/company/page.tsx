@@ -40,15 +40,17 @@ export default function CompanyPage() {
 
       <StackedImagesLayout
         title="นโยบายคุณภาพ"
-        content="เราคือสปาที่เชี่ยวชาญในด้านการดูแลสุขภาพแบบองค์รวม"
-        subContent={`ดั่งคำขวัญที่ว่า “คุณภาพมาตราฐาน บริการฉับไว ใส่ใจลูกค้า\nพัฒนาอย่างต่อเนื่อง และห่วงใยสิ่งแวดล้อม!”`}
+        titleColor={themeColor1}
+        content={`บริษัทเอเวอร์สปริง อโกรเคม จำกัด มีความมุ่งมั่นที่จะเป็นบริษัทที่มีระบบการบริหารคุณภาพตามมาตราฐานสากลเพื่อให้สินค้าสารป้องกันจำกัดศัตรูพืช และธาตุอาหารพืช ที่บริษัทผลิตและจำหน่าย มีคุณภาพตรงตามความต้องการของลูกค้าโดยทั้งนี้บริษัทมุ่งเน้นให้ผลิตภัณฑ์ของบริษัทสามารถตอบสนองต่อความพึ่งพอใจของลูกค้าและมีการปรับปรุงระบบทำงานของบริษัทให้มีการพัฒนาอย่างต่อเนื่อง`}
+        subContent={`ดั่งคำขวัญที่ว่า\n \n “คุณภาพมาตราฐาน บริการฉับไว ใส่ใจลูกค้า\nพัฒนาอย่างต่อเนื่อง และห่วงใยสิ่งแวดล้อม!”`}
         subContentFontSize="text-1xl"
-        subContentColor="#009646"
+        subContentColor={themeColor1}
         subContentBackground="border-only"
       />
 
       <StackedImagesLayout
         title="พันธกิจ"
+        titleColor={themeColor1}
         content={`1. องค์กรดำเนินธุรกิจให้สอดคล้องกับข้อกฎหมาย\n2. ส่งเสริมให้พนักงานตระหนักด้านสิ่งแวดล้อมให้สอดคล้องกับข้อปฎิบัติของบริษัท\n 3. ควบคุมในกระบวนการด้านการปฎิบัติงานด้านสิ่งแวดล้อม\n 4. ป้องกัน เฝ้าติดตาม และตรวจวัดเรื่องมลภาวะด้านสิ่งแวดล้อม`}
         images={[
           "https://media.istockphoto.com/id/2195989736/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B8%B5%E0%B8%AA%E0%B9%88%E0%B8%A7%E0%B8%99%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%A1%E0%B9%83%E0%B8%99%E0%B8%87%E0%B8%B2%E0%B8%99%E0%B9%80%E0%B8%81%E0%B8%A9%E0%B8%95%E0%B8%A3%E0%B9%82%E0%B8%94%E0%B8%A2%E0%B9%80%E0%B8%89%E0%B8%9E%E0%B8%B2%E0%B8%B0%E0%B9%83%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%84%E0%B9%88%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9E%E0%B8%B2%E0%B8%B0%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B9%80%E0%B8%AB%E0%B9%87%E0%B8%94%E0%B8%81%E0%B8%A5%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%88%E0%B9%89%E0%B8%87%E0%B8%95%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%A0%E0%B8%B2%E0%B8%8A%E0%B8%99%E0%B8%B0%E0%B8%9C%E0%B8%B1%E0%B8%81.jpg?s=1024x1024&w=is&k=20&c=SPX_X6E1_LpkuZiO50896tydTkdChIMR6dw9yJ4U5r4=",
@@ -76,9 +78,9 @@ export default function CompanyPage() {
         title="เนื้อหา"
         content="เนื้อหา"
         reverse={false}
-        imageWidth="w-64"
-        imageHeight="h-64"
-        // className="bg-gray-100 p-4 rounded-lg"
+        imageWidth="w-70"
+        imageHeight="h-70"
+        // className="bg-gray-500 p-7 rounded-lg"
       />
     </div>
   );

@@ -7,7 +7,10 @@ export default function Title() {
   const { changeThemeColor1 } = useThemeContext();
   return (
     <div className="px-16 py-2 grid grid-cols-3">
-      <div>
+      <div
+        style={{ color: "#323296", fontWeight: "bolder", padding: "10px 10px" }}
+      >
+        {/* <div className="title-ever-name"> */}
         <div>Everspring Agrochem Co.,Ltd.</div>
         <div>บริษัท เอเวอร์สปริง อโกรเคม จำกัด</div>
       </div>
@@ -19,7 +22,11 @@ export default function Title() {
         />
       </div>
       <div className="flex justify-between items-center">
-        <div>02-363-8560</div>
+        {/* <div className="title-ever-tel">02-363-8560</div> */}
+        <div style={{ color: "#323296", fontWeight: "bolder" }}>
+          02-363-8560
+        </div>
+
         <div className="grid grid-cols-3 gap-2 items-center align-middle justify-items-center">
           {/* <BtnColorPicker color={"#D9D9D9"} />
           <BtnColorPicker color="#323296" />
