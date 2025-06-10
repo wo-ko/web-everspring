@@ -2,6 +2,7 @@
 import { useThemeContext } from "@app/context/theme-context";
 import BtnChangeLanguage from "./btn-change-language";
 import BtnColorPicker from "./btn-color-picker";
+import { Phone } from "lucide-react";
 
 export default function Title() {
   const { changeThemeColor1 } = useThemeContext();
@@ -23,8 +24,12 @@ export default function Title() {
       </div>
       <div className="flex justify-between items-center">
         {/* <div className="title-ever-tel">02-363-8560</div> */}
-        <div style={{ color: "#323296", fontWeight: "bolder" }}>
-          02-363-8560
+        <div
+          className="flex items-center gap-2"
+          style={{ color: "#323296", fontWeight: "bolder" }}
+        >
+          <Phone size={20} />
+          <span>02-363-8560</span>
         </div>
 
         <div className="grid grid-cols-3 gap-2 items-center align-middle justify-items-center">
