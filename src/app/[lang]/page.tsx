@@ -1,13 +1,31 @@
 'use client';
-import { ThemeContext } from '@app/context/theme-context';
+import { ThemeContext, useThemeContext } from '@app/context/theme-context';
 import { useContext } from "react";
-
+import Swiper from './components/swiper';
+import SideImageLayout from './components/side-Image-layout';
+import ProductGroup from './components/product-group';
+import SwiperProduct from './components/swiper-product';
 export default function LangPage() {
   const { lang } = useContext(ThemeContext);
+  const { themeColor1 } = useThemeContext();
+
   return (
     <>
-      test
-      {lang}
+      <Swiper />
+      <SideImageLayout
+        imageSrc="https://lh3.googleusercontent.com/proxy/m-VEe3aIeFdjGFGgfviEdDNa9tLkjhRyyccb2lOjC5HDoVaQo2X09Va9xWNt-ftRpF0Kf_39vjAhm3eOpobN9Xx7nN0Vig"
+        title="บริษัท เอเวอร์สปริง อโกรเคม จำกัด"
+        content="มีความมุ่งมั่นที่จะเป็นบริษัทที่มีระบบการบริหารคุณภาพตามมาตรฐานสากลเพื่อให้สินค้า
+สารป้องกันกำจัดศัตรูพืชและธาตุอาหารพืช ที่บริษัทผลิตและจำหน่าย มีคุณภาพตรงตามความต้องการของลูกค้า 
+โดยทั้งนี้บริษัทมุ่งเน้นให้ผลิตภัณฑ์ของบริษัทสามารถตอบสนองต่อความพึงพอใจของลูกค้าและมีการปรับปรุงระบบการทำงานของบริษัทให้มีการพัฒนาอย่างต่อเนื่อง"
+        reverse={true}
+        imageWidth="w-64"
+        imageHeight="h-64"
+
+      />
+      <ProductGroup/>
+      <SwiperProduct/>
+      <p className="mt-4 text-center text-white">{lang}</p>
     </>
-  )
+  );
 }
