@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 
 interface ImageItem {
   src: string;
@@ -7,38 +8,60 @@ interface ImageItem {
 
 interface ImageDisplayProps {
   images: ImageItem[];
-  columns?: number;
+  imageSize?: string; // เช่น "250x300"
+  columns?: number;   // เช่น 2, 3, 4
 }
 
-const ImageDisplay: React.FC<ImageDisplayProps> = ({ images, columns }) => {
-  const getGridColsClass = (cols: number) => {
-    switch (cols) {
-      case 1:
-        return "md:grid-cols-1";
-      case 2:
-        return "md:grid-cols-2";
-      case 3:
-        return "md:grid-cols-3";
-      case 4:
-        return "md:grid-cols-4";
-      default:
-        return "md:grid-cols-3";
-    }
+const parseImageSize = (size?: string) => {
+  if (!size) return { width: "100%", height: "auto" };
+  const [w, h] = size.split("x").map(Number);
+  return {
+    width: !isNaN(w) ? `${w}px` : "100%",
+    height: !isNaN(h) ? `${h}px` : "auto",
   };
+};
+
+const getGridColsClass = (cols?: number) => {
+  switch (cols) {
+    case 1:
+      return "grid-cols-1";
+    case 2:
+      return "grid-cols-2";
+    case 3:
+      return "grid-cols-3";
+    case 4:
+      return "grid-cols-4";
+    default:
+      return "grid-cols-2"; // default = 2 columns
+  }
+};
+
+const ImageDisplay: React.FC<ImageDisplayProps> = ({
+  images,
+  imageSize = "250x300",
+  columns = 2,
+}) => {
+  const { width, height } = parseImageSize(imageSize);
+  const gridColsClass = getGridColsClass(columns);
 
   return (
-    <div
-      className={`grid gap-4 grid-cols-1 sm:grid-cols-2 ${getGridColsClass(
-        columns ?? 3
-      )}`}
-    >
+    <div className={`grid ${gridColsClass}`}>
       {images.map((img, idx) => (
-        <div key={idx} className="relative w-full aspect-square">
+        <div
+          key={idx}
+          className="flex justify-center items-center w-full"
+          style={{ padding: "0.25rem" }}
+        >
           <img
             src={img.src}
             alt={img.alt || `image-${idx}`}
-            className="object-cover rounded-lg shadow-md w-full h-full"
-            style={{ objectFit: "cover" }}
+            style={{
+              // width,
+              width: "70%",
+              height,
+              objectFit: "cover",
+              display: "block",
+            }}
           />
         </div>
       ))}
