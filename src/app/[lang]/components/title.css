@@ -1,0 +1,7 @@
+/* style={{ color: "#323296", fontWeight: "bolder" }} */
+
+.title-ever-name{
+    color: "#323296";
+    font-weight: bolder;
+    padding: '10px 10px';
+}

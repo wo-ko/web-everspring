@@ -12,6 +12,7 @@ interface StackedImagesLayoutProps {
   className?: string;
   titleColor?: string;
   titleAlign?: "left" | "center" | "right";
+  contentAlign?: "left" | "center" | "right";
   imageGapX?: string;
   imageGapY?: string;
   imagePosition?: "top" | "middle" | "bottom";
@@ -21,14 +22,15 @@ export default function StackedImagesLayout({
   title,
   content,
   subContent,
-  subContentColor = "#333",
+  subContentColor = "#323296",
   subContentFontSize = "text-xl",
   subContentBackground = "solid",
   images = [],
   imageSize = "w-24 h-24",
   className = "",
-  titleColor = "#fff",
+  titleColor = "#323296",
   titleAlign = "center",
+  contentAlign = "center",
   imageGapX = "gap-x-8",
   imageGapY = "gap-y-6",
   imagePosition = "bottom",
@@ -53,45 +55,38 @@ export default function StackedImagesLayout({
   );
 
   const titleAlignClass = {
-    left: "self-start text-left",
-    center: "self-center text-center",
-    right: "self-end text-right",
+    left: "self-start text-left p-4",
+    center: "self-center text-center p-4",
+    right: "self-end text-right p-4",
   }[titleAlign];
+
+  const contentAlignClass = {
+    left: "text-left self-start p-4",
+    center: "text-center self-center p-4",
+    right: "text-right self-end p-4",
+  }[contentAlign];
 
   const contentLines =
     typeof content === "string" ? content.split("\n") : content;
 
   return (
-    <div className={`flex flex-col items-center gap-4 my-8 ${className}`}>
+    <div className={`flex flex-col items-center gap-12 my-8 ${className}`}>
       {hasImages && imagePosition === "top" && renderImages()}
 
       {title && (
         <h2
           className={`text-2xl font-semibold ${titleAlignClass}`}
-          style={{ color: titleColor }}
+          style={{ color: titleColor || "#323296" }}
         >
           {title}
         </h2>
       )}
 
       {hasImages && imagePosition === "middle" && renderImages()}
-
-      {/* {contentLines.length > 1 ? (
-        <ol className="text-gray-700 max-w-xl list-decimal list-inside space-y-1 text-left">
-          {contentLines.map((line, idx) => (
-            <li key={idx} className="break-words leading-relaxed">
-              {line}
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <p className="text-center text-gray-700 max-w-xl whitespace-normal break-words leading-relaxed">
-          {contentLines[0]}
-        </p>
-      )} */}
-
       {contentLines.length > 1 ? (
-        <div className="text-center text-gray-700 max-w-xl whitespace-pre-line break-words leading-relaxed">
+        <div
+          className={`text-gray-700 max-w-xl whitespace-pre-line break-words leading-relaxed ${contentAlignClass}`}
+        >
           {contentLines.map((line, idx) => (
             <p key={idx}>{line}</p>
           ))}
@@ -114,7 +109,7 @@ export default function StackedImagesLayout({
         >
           <p
             className={`whitespace-pre-line break-words leading-relaxed ${subContentFontSize}`}
-            style={{ color: subContentColor }}
+            style={{ color: subContentColor || "#323296" }}
           >
             {subContent}
           </p>

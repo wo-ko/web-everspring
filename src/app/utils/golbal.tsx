@@ -6,7 +6,7 @@ export const displayComponentPattern = (item: ILayoutProp, content: any) => {
     case 'img':
       return (
         <div className='flex justify-center'>
-          <img  src={content[item.img as keyof typeof content]} />;
+          <img  src={content[item.img as keyof typeof content]} />
         </div>
       )
     case 'text-bold':
