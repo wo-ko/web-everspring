@@ -1,9 +1,10 @@
 'use client';
 import React from 'react'
-import './productgroup.css'
 import ProductCategory from './product-category';
+import { useThemeContext } from '@app/context/theme-context';
 
 export default function productgroup() {
+    const { themeColor1 } = useThemeContext();
     const categories = [
         { icon: '/icons/rain-plants.svg', alt: 'Rain Plants', label: 'สารกำจัดศัตรูพืช' },
         { icon: '/icons/pesticide.svg', alt: 'Pesticide', label: 'สารกำจัดแมลง' },
@@ -13,25 +14,24 @@ export default function productgroup() {
         { icon: '/icons/bottles.svg', alt: 'Bottles', label: 'สารเพิ่มประสิทธิภาพ' },
     ];
     return (
-        <div className={'container-product-group'}>
-            <title>Our Products</title>
-            <link rel="icon" href="/favicon.ico" />
-            <main className={'main-product-group'}>
-                <h1 className={'title-product-group'}>
-                    ผลิตภัณฑ์
-                </h1>
-
-                <div className={'category-grid-product-group'}>
-                    {categories.map((category, index) => (
-                        <ProductCategory
-                            key={index}
-                            iconSrc={category.icon}
-                            altText={category.alt}
-                            label={category.label}
-                        />
-                    ))}
-                </div>
-            </main>
+    <div 
+    // className="min-h-screen px-2 flex flex-col justify-center items-center"
+    >
+      <main className="py-20 flex flex-1 flex-col justify-center items-center w-full">
+        <h1 className="mb-12 text-4xl font-bold" style={{ color: themeColor1 || '#388e3c' }}>
+          ผลิตภัณฑ์
+        </h1>
+        <div className="flex flex-wrap justify-center gap-8 max-w-screen-xl w-full">
+          {categories.map((category, index) => (
+            <ProductCategory
+              key={index}
+              iconSrc={category.icon}
+              altText={category.alt}
+              label={category.label}
+            />
+          ))}
         </div>
-    )
+      </main>
+    </div>
+  );
 }
