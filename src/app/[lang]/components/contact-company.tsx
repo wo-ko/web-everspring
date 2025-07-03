@@ -1,8 +1,7 @@
 'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { useThemeContext } from '@app/context/theme-context'; // ตรวจสอบ path ให้ถูกต้อง
+import { useThemeContext } from '@app/context/theme-context';
 
 export default function ContactCompany() {
     const { themeColor1 } = useThemeContext();
@@ -30,7 +29,6 @@ export default function ContactCompany() {
                         <p className="text-base font-bold text-gray-800 mt-0">โทรศัพท์ 02-363-8560</p>
                     </div>
 
-                    {/* Company Contact Column */}
                     <div className="flex-1 min-w-[250px] mb-8 md:mb-0">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4 whitespace-nowrap">ติดต่อบริษัท</h3>
                         <p className="text-base leading-relaxed mb-3">
@@ -87,7 +85,6 @@ export default function ContactCompany() {
                         </div>
                     </div>
 
-                    {/* Affiliated Companies Column */}
                     <div className="flex-1 min-w-[250px] mb-8 md:mb-0">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">บริษัทในเครือ</h3>
                         <ul className="list-none p-0 m-0">
@@ -98,7 +95,6 @@ export default function ContactCompany() {
                         </ul>
                     </div>
 
-                    {/* Map Column */}
                     <div className="flex justify-center items-center w-full h-72 rounded-lg overflow-hidden mt-5 bg-blue-300">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.257436918698!2d100.6457921!3d13.823574199999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d62a3efcf9499%3A0x48407c5b5e07bc55!2z4Lia4Lij4Li04Lip4Lix4LiXIOC5gOC4reC5gOC4p-C4reC4o-C5jOC4quC4m-C4o-C4tOC4hyDguK3guYLguIHguKPguYDguITguKEg4LiI4Liz4LiB4Lix4LiU!5e0!3m2!1sth!2sth!4v1749624468194!5m2!1sth!2sth" // ตรวจสอบ URL ของ iframe ให้ถูกต้อง

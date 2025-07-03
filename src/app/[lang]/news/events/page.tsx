@@ -9,7 +9,7 @@ const sampleActivities = [
     id: 1,
     imageUrl: 'https://www.rmutt.ac.th/wp-content/uploads/2023/04/songkranday2023-01.jpg',
     title: 'สงกรานต์2569 ร่วมกับร้านรุ่งอนันต์',
-    description: '',
+    description: 'ร่วมกิจกรรมสงกรานต์2569 กับร้านรุ่งอนันต์',
     linkUrl: '#', 
   }
 ];

@@ -10,7 +10,7 @@ const sampleActivities = [
     imageUrl: 'https://topgolfthailand.com/wp-content/uploads/2023/10/blog-7.jpg',
     title: 'นโยบายประจำปี 2566 ร่วมกับร้านรุ่งอนันต์',
     description: 'งานขายประจำปี 2566 ร่วมกับร้านรุ่งอนันต์',
-    linkUrl: '#', // ลิงก์ไปยังหน้ารายละเอียด
+    linkUrl: '#',
   },
   {
     id: 2,
@@ -19,8 +19,6 @@ const sampleActivities = [
     description: 'กิจกรรม AG-GRO NEW GEN 2023 : ศึกษาดูงานนอกสถานที่',
     linkUrl: '#',
   },
-  // สามารถเพิ่มกิจกรรมอื่นๆ ได้ที่นี่
-  // You can add other activities here
   {
     id: 3,
     imageUrl: 'https://fth0.com/uppic/22102176/activity/22102176_0_20240524-102930.jpg',

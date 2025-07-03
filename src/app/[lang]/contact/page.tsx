@@ -11,7 +11,6 @@ export default function LangPage() {
   return (
     <>
     <ContactCompany/>
-    {/* <Footer/> */}
     </>
   );
 }

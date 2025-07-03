@@ -2,17 +2,18 @@
 import React from 'react'
 import ProductCategory from './product-category';
 import { useThemeContext } from '@app/context/theme-context';
+type Categories = {
+  icon: string;
+  alt: string;
+  label: string;
+};
 
-export default function productgroup() {
+type categoriesProps = {
+  categories: Categories[];
+};
+ const ProductGroup: React.FC<categoriesProps> = ({ categories }) =>{
     const { themeColor1 } = useThemeContext();
-    const categories = [
-        { icon: '/icons/rain-plants.svg', alt: 'Rain Plants', label: 'สารกำจัดศัตรูพืช' },
-        { icon: '/icons/pesticide.svg', alt: 'Pesticide', label: 'สารกำจัดแมลง' },
-        { icon: '/icons/shield-leaf.svg', alt: 'Shield Leaf', label: 'สารป้องกันกำจัดโรคพืช' },
-        { icon: '/icons/sprayer-plants.svg', alt: 'Sprayer Plants', label: 'สารกำจัดวัชพืช' },
-        { icon: '/icons/water-drop-leaf.svg', alt: 'Water Drop Leaf', label: 'ปุ๋ยน้ำและอาหารเสริมพืช' },
-        { icon: '/icons/bottles.svg', alt: 'Bottles', label: 'สารเพิ่มประสิทธิภาพ' },
-    ];
+   
     return (
     <div 
     // className="min-h-screen px-2 flex flex-col justify-center items-center"
@@ -35,3 +36,5 @@ export default function productgroup() {
     </div>
   );
 }
+
+export default ProductGroup;

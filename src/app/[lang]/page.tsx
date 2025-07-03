@@ -7,13 +7,30 @@ import ProductGroup from './components/product-group';
 import SwiperProduct from './components/swiper-product';
 // import Footer from './components/foo-ter';
 import StackedImagesLayout from './components/stacked-images-layout';
+import ImageBanner from './components/image-banner';
 export default function LangPage() {
   const { lang } = useContext(ThemeContext);
   const { themeColor1 } = useThemeContext();
 
+const slides = [
+  { text: 'Slide 1', image: '/หน้าหลัก-01.jpg', link: 'https://www.youtube.com/' },
+  { text: 'Slide 2', image: '/หน้าหลัก-02.jpg', link: 'https://swiperjs.com/' },
+  { text: 'Slide 3', image: '/หน้าหลัก-03.jpg', link: 'https://github.com/' },
+];
+
+ const categories = [
+        { icon: '/icon-03.png', alt: '', label: 'สารกำจัดศัตรูพืช' },
+        { icon: '/icon-02.png', alt: '', label: 'สารกำจัดแมลง' },
+        { icon: '/icon-01.png', alt: '', label: 'สารป้องกันกำจัดโรคพืช' },
+        { icon: '/icon-06.png', alt: '', label: 'สารควบคุมการออกดอก' },
+        { icon: '/icon-04.png', alt: '', label: 'สารกำจัดไรศัตรูพืช' },
+        { icon: '/icon-05.png', alt: '', label: 'สารควบคุมหอย' },
+    ];
+    
+
   return (
     <>
-      <Swiper />
+      <Swiper slides={slides}/>
       <SideImageLayout
         imageSrc="https://lh3.googleusercontent.com/proxy/m-VEe3aIeFdjGFGgfviEdDNa9tLkjhRyyccb2lOjC5HDoVaQo2X09Va9xWNt-ftRpF0Kf_39vjAhm3eOpobN9Xx7nN0Vig"
         title="บริษัท เอเวอร์สปริง อโกรเคม จำกัด"
@@ -25,8 +42,16 @@ export default function LangPage() {
         imageHeight="h-64"
 
       />
-      <ProductGroup/>
-      <SwiperProduct/>
+       <ImageBanner
+        src="https://images.alphacoders.com/133/thumb-1920-1336951.png" 
+        alt="-" 
+      />
+      <ProductGroup categories={categories}/>
+      {/* <SwiperProduct/> */}
+      <ImageBanner
+        src="https://images3.alphacoders.com/135/thumb-1920-1350069.jpeg" 
+        alt="โกดังสินค้าของบริษัท" 
+      />
       <StackedImagesLayout
               title="บริษัทในเครือ"
               content=""
