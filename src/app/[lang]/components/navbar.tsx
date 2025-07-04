@@ -16,6 +16,7 @@
 //     </div>
 //   );
 // }
+
 "use client";
 
 import { useState, useContext } from "react";
@@ -26,9 +27,9 @@ import { Menu, X, Search, ChevronDown } from "lucide-react";
 const Logo = () => (
   <div className="flex items-center">
     <img
-          src="https://res.cloudinary.com/dyg6r8pec/image/upload/w_130,h_100,c_fit/v1749023798/logo_everspring-01-Photoroom_lq2qb3.png"
-          alt="Logo"
-        />
+      src="https://res.cloudinary.com/dyg6r8pec/image/upload/w_130,h_100,c_fit/v1749023798/logo_everspring-01-Photoroom_lq2qb3.png"
+      alt="Logo"
+    />
   </div>
 );
 
@@ -36,6 +37,8 @@ export default function Navbar() {
   const { lang, themeColor1 } = useContext(ThemeContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [animateMobileMenu, setAnimateMobileMenu] = useState(false);
+
 
   const menuItems = [
     { name: "หน้าหลัก", path: "" },
@@ -78,7 +81,17 @@ export default function Navbar() {
   const openMobileMenu = () => {
     setOpenSubmenu(null);
     setIsMobileMenuOpen(true);
+    setTimeout(() => {
+      setAnimateMobileMenu(true);
+    }, 10);
   };
+  const closeMobileMenu = () => {
+    setAnimateMobileMenu(false);
+    setTimeout(() => {
+      setIsMobileMenuOpen(false); 
+    }, 400);
+  };
+
 
   return (
     <>
@@ -144,22 +157,21 @@ export default function Navbar() {
       )}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 flex flex-col lg:hidden"
+          className={`fixed inset-0 z-40 flex flex-col lg:hidden transition-all duration-500 ease-in-out transform ${animateMobileMenu ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+            }`}
           style={{ backgroundColor: themeColor1 || "#323296" }}
         >
           <div
-            className={`flex items-center justify-between p-4 border-b ${
-              textColor === "text-white" ? "border-white/20" : "border-black/10"
-            }`}
+            className={`flex items-center justify-between p-4 border-b ${textColor === "text-white" ? "border-white/20" : "border-black/10"
+              }`}
           >
             <Link href={`/${lang}`} className={textColor}>
               <Logo />
             </Link>
             <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`p-1 rounded-md ${
-                textColor === "text-white" ? "hover:bg-white/20" : "hover:bg-black/10"
-              } ${textColor}`}
+              onClick={closeMobileMenu}
+              className={`p-1 rounded-md ${textColor === "text-white" ? "hover:bg-white/20" : "hover:bg-black/10"
+                } ${textColor}`}
               aria-label="Close menu"
             >
               <X className="w-7 h-7" />
@@ -177,9 +189,8 @@ export default function Navbar() {
                     >
                       <span className="text-lg font-medium">{item.name}</span>
                       <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-300 ${
-                          openSubmenu === item.name ? "rotate-180" : ""
-                        }`}
+                        className={`w-5 h-5 transition-transform duration-300 ${openSubmenu === item.name ? "rotate-180" : ""
+                          }`}
                       />
                     </div>
                   ) : (
@@ -194,17 +205,17 @@ export default function Navbar() {
 
                   {item.submenu && (
                     <div
-                      className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                        openSubmenu === item.name ? "max-h-96" : "max-h-0"
-                      }`}
+                      className={`transition-all duration-300 ease-in-out overflow-hidden ${openSubmenu === item.name ? "max-h-96" : "max-h-0"
+                        }`}
                     >
-                      <ul className="pl-6 pt-2 pb-1 space-y-1">
+                      <ul className="pl-6 pt-2 pb-1 space-y-1 bg-white/10 rounded-md shadow-md backdrop-blur-sm">
                         {item.submenu.map((subItem) => (
                           <li key={subItem.name}>
                             <Link
                               href={`/${lang}/${subItem.path}`}
                               onClick={() => setIsMobileMenuOpen(false)}
                               className={`block px-4 py-2 rounded-md ${textColor} hover:opacity-80`}
+                              
                             >
                               - {subItem.name}
                             </Link>
