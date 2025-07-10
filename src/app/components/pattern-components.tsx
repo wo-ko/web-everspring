@@ -1,4 +1,5 @@
 "use client";
+import { useThemeContext } from "@app/context/theme-context";
 import dynamic from "next/dynamic"
 import {
   ComponentType,
@@ -9,6 +10,7 @@ import {
 } from "react"
 
 export default function PatternComponents(props: { pageName: string }) {
+  const { lang } = useThemeContext();
   const [pageLayout, setPageLayout] = useState<any>({});
   const [pattern, setPattern] = useState([]);
   const [Components, setComponents] = useState<ComponentType<any>[]>();
@@ -32,7 +34,7 @@ export default function PatternComponents(props: { pageName: string }) {
     if (!Components) return null;
 
     const Component: ComponentType<any> = Components[patternLayout.patternLayoutId]
-    return <Component {...patternLayout.translation.en.translationData} />
+    return <Component {...patternLayout.translation[lang]} />
   }, [pageLayout, pattern, Components])
 
 
