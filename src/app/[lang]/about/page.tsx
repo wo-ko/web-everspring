@@ -3,13 +3,15 @@ import { useThemeContext } from "@app/context/theme-context";
 import { ILayoutProp } from "@app/types/context";
 import { displayComponentPattern } from "@app/utils/golbal";
 import StackedImagesLayout from "../components/stacked-images-layout";
+import PatternComponents from "@app/components/pattern-components";
 
 export default function AboutPage() {
   const { themeLayout, themeContent, themeColor1 } = useThemeContext();
 
   return (
     <div>
-      {themeLayout.about.map((row: ILayoutProp) => {
+      <PatternComponents pageName="about"/>
+      {/* {themeLayout.about.map((row: ILayoutProp) => {
         return <div>{displayComponentPattern(row, themeContent.about)}</div>;
       })}
 
@@ -55,7 +57,7 @@ export default function AboutPage() {
         ]}
         titleColor={themeColor1}
         imagePosition="middle"
-      />
+      /> */}
     </div>
   );
 }
