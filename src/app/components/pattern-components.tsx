@@ -1,29 +1,51 @@
-
+"use client";
 import dynamic from "next/dynamic"
-import { ComponentType, use } from "react"
+import {
+  ComponentType,
+  Fragment,
+  useCallback,
+  useEffect,
+  useState
+} from "react"
 
-export default function PatternComponents(props: {pageName: string}) {
-  const pageLayout = use(fetch(`http://localhost:4000/pages/page-display/${props.pageName}`).then(res => res.json()))
-  const pattern = use(fetch('http://localhost:4000/pattern-layouts').then(res => res.json()))
+export default function PatternComponents(props: { pageName: string }) {
+  const [pageLayout, setPageLayout] = useState<any>({});
+  const [pattern, setPattern] = useState([]);
+  const [Components, setComponents] = useState<ComponentType<any>[]>();
+  useEffect(() => {
+    const fetchData = async () => {
+      const _pageLayout = await fetch(`http://localhost:4000/pages/page-display/${pageName}`).then(res => res.json())
+      const _pattern = await fetch('http://localhost:4000/pattern-layouts').then(res => res.json())
 
-  const Components: ComponentType<{}>[] = pattern.reduce((result: { [key: string]: ComponentType<{}>}, item: any) => {
-    return {...result, [item.patternLayoutId]: dynamic(() => import('../components/layout-pattern' + item.patternLayoutPath), {  })}
-  }, {})
+      setPageLayout(_pageLayout);
+      setPattern(_pattern);
 
-  const getComponent = (patternLayout: any) => {
+      setComponents(_pattern.reduce((result: { [key: string]: ComponentType<{}> }, item: any) => {
+        return { ...result, [item.patternLayoutId]: dynamic(() => import('../components/layout-pattern' + item.patternLayoutPath), {}) }
+      }, {}))
+    }
+    fetchData();
+  }, [])
+
+  const { pageName } = props;
+  const getComponent = useCallback((patternLayout: any) => {
+    if (!Components) return null;
+
     const Component: ComponentType<any> = Components[patternLayout.patternLayoutId]
     return <Component {...patternLayout.translation.en.translationData} />
-  }
-  
+  }, [pageLayout, pattern, Components])
+
+
+
   return (
     <>
       {
-        pageLayout?.pageLayouts.map((pageLayout: any) => (
-          <>
+        pageLayout?.pageLayouts?.map((pageLayout: any, index: number) => (
+          <Fragment key={`components-${pageName}-${index}`}>
             {getComponent(pageLayout)}
-          </>
+          </Fragment>
         ))
-          
+
       }
     </>
   )
