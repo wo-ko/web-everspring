@@ -6,12 +6,12 @@ type ProductCategoryProps = {
 };
 
 const ProductCategory: React.FC<ProductCategoryProps> = ({ iconSrc, altText, label }) => {
-  return (
-    <div className="product-category">
-      <div className="icon-product-category">
-        <img src={iconSrc} alt={altText} className="product-category-icon" />
+ return (
+    <div className="flex flex-col items-center text-center w-[150px]">
+      <div className="w-[120px] h-[120px] rounded-full flex justify-center items-center mb-4 shadow-md bg-cyan-400">
+        <img src={iconSrc} alt={altText} className="w-[70%] h-[70%] object-contain" />
       </div>
-      <p className="product-category-label">{label}</p>
+      <p className="text-base text-gray-800 font-semibold">{label}</p>
     </div>
   );
 };

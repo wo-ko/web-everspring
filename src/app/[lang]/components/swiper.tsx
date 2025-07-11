@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import './swiper.css'; 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -16,22 +15,26 @@ function SwiperComponent() {
   ];
 
   return (
+    // คอนเทนเนอร์หลักของ Swiper: กำหนดความกว้างและความสูง
     <Swiper
       spaceBetween={30}
       centeredSlides={true}
       autoplay={{ delay: 2500, disableOnInteraction: false }}
       pagination={{ clickable: true }}
-      navigation={true}
+      // navigation={true} // คอมเมนต์ไว้เนื่องจาก navigation ไม่ได้ถูกใช้งาน
+      loop={true}
       modules={[Autoplay, Pagination, Navigation]}
-      className="container-swiper"
+      className="w-full h-1/2" // Original .container-swiper
     >
       {slides.map((slide, index) => (
-        <SwiperSlide key={index} className="container-swiper-slide ">
+        // SwiperSlide แต่ละอัน: จัดกึ่งกลางข้อความ, ขนาดตัวอักษร, พื้นหลัง, และการจัดเรียง Flexbox
+        <SwiperSlide key={index} className="text-center text-lg bg-gray-700 flex justify-center items-center"> {/* Original .container-swiper-slide */}
           <Link href={slide.link} target="_blank">
+            {/* รูปภาพในสไลด์: แสดงเป็น block, เต็มความกว้าง/สูง, และ object-fit cover */}
             <img
               src={slide.image}
               alt={slide.text}
-              className="container-swiper-image "
+              className="block w-full h-full object-cover" // Original .container-swiper-image
             />
           </Link>
         </SwiperSlide>

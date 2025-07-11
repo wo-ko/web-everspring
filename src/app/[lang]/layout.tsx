@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import ThemeProvider from '../context/theme-context';
 import Navbar from './components/navbar';
 import Title from './components/title';
+import Footer from './components/foo-ter';
 
 export default async function LangLayout({
   children,
@@ -37,6 +38,7 @@ export default async function LangLayout({
       <Title />
       <Navbar />
       {children}
+      <Footer/>
     </ThemeProvider>
   )
 }
