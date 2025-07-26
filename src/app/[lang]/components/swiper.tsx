@@ -31,22 +31,22 @@ const SwiperComponent: React.FC<SwiperProps> = ({ slides }) => {
       className="w-full h-1/2"
     >
       {slides.map((slide, index) => (
-        <SwiperSlide key={index} className="text-center text-lg bg-gray-700 flex justify-center items-center"> {/* Original .container-swiper-slide */}
+        <SwiperSlide key={index} 
+        className="text-center text-lg bg-gray-700 flex justify-center items-center"
+        >
           <Link href={slide.link} target="_blank">
             {/* <Image
               src={slide.image}
               alt={slide.text}
               className="block w-full h-full object-cover"
             /> */}
-            <div className="relative w-full h-[400px]">
-              <Image
+            <div className="relative w-full">
+              <img
                 src={slide.image}
                 alt={slide.text}
-                fill
                 className="object-cover"
               />
             </div>
-
           </Link>
         </SwiperSlide>
       ))}

@@ -18,8 +18,8 @@ type categoriesProps = {
     <div 
     // className="min-h-screen px-2 flex flex-col justify-center items-center"
     >
-      <main className="py-20 flex flex-1 flex-col justify-center items-center w-full">
-        <h1 className="mb-12 text-4xl font-bold" style={{ color: themeColor1 || '#388e3c' }}>
+      <main className="py-5 flex flex-1 flex-col justify-center items-center w-full">
+        <h1 className="mb-10 text-4xl font-bold" style={{ color: themeColor1 || '#388e3c' }}>
           ผลิตภัณฑ์
         </h1>
         <div className="flex flex-wrap justify-center gap-8 max-w-screen-xl w-full">

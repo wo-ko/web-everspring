@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import Image from 'next/image';
+
 interface ImageBannerProps {
   src: string;
   alt: string;
@@ -7,13 +7,13 @@ interface ImageBannerProps {
 const ImageBanner: FC<ImageBannerProps> = ({ src, alt }) => {
   return (
     <section className="w-full">
-      <div className="relative w-full h-[300px] sm:h-[400px]">
-        <Image
+        <div
+        className="relative w-full overflow-hidden" 
+      >
+        <img
           src={src}
           alt={alt}
-          fill
-          className="object-cover"
-          priority
+          // className="object-cover w-full h-full absolute top-0 left-0" 
         />
       </div>
     </section>
