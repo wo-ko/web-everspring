@@ -1,13 +1,13 @@
 "use client";
 import { useThemeContext } from "@app/context/theme-context";
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 import {
   ComponentType,
   Fragment,
   useCallback,
   useEffect,
-  useState
-} from "react"
+  useState,
+} from "react";
 
 export default function PatternComponents(props: { pageName: string }) {
   const { lang } = useThemeContext();
@@ -52,7 +52,7 @@ export default function PatternComponents(props: { pageName: string }) {
       }, {}))
     }
     fetchData();
-  }, [])
+  }, []);
 
   const { pageName } = props;
   // const getComponent = useCallback((patternLayout: any) => {
@@ -80,5 +80,5 @@ export default function PatternComponents(props: { pageName: string }) {
         ))
       }
     </>
-  )
+  );
 }

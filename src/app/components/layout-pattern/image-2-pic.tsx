@@ -1,9 +1,10 @@
 import React from "react";
-type ImageLogoProps = {
+
+type ImagePicProps = {
   obj?: { image: string }[];
 };
 
-export default function ImageLogo({ obj }: ImageLogoProps) {
+function Image2Pic({ obj }: ImagePicProps) {
   if (!obj || obj.length === 0) return null;
 
   const images = obj.map((o) => o.image);
@@ -22,9 +23,11 @@ export default function ImageLogo({ obj }: ImageLogoProps) {
           key={i}
           src={src}
           alt={`image-logo-${i}`}
-          style={{ maxWidth: 150, height: "auto", objectFit: "contain" }}
+          style={{ maxWidth: 500, height: "auto", objectFit: "contain" }}
         />
       ))}
     </div>
   );
 }
+
+export default Image2Pic;

@@ -4,14 +4,18 @@ import { ILayoutProp } from "@app/types/context";
 import { displayComponentPattern } from "@app/utils/golbal";
 import SideImageLayout from "../components/side-Image-layout";
 import StackedImagesLayout from "../components/stacked-images-layout";
+import ImageGallery from "../components/image-display";
+import PatternComponents from "@app/components/pattern-components";
 
 export default function CompanyPage() {
   const { themeLayout, themeContent, themeColor1 } = useThemeContext();
 
+  // ใช้งาน
   console.log("themeColor", themeColor1);
+
   return (
     <div>
-      <StackedImagesLayout
+      {/* <StackedImagesLayout
         title="บริษัทในเครือ"
         content="บริษัทเอเวอร์สปริง อโกรเคมจำกัด ดำเนินธุรกิจเกี่ยวกับการนำเข้า-ส่งออกสารเคมีเกษตรกลุ่มหลัก คือสารกำจัดวัชพืช สารกำจัดแมลง สารป้องกันกำจัดโรคพืช และธาตุอาหารพืช โดยเน้นความร่วมมือ ระหว่างผู้ประกอบการของชาวไทยและจีน ทำให้มีแหล่งนำเข้าในราคาต้นทุนที่ถูกกว่า และนำมาจำหน่ายให้กับผู้ผลิตปุ๋ย ในประเทศไทยและต่างประเทศพร้อมกับขึ้นทะเบียนการค้ากับกระทรวงเกษตร"
         images={[
@@ -72,7 +76,6 @@ export default function CompanyPage() {
         imagePosition="middle"
       />
 
-      {/* //เนื้อหา ซ้ายหรือขวา */}
       <SideImageLayout
         imageSrc="https://lh3.googleusercontent.com/proxy/m-VEe3aIeFdjGFGgfviEdDNa9tLkjhRyyccb2lOjC5HDoVaQo2X09Va9xWNt-ftRpF0Kf_39vjAhm3eOpobN9Xx7nN0Vig"
         title="เนื้อหา"
@@ -80,8 +83,9 @@ export default function CompanyPage() {
         reverse={false}
         imageWidth="w-70"
         imageHeight="h-70"
-        // className="bg-gray-500 p-7 rounded-lg"
-      />
+      /> */}
+
+      <PatternComponents pageName="company" />
     </div>
   );
 }

@@ -1,10 +1,10 @@
-'use client';
-import { ThemeContext, useThemeContext } from '@app/context/theme-context';
+"use client";
+import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import { useContext } from "react";
-import Swiper from './components/swiper';
-import SideImageLayout from './components/side-Image-layout';
-import ProductGroup from './components/product-group';
-import SwiperProduct from './components/swiper-product';
+import Swiper from "./components/swiper";
+import SideImageLayout from "./components/side-Image-layout";
+import ProductGroup from "./components/product-group";
+import SwiperProduct from "./components/swiper-product";
 // import Footer from './components/foo-ter';
 import StackedImagesLayout from './components/stacked-images-layout';
 import ImageBanner from './components/image-banner';
@@ -42,7 +42,6 @@ const slides = [
         reverse={true}
         imageWidth="w-64"
         imageHeight="h-64"
-
       />
        <ImageBanner
         src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1749193868/%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B9%80%E0%B8%AD%E0%B9%80%E0%B8%A7%E0%B8%AD%E0%B8%A3%E0%B9%8C-02_0_pqqbgi.jpg" 
