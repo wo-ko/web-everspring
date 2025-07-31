@@ -11,8 +11,8 @@ export default function LangPage() {
 
   return (
     <>
-    {/* <PatternComponents pageName="contact"/> */}
-    <ContactCompany/>
+    <PatternComponents pageName="contact"/>
+    {/* <ContactCompany/> */}
     </>
   );
 }

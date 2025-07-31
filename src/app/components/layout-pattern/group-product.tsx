@@ -28,7 +28,7 @@ const getLinkForCategory = (enName: string): string => {
 };
 
 const GroupProduct: React.FC<GroupProductProps> = ({ categories }) => {
-    console.log("Raw categories:", categories);
+    // console.log("Raw categories:", categories);
     const { themeColor1, lang } = useThemeContext();
     const currentLang = lang as keyof typeof categories[0]['productCategoryName'];
 //    const uniqueCategories = categories.filter((category, index, self) =>
