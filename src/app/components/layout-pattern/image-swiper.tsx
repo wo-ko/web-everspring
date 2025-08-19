@@ -16,6 +16,7 @@ type SwiperProps = {
 
 const ImageSwiper: React.FC<SwiperProps> = ({ obj }) => {
     return (
+        <div className="relative w-full">
         <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -24,6 +25,7 @@ const ImageSwiper: React.FC<SwiperProps> = ({ obj }) => {
             loop={true}
             modules={[Autoplay, Pagination, Navigation]}
             className="w-full h-1/2"
+            // className="w-full "
         >
             {obj?.length ? obj.map((slide, index) => (
                 <SwiperSlide key={index} className="text-center text-lg bg-gray-700 flex justify-center items-center">
@@ -38,6 +40,7 @@ const ImageSwiper: React.FC<SwiperProps> = ({ obj }) => {
                 </SwiperSlide>
             )) : null}
         </Swiper>
+        </div>
     );
 };
 
