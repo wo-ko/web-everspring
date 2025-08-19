@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+
 type ImageLogoProps = {
   obj?: { image: string }[];
 };
@@ -9,20 +11,13 @@ export default function ImageLogo({ obj }: ImageLogoProps) {
   const images = obj.map((o) => o.image);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: 16,
-        flexWrap: "wrap",
-        justifyContent: "center",
-      }}
-    >
+    <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 my-6 sm:my-8 md:my-10">
       {images.map((src, i) => (
         <img
           key={i}
           src={src}
           alt={`image-logo-${i}`}
-          style={{ maxWidth: 150, height: "auto", objectFit: "contain" }}
+          className="max-w-[100px] sm:max-w-[120px] md:max-w-[150px] h-auto object-contain"
         />
       ))}
     </div>

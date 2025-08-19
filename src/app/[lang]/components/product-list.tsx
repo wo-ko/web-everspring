@@ -1,37 +1,44 @@
-'use client';
+"use client";
 
-import React, { Component } from 'react';
+import { ThemeContext } from "@app/context/theme-context";
+import React, { useContext, useMemo } from "react";
 
 type Props = {
-    titles?: string;
-    activities: string[];
+  titles?: string;
+  activities: string[];
+  sortOrder?: "asc" | "desc"; // รับจาก parent
+  product?: "on";
 };
 
-class ProductList extends Component<Props> {
-    render() {
-        const { activities } = this.props;
+export default function ProductList({ titles, activities, sortOrder }: Props) {
+  const { lang } = useContext(ThemeContext);
 
-        if (!activities || activities.length === 0) {
-            return null;
-        }
+  const sortedActivities = useMemo(() => {
+    return [...activities].sort((a, b) =>
+      sortOrder === "asc" ? a.localeCompare(b) : b.localeCompare(a)
+    );
+  }, [activities, sortOrder]);
 
-        return (
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-                <div className="bg-gray-200 py-16 px-4 md:px-8 lg:px-16 text-center shadow-md mb-12">
-                    <p className="text-2xl md:text-3xl font-semibold">
-                        {this.props.titles}
-                    </p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                    <ul className="list-disc list-inside space-y-2 text-gray-700 text-base md:text-lg">
-                        {activities.map((product, index) => (
-                            <li key={`col1-${index}`}>{product}</li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-        );
-    }
+  if (!activities || activities.length === 0) return null;
+
+  return (
+    <div>
+      {/* หัวข้อหมวด พร้อมจำนวนสินค้า */}
+      <h3 className="font-bold text-xl mb-4">{titles}</h3>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4 mb-8 w-full max-w-3xl mx-auto">
+        <span className="text-gray-500 text-sm sm:text-base">
+          {lang === "th"
+            ? `| แสดงผลิตภัณฑ์ ${activities.length} รายการ`
+            : `| Showing ${activities.length} items`}
+        </span>
+      </div>
+
+      {/* รายการสินค้า */}
+      <ul className="space-y-1 text-gray-700 text-sm">
+        {sortedActivities.map((product, index) => (
+          <li key={index}>{product}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
-
-export default ProductList;

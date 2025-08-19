@@ -1,22 +1,3 @@
-// "use client";
-// import { ThemeContext } from "@app/context/theme-context";
-// import Link from "next/link";
-// import { useContext } from "react";
-
-// export default function Navbar() {
-//   const { lang } = useContext(ThemeContext);
-//   return (
-//     <div className="flex justify-between px-16 bg-blue-500">
-//       <Link href={`/${lang}`}>หน้าหลัก</Link>
-//       <Link href={`/${lang}/about`}>เกี่ยวกับเอเวอร์</Link>
-//       <Link href={`/${lang}/company`}>บริษัทในเครือ</Link>
-//       <Link href={`/${lang}/product`}>ผลิตภัณฑ์</Link>
-//       <Link href={`/${lang}/news`}>ข่าว/กิจกรรม</Link>
-//       <Link href={`/${lang}/contact`}>ติดต่อเรา</Link>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useState, useContext } from "react";
@@ -39,38 +20,71 @@ export default function Navbar() {
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const [animateMobileMenu, setAnimateMobileMenu] = useState(false);
 
-
   const menuItems = [
-    { name: "หน้าหลัก", path: "" },
-    { name: "เกี่ยวกับเอเวอร์", path: "about" },
-    { name: "บริษัทในเครือ", path: "company" },
+    { name: lang === "th" ? "หน้าหลัก" : "Home", path: "" },
     {
-      name: "ผลิตภัณฑ์",
-      path: "product",
+      name: lang === "th" ? "เกี่ยวกับเอเวอร์" : "About Everspring",
+      path: "about",
+    },
+    {
+      name: lang === "th" ? "บริษัทในเครือ" : "Affiliated Companies",
+      path: "company",
+    },
+    {
+      name: lang === "th" ? "ผลิตภัณฑ์" : "Products",
+      path: "product/all",
       submenu: [
-        { name: "ทั้งหมด", path: "product/all" },
-        { name: "สารกำจัดไรศัตรูพืช", path: "product/acaricide" },
-        { name: "สารกำจัดแมลง", path: "product/insecticide" },
-        { name: "สารป้องกันกำจัดโรคพืช", path: "product/fungicide" },
-        { name: "สารกำจัดวัชพืช", path: "product/herbicide" },
-        { name: "สารควบคุมการเจริญเติบโต", path: "product/plant" },
-        { name: "สารควบคุมหอย", path: "product/mollus" },
+        { name: lang === "th" ? "ทั้งหมด" : "All", path: "product/all" },
+        {
+          name: lang === "th" ? "สารกำจัดไรศัตรูพืช" : "Acaricides",
+          path: "product/acaricide",
+        },
+        {
+          name: lang === "th" ? "สารกำจัดแมลง" : "Insecticides",
+          path: "product/insecticide",
+        },
+        {
+          name: lang === "th" ? "สารป้องกันกำจัดโรคพืช" : "Fungicides",
+          path: "product/fungicide",
+        },
+        {
+          name: lang === "th" ? "สารกำจัดวัชพืช" : "Herbicides",
+          path: "product/herbicide",
+        },
+        {
+          name:
+            lang === "th"
+              ? "สารควบคุมการเจริญเติบโต"
+              : "Plant Growth Regulators",
+          path: "product/plant",
+        },
+        {
+          name: lang === "th" ? "สารควบคุมหอย" : "Molluscicides",
+          path: "product/mollus",
+        },
       ],
     },
     {
-      name: "ข่าว/กิจกรรม",
+      name: lang === "th" ? "ข่าว/กิจกรรม" : "News & Events",
       path: "news",
       submenu: [
-        { name: "ข่าวสาร", path: "news/press" },
-        { name: "กิจกรรม", path: "news/events" },
-        { name: "ตำแหน่งว่าง", path: "news/carrier" },
+        {
+          name: lang === "th" ? "ข่าวสาร" : "Press Releases",
+          path: "news/press",
+        },
+        { name: lang === "th" ? "กิจกรรม" : "Events", path: "news/events" },
+        {
+          name: lang === "th" ? "ตำแหน่งว่าง" : "Careers",
+          path: "news/carrier",
+        },
       ],
     },
-    { name: "ติดต่อเรา", path: "contact" },
+    { name: lang === "th" ? "ติดต่อเรา" : "Contact Us", path: "contact" },
   ];
 
   const textColor =
-    themeColor1?.toLowerCase() === "#d9d9d9" || themeColor1?.toLowerCase() === "white"
+    themeColor1?.toLowerCase() === "#d9d9d9" ||
+    themeColor1?.toLowerCase() === "white"
       ? "text-black"
       : "text-white";
 
@@ -88,10 +102,9 @@ export default function Navbar() {
   const closeMobileMenu = () => {
     setAnimateMobileMenu(false);
     setTimeout(() => {
-      setIsMobileMenuOpen(false); 
+      setIsMobileMenuOpen(false);
     }, 400);
   };
-
 
   return (
     <>
@@ -102,10 +115,11 @@ export default function Navbar() {
         >
           <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2">
             <Link href={`/${lang}`} className={textColor}>
-              <Logo />
+              <div className="w-32 h-16"></div>
             </Link>
+
             <nav
-              className={`hidden lg:flex items-center gap-10 font-medium text-[16px] tracking-wide relative ${textColor}`}
+              className={`hidden lg:flex items-center gap-10 font-light text-[16px] tracking-wide relative ${textColor}`}
             >
               {menuItems.map((item, index) => (
                 <div key={index} className="relative group">
@@ -118,6 +132,7 @@ export default function Navbar() {
                       <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
                     )}
                   </Link>
+
                   {item.submenu && (
                     <div className="absolute left-0 top-full mt-3 bg-white shadow-xl rounded-md opacity-0 group-hover:opacity-100 group-hover:visible invisible transition-all duration-300 min-w-[240px] z-50 border border-gray-100">
                       {item.submenu.map((sub, subIndex) => (
@@ -125,12 +140,17 @@ export default function Navbar() {
                           key={subIndex}
                           href={`/${lang}/${sub.path}`}
                           className="block px-6 py-3 text-gray-700 whitespace-nowrap text-[15px] transition-all duration-200 rounded-md hover:text-white hover:font-bold"
-                          style={{ ["--theme-color1" as any]: themeColor1 || "#323296" }}
+                          style={{
+                            ["--theme-color1" as any]: themeColor1 || "#323296",
+                          }}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = `${themeColor1 || "#3A3A9A"}`;
+                            e.currentTarget.style.backgroundColor = `${
+                              themeColor1 || "#3A3A9A"
+                            }`;
                           }}
                           onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "transparent";
+                            e.currentTarget.style.backgroundColor =
+                              "transparent";
                           }}
                         >
                           {sub.name}
@@ -143,11 +163,12 @@ export default function Navbar() {
             </nav>
 
             <div className="flex items-center gap-4">
-              <button className={`${textColor} hover:opacity-75`}>
-                <Search className="w-6 h-6" />
-              </button>
               <div className="lg:hidden">
-                <button onClick={openMobileMenu} className={textColor} aria-label="Open menu">
+                <button
+                  onClick={openMobileMenu}
+                  className={textColor}
+                  aria-label="Open menu"
+                >
                   <Menu className="w-8 h-8" />
                 </button>
               </div>
@@ -157,21 +178,28 @@ export default function Navbar() {
       )}
       {isMobileMenuOpen && (
         <div
-          className={`fixed inset-0 z-40 flex flex-col lg:hidden transition-all duration-500 ease-in-out transform ${animateMobileMenu ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-            }`}
+          className={`fixed inset-0 z-40 flex flex-col lg:hidden transition-all duration-500 ease-in-out transform ${
+            animateMobileMenu
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-full opacity-0"
+          }`}
           style={{ backgroundColor: themeColor1 || "#323296" }}
         >
           <div
-            className={`flex items-center justify-between p-4 border-b ${textColor === "text-white" ? "border-white/20" : "border-black/10"
-              }`}
+            className={`flex items-center justify-between p-4 border-b ${
+              textColor === "text-white" ? "border-white/20" : "border-black/10"
+            }`}
           >
             <Link href={`/${lang}`} className={textColor}>
-              <Logo />
+              <div className="w-32 h-16"></div>
             </Link>
             <button
               onClick={closeMobileMenu}
-              className={`p-1 rounded-md ${textColor === "text-white" ? "hover:bg-white/20" : "hover:bg-black/10"
-                } ${textColor}`}
+              className={`p-1 rounded-md ${
+                textColor === "text-white"
+                  ? "hover:bg-white/20"
+                  : "hover:bg-black/10"
+              } ${textColor}`}
               aria-label="Close menu"
             >
               <X className="w-7 h-7" />
@@ -189,8 +217,9 @@ export default function Navbar() {
                     >
                       <span className="text-lg font-medium">{item.name}</span>
                       <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-300 ${openSubmenu === item.name ? "rotate-180" : ""
-                          }`}
+                        className={`w-5 h-5 transition-transform duration-300 ${
+                          openSubmenu === item.name ? "rotate-180" : ""
+                        }`}
                       />
                     </div>
                   ) : (
@@ -205,8 +234,9 @@ export default function Navbar() {
 
                   {item.submenu && (
                     <div
-                      className={`transition-all duration-300 ease-in-out overflow-hidden ${openSubmenu === item.name ? "max-h-96" : "max-h-0"
-                        }`}
+                      className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                        openSubmenu === item.name ? "max-h-96" : "max-h-0"
+                      }`}
                     >
                       <ul className="pl-6 pt-2 pb-1 space-y-1 bg-white/10 rounded-md shadow-md backdrop-blur-sm">
                         {item.submenu.map((subItem) => (
@@ -215,7 +245,6 @@ export default function Navbar() {
                               href={`/${lang}/${subItem.path}`}
                               onClick={() => setIsMobileMenuOpen(false)}
                               className={`block px-4 py-2 rounded-md ${textColor} hover:opacity-80`}
-                              
                             >
                               - {subItem.name}
                             </Link>
@@ -233,4 +262,3 @@ export default function Navbar() {
     </>
   );
 }
-

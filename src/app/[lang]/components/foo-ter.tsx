@@ -1,79 +1,116 @@
-import Link from 'next/link';
+// foo-ter.tsx
+"use client";
+
+import { useThemeContext } from "@app/context/theme-context";
+import { Noto_Sans_Thai } from "next/font/google";
+
+const notoSansThai = Noto_Sans_Thai({
+  subsets: ["thai"],
+  weight: ["200", "400"],
+});
+
+const fontMix = `${notoSansThai.className}`;
 
 const Footer = () => {
+  const { lang } = useThemeContext();
+
   const currentYear = new Date().getFullYear();
 
+  const texts = {
+    company: lang === "th" ? "EVERSPRING AGROCHEM" : "EVERSPRING AGROCHEM",
+    address:
+      lang === "th"
+        ? "388/70 Biz Gallerie\nแขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพมหานคร\n10230"
+        : "388/70 Biz Gallerie\nNuanchan, Bueng Kum, Bangkok\n10230",
+    hours:
+      lang === "th" ? "เวลาทำการ : 08.00-17.00" : "Working hours: 08.00-17.00",
+    menu1:
+      lang === "th"
+        ? [
+            { path: "about", label: "เกี่ยวกับเรา" },
+            { path: "company", label: "บริษัทในเครือ" },
+            // { path: "product", label: "ผลิตภัณฑ์" },
+          ]
+        : [
+            { path: "about", label: "About Us" },
+            { path: "company", label: "Our Company" },
+            // { path: "product", label: "Products" },
+          ],
+    menu2:
+      lang === "th"
+        ? [
+            { path: "news", label: "ข่าวสาร" },
+            { path: "contact", label: "ติดต่อ" },
+            // { path: "privacy-policies", label: "Privacy Policies" },
+          ]
+        : [
+            { path: "news", label: "News" },
+            { path: "contact", label: "Contact" },
+            // { path: "privacy-policies", label: "Privacy Policies" },
+          ],
+    copyright:
+      lang === "th"
+        ? `© ${currentYear} PBL DevTeam. สงวนลิขสิทธิ์ทุกประการ`
+        : `© ${currentYear} PBL DevTeam. All rights reserved`,
+  };
+
   return (
-    <footer className="bg-white text-gray-700 py-10 px-5 font-sans border-t border-gray-100 flex flex-col items-center">
+    <footer
+      className={`${fontMix} bg-white text-gray-700 py-10 px-5 border-t border-gray-100 flex flex-col items-center`}
+    >
       <div className="flex flex-wrap justify-between max-w-screen-xl w-full mb-8 lg:mb-12">
+        {/* Company Info */}
         <div className="flex-1 min-w-[200px] mb-5 pr-5 md:pr-0 md:mr-5">
-          <h3 className="text-black text-lg font-bold mb-4">EVERSPRING AGROCHEM</h3>
+          <h3 className="text-black text-lg font-bold mb-4">{texts.company}</h3>
           <p className="text-gray-600 text-sm leading-relaxed mb-1">
-            388/70 Biz Gallerie ถ.ละรินจันทร์
-            <br />
-            แขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพมหานคร
-            <br />
-            10230
+            {texts.address.split("\n").map((line, i) => (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            ))}
           </p>
-          <p className="text-gray-600 text-sm">เวลาทำการ : 08.00-17.00</p>
+          <p className="text-gray-600 text-sm">{texts.hours}</p>
         </div>
 
+        {/* Menu 1 */}
         <div className="flex-1 min-w-[200px] mb-5 pr-5 md:pr-0 md:mr-5">
-          <ul className="list-none p-0 m-0">
-            <li className="mb-2">
-              <Link href="/about-us" className="text-gray-600 text-base transition-colors duration-300 hover:text-black">
-                เกี่ยวกับเรา
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link href="/our-company" className="text-gray-600 text-base transition-colors duration-300 hover:text-black">
-                บริษัทในเครือ
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link href="/products" className="text-gray-600 text-base transition-colors duration-300 hover:text-black">
-                ผลิตภัณฑ์
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link href="/news" className="text-gray-600 text-base transition-colors duration-300 hover:text-black">
-                ข่าวสาร
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="flex-1 min-w-[200px] mb-5 pr-5 md:pr-0 md:mr-5">
-          <ul className="list-none p-0 m-0">
-            <li className="mb-2">
-              <Link href="/contact" className="text-gray-600 text-base transition-colors duration-300 hover:text-black">
-                ติดต่อ
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link href="/privacy-policies" className="text-gray-600 text-base transition-colors duration-300 hover:text-black">
-                Privacy Policies
-              </Link>
-            </li>
+          <ul className="list-none p-0 m-0 space-y-2">
+            {texts.menu1.map((item, idx) => (
+              <li key={idx} className="flex items-center">
+                <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                <a
+                  href={`/${lang}/${item.path}`}
+                  className="text-gray-600 text-base transition-colors duration-300 hover:text-black"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div className="flex-grow-[1.5] min-w-[280px] mb-5">
-          <h4 className="text-gray-600 text-base font-bold mb-4">มีอะไรไหม ?</h4>
-          <div className="flex border-b border-gray-300 pb-1 mb-3 flex-col sm:flex-row sm:border-b-0 sm:pb-0">
-            <input
-              type="email"
-              placeholder="Enter Your Email Address"
-              className="border-none bg-transparent outline-none flex-grow py-1 px-0 text-gray-700 text-sm placeholder:text-gray-400 mb-2 sm:mb-0 sm:mr-2 sm:border-b sm:border-gray-300"
-            />
-            <button type="submit" className="bg-transparent border-none text-black text-sm font-bold cursor-pointer py-1 px-2 transition-colors duration-300 hover:text-gray-600 self-start sm:self-auto">
-              SUBSCRIBE
-            </button>
-          </div>
+        {/* Menu 2 */}
+        <div className="flex-1 min-w-[200px] mb-5 pr-5 md:pr-0 md:mr-5">
+          <ul className="list-none p-0 m-0 space-y-2">
+            {texts.menu2.map((item, idx) => (
+              <li key={idx} className="flex items-center">
+                <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                <a
+                  href={`/${lang}/${item.path}`}
+                  className="text-gray-600 text-base transition-colors duration-300 hover:text-black"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <div className="w-full text-center text-xs text-gray-500 mt-5 pt-5 border-t border-gray-200">
-        <p>&copy; {currentYear} PBL DevTeam. All rights reserved</p>
+      {/* Copyright */}
+      <div className="w-full text-center text-xs text-gray-500 mt-6 pt-6 border-t border-gray-200">
+        <p>{texts.copyright}</p>
       </div>
     </footer>
   );

@@ -4,6 +4,7 @@ import ThemeProvider from "../context/theme-context";
 import Navbar from "./components/navbar";
 import Title from "./components/title";
 import Footer from "./components/foo-ter";
+import "@app/globals.css";
 
 export default async function LangLayout({
   children,

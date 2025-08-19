@@ -1,16 +1,46 @@
-import clsx from 'clsx';
+import clsx from "clsx";
+import React from "react";
 
 export default function Paragraph(props: {
   text: string;
   customClass?: string;
 }) {
-  // const { themeColor } = useThemeContext();
-  // indent-4
+  
+  const highlightWords = [
+    "บริษัทเอเวอร์สปริง",
+    "อโกรเคม จำกัด",
+    "กลุ่มบริษัทในเครือเอเวอร์สปริง",
+    "Everspring Agrochem Co., Ltd",
+    "The Everspring Group"
+  ];
+
+  const renderText = (text: string) => {
+    const regex = new RegExp(`(${highlightWords.join("|")})`, "g");
+
+    return text.split("\n").map((line, idx) => (
+      <span key={idx} className="block">
+        {line.split(regex).map((segment, i) =>
+          highlightWords.includes(segment) ? (
+            <span key={i} className="font-semibold">
+              {segment}
+            </span>
+          ) : (
+            segment
+          )
+        )}
+      </span>
+    ));
+  };
+
   return (
     <p
-      className={clsx('whitespace-pre-line py-2 px-4', props.customClass)}
-      >
-      {props.text}
+      className={clsx(
+        "whitespace-pre-line py-4 px-6 max-w-3xl mx-auto text-gray-800 leading-relaxed mb-6 sm:mb-8 md:mb-10 " +
+          "text-sm sm:text-base md:text-lg tracking-normal font-light",
+        props.customClass
+      )}
+    >
+      {renderText(props.text)}
     </p>
-  )
+  );
 }
