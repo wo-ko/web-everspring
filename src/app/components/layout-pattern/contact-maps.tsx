@@ -2,11 +2,10 @@ import React from "react";
 export default function ContactMaps(props: { text?: string }) {
 
     return (
-        <div className="flex justify-center items-center w-full h-72 rounded-lg overflow-hidden mt-5 bg-blue-300">
+        <div className="flex justify-center items-center w-[100%] h-72 rounded-lg overflow-hidden">
             <iframe
                 src={props?.text}
-                width="100%"
-                height="100%"
+                className="w-full md:w-[50%] h-[100%] border border-slate-600 rounded-xl shadow-lg"
                 style={{ border: 0 }}
                 allowFullScreen={true}
                 loading="lazy"
@@ -14,6 +13,7 @@ export default function ContactMaps(props: { text?: string }) {
             >
             </iframe>
         </div>
+        
     );
 }
 
