@@ -7,21 +7,24 @@ import ActivitiesSection from '../../components/activities-section';
 const sampleActivities = [
   {
     id: 1,
-    imageUrl: 'https://www.rmutt.ac.th/wp-content/uploads/2023/04/songkranday2023-01.jpg',
-    title: 'สงกรานต์2569 ร่วมกับร้านรุ่งอนันต์',
-    description: 'ร่วมกิจกรรมสงกรานต์2569 กับร้านรุ่งอนันต์',
+    imageUrl: 'https://res.cloudinary.com/dyg6r8pec/image/upload/v1755657251/%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A1%E0%B9%88-01_zroxzi.jpg',
+    title: { th: 'วันแม่แห่งชาติ', en: 'Mother’s Day' },
+    description: { th: 'วันแม่แห่งชาติ 12 สิงหาคม 2568', en: 'Mother’s Day, 12 August 2025' },
     linkUrl: '#', 
   }
 ];
 
-
 export default function Events() {
   const { lang } = useContext(ThemeContext);
   const { themeColor1 } = useThemeContext();
- return (
+
+  return (
     <div>
       <main>
-        <ActivitiesSection titles={'กิจกรรม'} activities={sampleActivities} />
+        <ActivitiesSection 
+          titles={{ th: 'กิจกรรม', en: 'Events' }} 
+          activities={sampleActivities} 
+        />
       </main>
     </div>
   );

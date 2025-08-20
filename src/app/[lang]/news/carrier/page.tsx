@@ -1,42 +1,186 @@
-'use client';
-import { ThemeContext, useThemeContext } from '@app/context/theme-context';
+"use client";
+import { ThemeContext } from "@app/context/theme-context";
 import { useContext } from "react";
-import ContactCompany from '../../components/contact-company';
-import ActivitiesSection from '../../components/activities-section';
 
-const sampleActivities = [
+const jobOpenings = [
   {
     id: 1,
-    imageUrl: 'https://topgolfthailand.com/wp-content/uploads/2023/10/blog-7.jpg',
-    title: 'นโยบายประจำปี 2566 ร่วมกับร้านรุ่งอนันต์',
-    description: 'งานขายประจำปี 2566 ร่วมกับร้านรุ่งอนันต์',
-    linkUrl: '#',
-  },
-  {
-    id: 2,
-    imageUrl: 'http://anubandamnoen.com/_files_school/70102030/data/70102030_0_20210212-195024.jpg', 
-    title: 'กิจกรรม AG-GRO NEW GEN 2023 : ศึกษาดูงานนอกสถานที่',
-    description: 'กิจกรรม AG-GRO NEW GEN 2023 : ศึกษาดูงานนอกสถานที่',
-    linkUrl: '#',
-  },
-  {
-    id: 3,
-    imageUrl: 'https://fth0.com/uppic/22102176/activity/22102176_0_20240524-102930.jpg',
-    title: 'หัวข้อกิจกรรมใหม่ที่น่าสนใจ',
-    description: 'คำอธิบายสั้นๆ เกี่ยวกับกิจกรรมนี้',
-    linkUrl: '#',
+    title: {
+      th: "เจ้าหน้าที่การตลาด (Marketing Officer)",
+      en: "Marketing Officer",
+    },
+    location: {
+      th: "กรุงเทพมหานคร (เขตบึงกุ่ม)",
+      en: "Bangkok (Bueng Kum District)",
+    },
+    type: {
+      th: "งานประจำ",
+      en: "Full-time",
+    },
+    salary: {
+      th: "ตามตกลง",
+      en: "Negotiable",
+    },
+    workingHours: {
+      days: {
+        th: "วันจันทร์ – วันศุกร์",
+        en: "Monday – Friday",
+      },
+      time: {
+        th: "08.30 - 17.30 น.",
+        en: "08:30 AM - 5:30 PM",
+      },
+      note: {
+        th: "หยุดวันเสาร์-อาทิตย์ แต่สามารถรับโทรศัพท์และปฏิบัติงานได้ในกรณีจำเป็น",
+        en: "Off on Saturday-Sunday, but can answer calls or work if necessary",
+      },
+    },
+    requirements: {
+      gender: {
+        th: "ไม่ระบุ",
+        en: "Not specified",
+      },
+      age: {
+        th: "23-40 ปี",
+        en: "23-40 years",
+      },
+      education: {
+        th: "ปริญญาตรี",
+        en: "Bachelor's degree",
+      },
+      experience: {
+        th: "1-3 ปี",
+        en: "1-3 years",
+      },
+      additionalQualifications: {
+        th: [
+          "สามารถขับรถยนต์ได้ (มีใบขับขี่)",
+          "ใช้ Microsoft Word, Excel ได้ดี",
+          "มีวุฒิการศึกษา วทบ. เกษตรศาสตร์ จะพิจารณาเป็นพิเศษ",
+        ],
+        en: [
+          "Able to drive (with license)",
+          "Proficient in Microsoft Word, Excel",
+          "Bachelor’s degree in Agricultural Science preferred",
+        ],
+      },
+    },
+    benefits: {
+      th: [
+        "ประกันสังคม",
+        "ยูนิฟอร์มบริษัท",
+        "งานเลี้ยงสรรค์ประจำปี",
+        "กองทุนสำรองเลี้ยงชีพ",
+        "ท่องเที่ยวประจำปี (ขึ้นอยู่กับผลกำไรในแต่ละปี)",
+        "โบนัสประจำปี (ขึ้นอยู่กับผลกำไรในแต่ละปี)",
+        "มีรถยนต์ให้ใช้ปฏิบัติงานนอกพื้นที่ หรือการเดินทางไปโรงงานสาขากำแพงแสน",
+      ],
+      en: [
+        "Social Security",
+        "Company Uniform",
+        "Annual Party",
+        "Provident Fund",
+        "Annual Trip (depending on yearly profit)",
+        "Annual Bonus (depending on yearly profit)",
+        "Company car for offsite work or travel to Kamphaeng Saen branch",
+      ],
+    },
+    linkUrl:
+      "https://mail.google.com/mail/?view=cm&to=pbl.devteam@gmail.com&su=Apply%20Marketing%20Officer",
   },
 ];
 
-
 export default function Carrier() {
   const { lang } = useContext(ThemeContext);
-  const { themeColor1 } = useThemeContext();
- return (
-    <div>
-      <main>
-        <ActivitiesSection titles={'ตำแหน่งว่าง'} activities={sampleActivities} />
-      </main>
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-16">
+      <h1 className="text-2xl md:text-3xl font-semibold mb-10 text-gray-800">
+        {lang === "th" ? "ตำแหน่งงานว่าง" : "Job Vacancies"}
+      </h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {jobOpenings.map((job) => (
+          <div
+            key={job.id}
+            className="p-6 bg-white border border-gray-200 rounded-xl flex flex-col"
+          >
+            {/* Job title */}
+            <h2 className="text-lg font-medium text-gray-900 mb-2">
+              {job.title[lang as "th" | "en"]}
+            </h2>
+
+            {/* Location and type */}
+            <p className="text-sm text-gray-600 mb-2">
+              📍 {job.location[lang as "th" | "en"]} · ⏱{" "}
+              {job.type[lang as "th" | "en"]}
+            </p>
+
+            {/* Working hours */}
+            <p className="text-sm text-gray-600 mb-2">
+              🕒 {job.workingHours.days[lang as "th" | "en"]} |{" "}
+              {job.workingHours.time[lang as "th" | "en"]}
+            </p>
+            <p className="text-xs text-gray-500 mb-4">
+              {job.workingHours.note[lang as "th" | "en"]}
+            </p>
+
+            {/* Requirements */}
+            <div className="mb-4">
+              <h3 className="font-medium mb-1">
+                {lang === "th" ? "คุณสมบัติ" : "Requirements"}
+              </h3>
+              <ul className="list-disc list-inside text-sm text-gray-600">
+                <li>
+                  {lang === "th" ? "เพศ" : "Gender"}:{" "}
+                  {job.requirements.gender[lang as "th" | "en"]}
+                </li>
+                <li>
+                  {lang === "th" ? "อายุ" : "Age"}:{" "}
+                  {job.requirements.age[lang as "th" | "en"]}
+                </li>
+                <li>
+                  {lang === "th" ? "การศึกษา" : "Education"}:{" "}
+                  {job.requirements.education[lang as "th" | "en"]}
+                </li>
+                <li>
+                  {lang === "th" ? "ประสบการณ์" : "Experience"}:{" "}
+                  {job.requirements.experience[lang as "th" | "en"]}
+                </li>
+                {job.requirements.additionalQualifications[
+                  lang as "th" | "en"
+                ].map((q, i) => (
+                  <li key={i}>{q}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Benefits */}
+            <div className="mb-4">
+              <h3 className="font-medium mb-1">
+                {lang === "th" ? "สวัสดิการ" : "Benefits"}
+              </h3>
+              <ul className="list-disc list-inside text-sm text-gray-600">
+                {job.benefits[lang as "th" | "en"].map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Apply link */}
+            <a
+              href={`https://mail.google.com/mail/?view=cm&to=pbl.devteam@gmail.com&su=${encodeURIComponent(
+                job.title[lang as "th" | "en"]
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-green-600 hover:underline mt-auto"
+            >
+              {lang === "th" ? "สมัครตำแหน่งนี้" : "Apply"} →
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
