@@ -4,16 +4,17 @@ import { DataAcaricide } from "@app/[lang]/data/acaricide";
 
 type Props = {
   sortOrder: "asc" | "desc";
+  activities: string[];
 };
 
 export default function AcaricidePage({ sortOrder }: Props) {
   return (
-    <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div className="flex justify-start px-4 sm:px-6 lg:px-8 md:py-16">
       <ProductList
         titles={"Acaricide (ไร)"}
         activities={DataAcaricide}
         sortOrder={sortOrder}
       />
-    </section>
+    </div>
   );
 }

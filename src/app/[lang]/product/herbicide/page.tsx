@@ -1,12 +1,11 @@
 "use client";
 
-import { useContext } from "react";
-import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import ProductList from "@app/[lang]/components/product-list";
 import { herbicideProducts } from "@app/[lang]/data/herbicide";
 
 type Props = {
   sortOrder: "asc" | "desc";
+  activities: string[];
 };
 
 export default function Herbicide({ sortOrder }: Props) {

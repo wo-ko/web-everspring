@@ -5,11 +5,12 @@ import { insecticideProducts } from "@app/[lang]/data/insecticide";
 
 type Props = {
   sortOrder: "asc" | "desc";
+  activities: string[];
 };
 
 export default function Insecticide({ sortOrder }: Props) {
   return (
-    <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 md:py-16">
       <ProductList
         titles={"Insecticide (แมลงศัตรูพืช)"}
         activities={insecticideProducts} // ส่งตรงไป ProductList
