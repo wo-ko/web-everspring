@@ -2,8 +2,12 @@
 import ProductList from "@app/[lang]/components/product-list";
 import { DataPlant } from "@app/[lang]/data/plant";
 
-export default function Plant() {
-  const sortOrder: "asc" | "desc" = "asc";
+type Props = {
+  sortOrder: "asc" | "desc";
+};
+
+export default function Plant({ sortOrder }: Props) {
+  
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       <ProductList

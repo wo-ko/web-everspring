@@ -3,9 +3,11 @@
 import ProductList from "@app/[lang]/components/product-list";
 import { insecticideProducts } from "@app/[lang]/data/insecticide";
 
-export default function Insecticide() {
-  const sortOrder: "asc" | "desc" = "asc";
+type Props = {
+  sortOrder: "asc" | "desc";
+};
 
+export default function Insecticide({ sortOrder }: Props) {
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       <ProductList
