@@ -13,14 +13,14 @@ export default function Title() {
         <div className="text-base md:text-lg">Everspring Agrochem Co.,Ltd.</div>
         <div className="text-sm md:text-base">บริษัท เอเวอร์สปริง อโกรเคม จำกัด</div>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="hidden md:flex justify-center items-center">
         <img
           src="https://res.cloudinary.com/dyg6r8pec/image/upload/w_130,h_100,c_fit/v1749023798/logo_everspring-01-Photoroom_lq2qb3.png"
           alt="Logo"
           className="w-[100px] h-auto"
         />
       </div>
-      <div className="flex flex-col md:flex-row justify-center md:justify-end items-center gap-2 md:gap-4 text-sm md:text-base">
+      <div className="flex flex-row justify-between md:justify-end items-center gap-2 md:gap-4 text-sm md:text-base">
         <div className="flex items-center gap-1 text-[#323296] font-bold">
           <Phone size={18} />
           <span>02-363-8560</span>
@@ -29,8 +29,9 @@ export default function Title() {
           <BtnColorPicker color="#D9D9D9" changeThemeColor={changeThemeColor1} />
           <BtnColorPicker color="#323296" changeThemeColor={changeThemeColor1} />
           <BtnColorPicker color="#009646" changeThemeColor={changeThemeColor1} />
+          <BtnChangeLanguage />
         </div>
-        <BtnChangeLanguage />
+        
       </div>
     </div>
   );
