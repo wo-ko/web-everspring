@@ -5,12 +5,18 @@ import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import clsx from "clsx";
 
 // Components + data ของแต่ละหมวด
-import Acaricide, { DataAcaricide } from "../acaricide/page";
-import Herbicide, { herbicideProducts } from "../herbicide/page";
-import Insecticide, { insecticideProducts } from "../insecticide/page";
-import Fungicide, { diseaseControlProducts } from "../fungicide/page";
-import Plant, { DataPlant } from "../plant/page";
-import Mollus, { DataMollus } from "../mollus/page";
+import Acaricide from "../acaricide/page";
+import Herbicide from "../herbicide/page";
+import Insecticide from "../insecticide/page";
+import Fungicide from "../fungicide/page";
+import Plant from "../plant/page";
+import Mollus from "../mollus/page";
+import { DataAcaricide } from "@app/[lang]/data/acaricide";
+import { diseaseControlProducts } from "@app/[lang]/data/fungicide";
+import { herbicideProducts } from "@app/[lang]/data/herbicide";
+import { insecticideProducts } from "@app/[lang]/data/insecticide";
+import { DataMollus } from "@app/[lang]/data/mollus";
+import { DataPlant } from "@app/[lang]/data/plant";
 
 // กำหนด type ให้ component แต่ละตัวรับ sortOrder
 type CategoryComponentType = React.FC<{ sortOrder: "asc" | "desc" }>;

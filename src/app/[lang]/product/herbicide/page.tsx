@@ -3,53 +3,11 @@
 import { useContext } from "react";
 import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import ProductList from "@app/[lang]/components/product-list";
+import { herbicideProducts } from "@app/[lang]/data/herbicide";
 
-export const herbicideProducts = [
-  "2,4-D-dimethylammonium 84% W/V SL",
-  "acetochlor 50% W/V EC",
-  "alachlor 48% EC ",
-  "ametryn 50% SC",
-  "ametryn 80% WP",
-  "atrazine 50% SC",
-  "atrazine 90% WG",
-  "atrazine+alachlor 14%+33% W/V SE",
-  "bispyribac-sodium 10% W/V SC",
-  "bispyribac-sodium 20% WP",
-  "bispyribac-sodium+bensulfuson-methyl 18%+12% WP",
-  "butachlor 60% EC",
-  "butachlor 60% W/V EW",
-  "clomazole+propanil 12%+27% W/V EC",
-  "cyhalofop-butyl 10% EC",
-  "diuron 80% WP",
-  "fenoxaprop-P-ethyl 6.9% EW",
-  "fluazifop-P-butyl 15% W/V EC",
-  "glufosinate-ammonium 15% SL",
-  "glyphosate-isopropylammonium 48% W/V SL",
-  "haloxayfop-P-methyl 10.8% EC",
-  "imazapic 24% W/V SL",
-  "mesotrione + atrazine 2.5% + 25% SC",
-  "metsulfuron-methyl 20% WG",
-  "nicosulfuron 6% W/V OD",
-  "oxadiazon 25% W/V EC",
-  "oxyfluorfen 23.5% W/V EC",
-  "pendimethalin 33% W/V EC",
-  "pennoxsulam 2.5% W/V OD",
-  "pretilachlor  30% W/V EC",
-  "quinclorac 50% WP",
-  "quinclorac+bensulfuron-methyl 34%+2% WP",
-  "quizalofop-P-ethyl 5%  W/V EC",
-  "triclopyr butoxyethyl ester 66.8% W/V EC",
-  "flumioxazin 50% WP",
-  "metribuzin 70% WG",
-];
+export default function Herbicide() {
 
-interface Props {
-  sortOrder: "asc" | "desc";
-}
-
-export default function Herbicide({ sortOrder }: Props) {
-  const { lang } = useContext(ThemeContext);
-  const { themeColor1 } = useThemeContext();
+  const sortOrder: "asc" | "desc" = "asc";
 
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
