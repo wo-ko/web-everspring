@@ -72,7 +72,7 @@ export default function AllProduct() {
         <HerbicidePage sortOrder={sortOrder} activities={herbicideProducts} />
         <InsecticidePage sortOrder={sortOrder} activities={insecticideProducts} />
         <FungicidePage sortOrder={sortOrder} activities={diseaseControlProducts} />
-        <AcaricidePage sortOrder={sortOrder} activities={DataAcaricide} />
+        <AcaricidePage sortOrder={sortOrder} activities={DataAcaricide} isAllPage={true} />
         <PlantPage sortOrder={sortOrder} activities={DataPlant} />
         <MollusPage sortOrder={sortOrder} activities={DataMollus} />
       </div>

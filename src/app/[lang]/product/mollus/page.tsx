@@ -9,7 +9,7 @@ type Props = {
 
 export default function Mollus({ sortOrder }: Props) {
   return (
-    <div className="flex justify-start px-4 sm:px-6 lg:px-8 md:py-16">
+    <div className="flex justify-center px-4 sm:px-6 lg:px-8 md:py-16">
       <ProductList
         titles={"Molluscicide (หอย)"}
         activities={DataMollus} // ส่งตรงไป ProductList

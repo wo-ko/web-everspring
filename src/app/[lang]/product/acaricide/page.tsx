@@ -4,12 +4,22 @@ import { DataAcaricide } from "@app/[lang]/data/acaricide";
 
 type Props = {
   sortOrder: "asc" | "desc";
-  activities: string[];
+  activities: any[];
+  isAllPage?: boolean;
 };
 
-export default function AcaricidePage({ sortOrder }: Props) {
+export default function AcaricidePage({
+  sortOrder,
+  isAllPage,
+}: Props) {
   return (
-    <div className="flex justify-start px-4 sm:px-6 lg:px-8 md:py-16">
+    <div
+      className={
+        isAllPage
+          ? "px-4 sm:px-6 lg:px-8 md:py-16" // layout สำหรับ AllProduct
+          : "w-full flex flex-col items-center px-4 sm:px-6 lg:px-8 md:py-16" // layout สำหรับหน้าเฉพาะหมวด
+      }
+    >
       <ProductList
         titles={"Acaricide (ไร)"}
         activities={DataAcaricide}

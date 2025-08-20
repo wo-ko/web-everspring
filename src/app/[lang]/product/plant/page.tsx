@@ -9,7 +9,7 @@ type Props = {
 
 export default function Plant({ sortOrder }: Props) {
   return (
-    <div className="flex justify-start px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <div className="flex justify-center sm:px-6 lg:px-8 py-12 md:py-16">
       <ProductList
         titles={"Plant Growth Regulators (ควบคุมการออกดอก)"}
         activities={DataPlant} // ส่งตรง
