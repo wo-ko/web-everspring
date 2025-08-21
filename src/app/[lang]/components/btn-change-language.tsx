@@ -5,7 +5,7 @@ export default function BtnChangeLanguage() {
   const { lang, changeLanguage } = useContext(ThemeContext);
   return (
     <button onClick={() => changeLanguage(lang === 'th' ? 'en' : 'th')}>
-      {lang}
+      {lang == "en" ? "English" : "ภาษาไทย"}
     </button>
   )
 }
