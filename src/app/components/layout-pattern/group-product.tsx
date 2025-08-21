@@ -14,7 +14,9 @@ type Category = {
 
 type GroupProductProps = {
     categories: Category[];
+    text?: string;
 };
+
 const getLinkForCategory = (enName: string): string => {
     const slugMap: { [key: string]: string } = {
         "Herbicide": "/th/product/herbicide",
@@ -27,8 +29,7 @@ const getLinkForCategory = (enName: string): string => {
     return slugMap[enName] || '/th/product';
 };
 
-const GroupProduct: React.FC<GroupProductProps> = ({ categories }) => {
-    // console.log("Raw categories:", categories);
+const GroupProduct: React.FC<GroupProductProps> = ({ categories, text }) => {
     const { themeColor1, lang } = useThemeContext();
     const currentLang = lang as keyof typeof categories[0]['productCategoryName'];
 //    const uniqueCategories = categories.filter((category, index, self) =>
@@ -40,8 +41,8 @@ const GroupProduct: React.FC<GroupProductProps> = ({ categories }) => {
         <div>             
             <main className="py-5 flex flex-1 flex-col justify-center items-center w-full">                
                 <Link href="/th/product">
-                    <h1 className="mb-10 text-4xl font-bold cursor-pointer" style={{ color: themeColor1 || '#388e3c' }}>
-                        ผลิตภัณฑ์
+                    <h1 className="mb-10 text-4xl font-bold cursor-pointer" style={{ color: themeColor1}}>
+                        {text}
                     </h1>
                 </Link>
                 <div className="flex flex-wrap justify-center gap-8 max-w-screen-xl w-full px-4">
