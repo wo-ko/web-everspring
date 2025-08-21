@@ -41,7 +41,7 @@ const GroupProduct: React.FC<GroupProductProps> = ({ categories, text }) => {
         <div>             
             <main className="py-5 flex flex-1 flex-col justify-center items-center w-full">                
                 <Link href="/th/product">
-                    <h1 className="mb-10 text-4xl font-bold cursor-pointer" style={{ color: themeColor1}}>
+                    <h1 className="mb-10 text-4xl font-bold cursor-pointer" style={{ color: themeColor1 || '#323296'}}>
                         {text}
                     </h1>
                 </Link>
@@ -61,7 +61,7 @@ const GroupProduct: React.FC<GroupProductProps> = ({ categories, text }) => {
                                         }}
                                     />
                                 </div>
-                                <p className="font-semibold hover:from-neutral-800" style={{ color: themeColor1 || '#388e3c' }}>
+                                <p className="font-semibold hover:from-neutral-800" style={{ color: themeColor1 || '#323296' }}>
                                     {category.productCategoryName[currentLang]}
                                 </p>
                             </div>

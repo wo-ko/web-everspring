@@ -1,3 +1,4 @@
+import { useThemeContext } from '@app/context/theme-context';
 import React from 'react';
 
 type Link = {
@@ -21,6 +22,7 @@ type ContactCompanyProps = {
 };
 
 const ContactLink = ({ link }: { link: Link }) => {
+  const { themeColor1 } = useThemeContext();
   const getIcon = () => {
     switch (link.type) {
       // case 'phone':
@@ -39,12 +41,13 @@ const ContactLink = ({ link }: { link: Link }) => {
   return (
     <div className="bg-white border border-gray-300 rounded-md p-2.5 flex items-center w-full max-w-xs shadow-sm">
       {getIcon()}
-      <span className="text-sm font-medium">{link.text}</span>
+      <span className="text-sm font-medium" style={{ color: themeColor1 || '#323296'}}>{link.text}</span>
     </div>
   );
 };
 
 export default function ContactCompany({ obj }: ContactCompanyProps) {
+  const { themeColor1 } = useThemeContext();
   if (!obj || obj.length === 0) {
     return null;
   }
@@ -62,24 +65,24 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
                 height={100}
               />
             </div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ color: themeColor1 || '#323296'}}>
               {column.titlephone}
             </h3>
-            <p className="text-base  text-gray-800 mt-0">
+            <p className="text-base  text-gray-800 mt-0" style={{ color: themeColor1 || '#323296'}}>
               {column.textphone}
             </p>
           </div>
           <div className="flex flex-col items-center md:items-start">
             {column.title && (
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4" style={{ color: themeColor1 || '#323296'}}> 
                 {column.title}
               </h3>
             )}
-            <div className="whitespace-pre-line text-base leading-relaxed">
+            <div className="whitespace-pre-line text-base leading-relaxed" style={{ color: themeColor1 || '#323296'}}>
               {column.text}
             </div>
             {column.links && (
-              <div className="mt-5 space-y-3">
+              <div className="mt-5 space-y-3" style={{ color: themeColor1 || '#323296'}}>
                 {column.links.map((link, linkIndex) => (
                   <ContactLink key={linkIndex} link={link} />
                 ))}
@@ -87,7 +90,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
             )}
           </div>
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ color: themeColor1 || '#323296'}}>
               {column.titlecompany}
             </h3>
             {column.linkscompany && (
@@ -96,6 +99,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
                   <li
                     key={linkIndex}
                     className="text-base  text-gray-800"
+                    style={{ color: themeColor1 || '#323296'}}
                   >
                     {link.text}
                   </li>
