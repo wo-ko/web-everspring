@@ -39,6 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+<<<<<<< HEAD
+
+# local
+*.local
+=======
+>>>>>>> 947afee (first commit)
 
 # local
 *.local
