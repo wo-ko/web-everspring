@@ -22,6 +22,7 @@ type ContactCompanyProps = {
 };
 
 const ContactLink = ({ link }: { link: Link }) => {
+  const { themeColor1 } = useThemeContext();
   const getIcon = () => {
     switch (link.type) {
       // case 'phone':
@@ -61,12 +62,13 @@ const ContactLink = ({ link }: { link: Link }) => {
   return (
     <div className="bg-white border border-gray-300 rounded-md p-2.5 flex items-center w-full max-w-xs shadow-sm">
       {getIcon()}
-      <span className="text-sm font-medium">{link.text}</span>
+      <span className="text-sm font-medium" style={{ color: themeColor1 || '#323296'}}>{link.text}</span>
     </div>
   );
 };
 
 export default function ContactCompany({ obj }: ContactCompanyProps) {
+  const { themeColor1 } = useThemeContext();
   if (!obj || obj.length === 0) {
     return null;
   }
