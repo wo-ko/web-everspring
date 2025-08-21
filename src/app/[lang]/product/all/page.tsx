@@ -3,18 +3,18 @@ import React, { useContext, useState, useMemo } from "react";
 import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import clsx from "clsx";
 
-import AcaricidePage from "../acaricide/page";
-import HerbicidePage from "../herbicide/page";
-import InsecticidePage from "../insecticide/page";
-import FungicidePage from "../fungicide/page";
-import PlantPage from "../plant/page";
-import MollusPage from "../mollus/page";
 import { herbicideProducts } from "@app/[lang]/data/herbicide";
 import { insecticideProducts } from "@app/[lang]/data/insecticide";
 import { diseaseControlProducts } from "@app/[lang]/data/fungicide";
 import { acaricide } from "@app/[lang]/data/acaricide";
 import { DataPlant } from "@app/[lang]/data/plant";
 import { DataMollus } from "@app/[lang]/data/mollus";
+import AcaricideUI from "../acaricide/AcaricideUI";
+import Fungicide from "../fungicide/Fungicide";
+import HerbicideUI from "../herbicide/HerbicideUI";
+import InsecticideUI from "../insecticide/InsecticideUI";
+import MollusUI from "../mollus/MollusUI";
+import PlantUI from "../plant/PlantUI";
 
 export default function AllProduct() {
   const { lang } = useContext(ThemeContext);
@@ -68,24 +68,20 @@ export default function AllProduct() {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <HerbicidePage sortOrder={sortOrder} activities={herbicideProducts} />
-        <InsecticidePage
-          sortOrder={sortOrder}
-          activities={insecticideProducts}
-        />
-        <FungicidePage
-          sortOrder={sortOrder}
-          activities={diseaseControlProducts}
-        />
+        <HerbicideUI sortOrder={sortOrder} activities={herbicideProducts} />
 
-        <AcaricidePage
+        <InsecticideUI sortOrder={sortOrder} activities={insecticideProducts} />
+        <Fungicide sortOrder={sortOrder} activities={diseaseControlProducts} />
+
+        <AcaricideUI
           sortOrder={sortOrder}
           activities={acaricide}
           isAllPage={true}
         />
 
-        <PlantPage sortOrder={sortOrder} activities={DataPlant} />
-        <MollusPage sortOrder={sortOrder} activities={DataMollus} />
+        <PlantUI sortOrder={sortOrder} activities={DataPlant} />
+
+        <MollusUI sortOrder={sortOrder} activities={DataMollus} />
       </div>
     </section>
   );

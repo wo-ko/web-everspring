@@ -11,7 +11,7 @@ export default function CompanyPage() {
   const { themeLayout, themeContent, themeColor1 } = useThemeContext();
 
   // ใช้งาน
-  console.log("themeColor", themeColor1);
+  // console.log("themeColor", themeColor1);
 
   return (
     <div>

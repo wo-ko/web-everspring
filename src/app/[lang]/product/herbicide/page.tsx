@@ -1,21 +1,6 @@
-"use client";
-
-import ProductList from "@app/[lang]/components/product-list";
 import { herbicideProducts } from "@app/[lang]/data/herbicide";
+import HerbicideUI from "./HerbicideUI";
 
-type Props = {
-  sortOrder: "asc" | "desc";
-  activities: string[];
-};
-
-export default function Herbicide({ sortOrder }: Props) {
-  return (
-    <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-      <ProductList
-        titles={"Herbicide (วัชพืช)"}
-        activities={herbicideProducts}
-        sortOrder={sortOrder} // จัดเรียงใน ProductList
-      />
-    </section>
-  );
+export default function Page() {
+  return <HerbicideUI sortOrder="asc" activities={herbicideProducts} />;
 }
