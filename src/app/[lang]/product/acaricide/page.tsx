@@ -1,8 +1,8 @@
 "use client";
 import ProductList from "@app/[lang]/components/product-list";
-import { DataAcaricide } from "@app/[lang]/data/acaricide";
+import { acaricide } from "@app/[lang]/data/acaricide";
 
-type Props = {
+type dataProps = {
   sortOrder: "asc" | "desc";
   activities: any[];
   isAllPage?: boolean;
@@ -11,7 +11,8 @@ type Props = {
 export default function AcaricidePage({
   sortOrder,
   isAllPage,
-}: Props) {
+  activities,
+}: dataProps) {
   return (
     <div
       className={
@@ -19,10 +20,11 @@ export default function AcaricidePage({
           ? "px-4 sm:px-6 lg:px-8 md:py-16" // layout สำหรับ AllProduct
           : "w-full flex flex-col items-center px-4 sm:px-6 lg:px-8 md:py-16" // layout สำหรับหน้าเฉพาะหมวด
       }
+      // className="px-4 sm:px-6 lg:px-8 md:py-16"
     >
       <ProductList
         titles={"Acaricide (ไร)"}
-        activities={DataAcaricide}
+        activities={acaricide}
         sortOrder={sortOrder}
       />
     </div>

@@ -12,10 +12,9 @@ import MollusPage from "../mollus/page";
 import { herbicideProducts } from "@app/[lang]/data/herbicide";
 import { insecticideProducts } from "@app/[lang]/data/insecticide";
 import { diseaseControlProducts } from "@app/[lang]/data/fungicide";
-import { DataAcaricide } from "@app/[lang]/data/acaricide";
+import { acaricide } from "@app/[lang]/data/acaricide";
 import { DataPlant } from "@app/[lang]/data/plant";
 import { DataMollus } from "@app/[lang]/data/mollus";
-
 
 export default function AllProduct() {
   const { lang } = useContext(ThemeContext);
@@ -28,7 +27,7 @@ export default function AllProduct() {
       herbicideProducts.length +
       insecticideProducts.length +
       diseaseControlProducts.length +
-      DataAcaricide.length +
+      acaricide.length +
       DataPlant.length +
       DataMollus.length
     );
@@ -70,9 +69,21 @@ export default function AllProduct() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <HerbicidePage sortOrder={sortOrder} activities={herbicideProducts} />
-        <InsecticidePage sortOrder={sortOrder} activities={insecticideProducts} />
-        <FungicidePage sortOrder={sortOrder} activities={diseaseControlProducts} />
-        <AcaricidePage sortOrder={sortOrder} activities={DataAcaricide} isAllPage={true} />
+        <InsecticidePage
+          sortOrder={sortOrder}
+          activities={insecticideProducts}
+        />
+        <FungicidePage
+          sortOrder={sortOrder}
+          activities={diseaseControlProducts}
+        />
+
+        <AcaricidePage
+          sortOrder={sortOrder}
+          activities={acaricide}
+          isAllPage={true}
+        />
+
         <PlantPage sortOrder={sortOrder} activities={DataPlant} />
         <MollusPage sortOrder={sortOrder} activities={DataMollus} />
       </div>

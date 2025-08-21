@@ -58,7 +58,14 @@ export default function ProductList({
   activities,
   sortOrder = "asc",
 }: Props) {
+    // const sortedActivities = useMemo(() => {
+    //   return [...activities].sort((a, b) =>
+    //     sortOrder === "asc" ? a.localeCompare(b) : b.localeCompare(a)
+    //   );
+    // }, [activities, sortOrder]);
+
   const sortedActivities = useMemo(() => {
+    if (!Array.isArray(activities)) return [];
     return [...activities].sort((a, b) =>
       sortOrder === "asc" ? a.localeCompare(b) : b.localeCompare(a)
     );

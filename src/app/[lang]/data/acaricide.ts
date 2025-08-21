@@ -1,4 +1,4 @@
-export const DataAcaricide = [
+export const acaricide = [
   "amitraz 20% W/V EC",
   "fenpyroximate 5% W/V SC",
   "fenpyroximate 5% W/V SC",
