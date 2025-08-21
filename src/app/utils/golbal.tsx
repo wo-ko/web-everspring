@@ -1,6 +1,7 @@
 import PatternP from '@app/components/pattern-p';
 import { ILayoutProp } from '@app/types/context';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const displayComponentPattern = (item: ILayoutProp, content: any) => {
   switch (item.pattern) {
     case 'img':

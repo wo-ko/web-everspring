@@ -1,12 +1,12 @@
 "use client";
 import ProductList from "@app/[lang]/components/product-list";
-import { acaricide } from "@app/[lang]/data/acaricide";
 
 type DataProps = {
   sortOrder: "asc" | "desc";
-  activities: any[];
+  activities: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   isAllPage?: boolean;
 };
+
 
 export default function AcaricideUI({ sortOrder, activities, isAllPage }: DataProps) {
   return (

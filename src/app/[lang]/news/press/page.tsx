@@ -1,7 +1,4 @@
 "use client";
-import { ThemeContext, useThemeContext } from "@app/context/theme-context";
-import { useContext } from "react";
-import ContactCompany from "../../components/contact-company";
 import ActivitiesSection from "../../components/activities-section";
 
 const sampleActivities = [
@@ -50,8 +47,6 @@ const sampleActivities = [
 ];
 
 export default function Peess() {
-  const { lang } = useContext(ThemeContext);
-  const { themeColor1 } = useThemeContext();
   return (
     <div>
       <main>

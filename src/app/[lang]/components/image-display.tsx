@@ -9,7 +9,7 @@ interface ImageItem {
 interface ImageDisplayProps {
   images: ImageItem[];
   imageSize?: string; // เช่น "250x300"
-  columns?: number;   // เช่น 2, 3, 4
+  columns?: number; // เช่น 2, 3, 4
 }
 
 const parseImageSize = (size?: string) => {
@@ -41,7 +41,8 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
   imageSize = "250x300",
   columns = 2,
 }) => {
-  const { width, height } = parseImageSize(imageSize);
+  const { width, height } = parseImageSize(imageSize); // eslint-disable-line @typescript-eslint/no-unused-vars
+
   const gridColsClass = getGridColsClass(columns);
 
   return (

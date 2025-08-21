@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/globas.css";
+import { useThemeContext } from "@app/context/theme-context";
 
 type Link = {
   type: "email" | "line" | "facebook";
@@ -68,7 +69,6 @@ const ContactLink = ({ link }: { link: Link }) => {
 };
 
 export default function ContactCompany({ obj }: ContactCompanyProps) {
-  const { themeColor1 } = useThemeContext();
   if (!obj || obj.length === 0) {
     return null;
   }

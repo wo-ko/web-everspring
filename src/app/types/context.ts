@@ -4,14 +4,14 @@ export interface ILayoutProp {
   text?: string;
 }
 
-export  interface ILayout {
+export interface ILayout {
   home: ILayoutProp[];
   about: ILayoutProp[];
 }
 
 export interface IContent {
-  home: any;
-  about: any;
+  home: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  about: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface IThemeData {

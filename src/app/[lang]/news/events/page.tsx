@@ -1,29 +1,27 @@
-'use client';
-import { ThemeContext, useThemeContext } from '@app/context/theme-context';
-import { useContext } from "react";
-import ContactCompany from '../../components/contact-company';
-import ActivitiesSection from '../../components/activities-section';
+"use client";
+import ActivitiesSection from "../../components/activities-section";
 
 const sampleActivities = [
   {
     id: 1,
-    imageUrl: 'https://res.cloudinary.com/dyg6r8pec/image/upload/v1755657251/%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A1%E0%B9%88-01_zroxzi.jpg',
-    title: { th: 'วันแม่แห่งชาติ', en: 'Mother’s Day' },
-    description: { th: 'วันแม่แห่งชาติ 12 สิงหาคม 2568', en: 'Mother’s Day, 12 August 2025' },
-    linkUrl: '#', 
-  }
+    imageUrl:
+      "https://res.cloudinary.com/dyg6r8pec/image/upload/v1755657251/%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A1%E0%B9%88-01_zroxzi.jpg",
+    title: { th: "วันแม่แห่งชาติ", en: "Mother’s Day" },
+    description: {
+      th: "วันแม่แห่งชาติ 12 สิงหาคม 2568",
+      en: "Mother’s Day, 12 August 2025",
+    },
+    linkUrl: "#",
+  },
 ];
 
 export default function Events() {
-  const { lang } = useContext(ThemeContext);
-  const { themeColor1 } = useThemeContext();
-
   return (
     <div>
       <main>
-        <ActivitiesSection 
-          titles={{ th: 'กิจกรรม', en: 'Events' }} 
-          activities={sampleActivities} 
+        <ActivitiesSection
+          titles={{ th: "กิจกรรม", en: "Events" }}
+          activities={sampleActivities}
         />
       </main>
     </div>

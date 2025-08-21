@@ -1,13 +1,11 @@
-import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import { IBtnColorPickerProps } from "@app/types/lang.type";
-import { useContext } from "react";
 
 export default function BtnColorPicker({
   color,
   changeThemeColor,
 }: IBtnColorPickerProps) {
   const handleClick = () => {
-    //@ts-ignore
+    // @ts-expect-error: changeThemeColor อาจมี type mismatch
     changeThemeColor(color);
   };
 

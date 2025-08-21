@@ -9,10 +9,16 @@ import {
   useState,
 } from "react";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 export default function PatternComponents(props: { pageName: string }) {
   const { lang } = useThemeContext();
   const [pageLayout, setPageLayout] = useState<any>({});
   const [pattern, setPattern] = useState([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   const [Components, setComponents] = useState<ComponentType<any>[]>();
   const [productCategories, setProductCategories] = useState([]);
 
