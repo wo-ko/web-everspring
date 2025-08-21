@@ -10,8 +10,9 @@ type Categories = {
 
 type categoriesProps = {
   categories: Categories[];
+  text:string;
 };
- const ProductGroup: React.FC<categoriesProps> = ({ categories }) =>{
+ const ProductGroup: React.FC<categoriesProps> = ({ categories,text }) =>{
     const { themeColor1 } = useThemeContext();
    
     return (
@@ -20,7 +21,7 @@ type categoriesProps = {
     >
       <main className="py-5 flex flex-1 flex-col justify-center items-center w-full">
         <h1 className="mb-10 text-4xl font-bold" style={{ color: themeColor1 || '#388e3c' }}>
-          ผลิตภัณฑ์
+          {text}
         </h1>
         <div className="flex flex-wrap justify-center gap-8 max-w-screen-xl w-full">
           {categories.map((category, index) => (
