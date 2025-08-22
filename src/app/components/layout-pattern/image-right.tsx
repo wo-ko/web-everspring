@@ -29,11 +29,32 @@ export default function ImageRightTextBlock({ obj }: ImageRightTextBlockProps) {
         {/* ข้อความด้านซ้าย */}
         <div className="md:w-1/2">
           {title && (
-            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-gray-900">
+            <h2
+              className={`
+    text-[18px]       /* มือถือเล็ก */
+    sm:text-[20px]    /* มือถือใหญ่ / iPhone Pro */
+    md:text-[22px]    /* iPad / Tablet */
+    lg:text-[30px]    /* Desktop ขนาดกลาง */
+    xl:text-[30px]    /* Desktop / Widescreen */
+    font-semibold mb-6 text-gray-900
+  `}
+            >
               {title}
             </h2>
           )}
-          <p className="text-gray-700 text-lg leading-relaxed">{text}</p>
+          <p
+            className={`
+    text-[14px]       /* มือถือเล็ก */
+    sm:text-[15px]    /* มือถือใหญ่ / iPhone Pro */
+    md:text-[16px]    /* iPad / Tablet */
+    lg:text-[18px]    /* Desktop ขนาดกลาง */
+    xl:text-[20px]    /* Desktop / Widescreen */
+    leading-relaxed
+    text-gray-700
+  `}
+          >
+            {text}
+          </p>
         </div>
       </div>
     </section>

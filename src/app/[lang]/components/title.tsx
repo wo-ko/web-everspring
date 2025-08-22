@@ -25,7 +25,7 @@ export default function Title() {
           <Phone size={18} />
           <span>02-363-8560</span>
         </div>
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
           <BtnColorPicker color="#D9D9D9" changeThemeColor={changeThemeColor1} />
           <BtnColorPicker color="#323296" changeThemeColor={changeThemeColor1} />
           <BtnColorPicker color="#009646" changeThemeColor={changeThemeColor1} />

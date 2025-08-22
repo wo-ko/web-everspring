@@ -21,6 +21,7 @@ export default function PatternComponents(props: { pageName: string }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   const [Components, setComponents] = useState<ComponentType<any>[]>();
   const [productCategories, setProductCategories] = useState([]);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -39,9 +40,12 @@ export default function PatternComponents(props: { pageName: string }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const _pageLayout = await fetch(`http://localhost:4000/pages/page-display/${pageName}`).then(res => res.json())
-      const _pattern = await fetch('http://localhost:4000/pattern-layouts').then(res => res.json())
-      const _productCategories = await fetch('http://localhost:4000/product-category').then(res => res.json()) 
+      // const _pageLayout = await fetch(`http://localhost:4000/pages/page-display/${pageName}`).then(res => res.json())
+      // const _pattern = await fetch('http://localhost:4000/pattern-layouts').then(res => res.json())
+      // const _productCategories = await fetch('http://localhost:4000/product-category').then(res => res.json()) 
+      const _pageLayout = await fetch(`${API_URL}/pages/page-display/${pageName}`).then(res => res.json());
+      const _pattern = await fetch(`${API_URL}/pattern-layouts`).then(res => res.json());
+      const _productCategories = await fetch(`${API_URL}/product-category`).then(res => res.json());
       setPageLayout(_pageLayout);
       setPattern(_pattern);
       setProductCategories(_productCategories); 

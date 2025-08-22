@@ -7,11 +7,32 @@ type DataProps = {
   isAllPage?: boolean;
 };
 
-
-export default function AcaricideUI({ sortOrder, activities, isAllPage }: DataProps) {
+export default function AcaricideUI({
+  sortOrder,
+  activities,
+  isAllPage,
+}: DataProps) {
   return (
-    <div className={isAllPage ? "px-4 sm:px-6 lg:px-8 md:py-16" : "w-full flex flex-col items-center px-4 sm:px-6 lg:px-8 md:py-16"}>
-      <ProductList titles="Acaricide (ไร)" activities={activities} sortOrder={sortOrder} />
+    <div
+      className={`
+        w-full
+        mx-auto
+        ${
+          isAllPage
+            ? "px-2 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12"
+            : "flex flex-col  px-8 sm:px-4 md:px-8 lg:px-8 py-6 sm:py-8 md:py-12"
+        }
+        max-w-full
+        sm:max-w-xl
+        md:max-w-3xl
+        lg:max-w-5xl
+      `}
+    >
+      <ProductList
+        titles="Acaricide (ไร)"
+        activities={activities}
+        sortOrder={sortOrder}
+      />
     </div>
   );
 }

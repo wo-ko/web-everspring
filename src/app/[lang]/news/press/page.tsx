@@ -11,8 +11,8 @@ const sampleActivities = [
       en: "Annual Policy 2023 in Collaboration with Rung Anan Shop",
     },
     description: {
-      th: "วันแม่แห่งชาติ 12 สิงหาคม 2568",
-      en: "Mother's Day, 12 August 2025",
+      th: "กิจกรรมปาร์ตี้",
+      en: "Partyyyyy",
     },
     linkUrl: "#",
   },

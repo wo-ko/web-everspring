@@ -11,7 +11,8 @@ export default function Paragraph(props: {
     "อโกรเคม จำกัด",
     "กลุ่มบริษัทในเครือเอเวอร์สปริง",
     "Everspring Agrochem Co., Ltd",
-    "The Everspring Group"
+    "The Everspring Group",
+    "บริษัท เอเวอร์สปริง อโกรเคม จำกัด และ บริษัท เอฟ แอนด์ ดับบลิว อะโกรเคม จำกัด"
   ];
 
   const renderText = (text: string) => {

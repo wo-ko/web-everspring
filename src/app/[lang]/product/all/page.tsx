@@ -21,7 +21,6 @@ export default function AllProduct() {
   const { themeColor1 } = useThemeContext();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  // รวมทุกหมวดเพื่อแสดงจำนวนรวม
   const totalProducts = useMemo(() => {
     return (
       herbicideProducts.length +
@@ -34,17 +33,17 @@ export default function AllProduct() {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <section className="max-w-full px-4 sm:px-6 lg:px-12 py-8 sm:py-12 md:py-16 mx-auto">
       {/* ปุ่มเรียงลำดับ */}
-      <div className="flex justify-between items-center gap-4 mb-8 w-full max-w-3xl mx-auto">
-        <span className="text-gray-700 font-light">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 w-full max-w-5xl mx-auto">
+        <span className="text-gray-700 font-light text-sm sm:text-base md:text-lg">
           {lang === "th"
             ? `| แสดงผลิตภัณฑ์ทั้งหมด (${totalProducts} รายการ)`
             : `| Showing all products (${totalProducts} items)`}
         </span>
         <button
           onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-          className="px-4 py-2 text-white font-light rounded transition-colors duration-200"
+          className="px-3 py-1 sm:px-4 sm:py-2 text-white font-light rounded transition-colors duration-200 text-xs sm:text-sm md:text-base"
           style={{ backgroundColor: "#0286C2" }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.backgroundColor = "#026699")
@@ -58,30 +57,49 @@ export default function AllProduct() {
         </button>
       </div>
 
+      {/* หัวข้อ */}
       <h2
         style={{ color: themeColor1 || "#323296" }}
         className={clsx(
-          "text-center font-extrabold tracking-tight text-3xl sm:text-4xl md:text-5xl mb-4"
+          "text-center font-extrabold tracking-tight mb-6",
+          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
         )}
       >
         {lang === "th" ? "ผลิตภัณฑ์ทั้งหมด" : "All Products"}
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <HerbicideUI sortOrder={sortOrder} activities={herbicideProducts} />
-
-        <InsecticideUI sortOrder={sortOrder} activities={insecticideProducts} />
-        <Fungicide sortOrder={sortOrder} activities={diseaseControlProducts} />
-
+      {/* Grid ของสินค้า */}
+      <div>
+        <HerbicideUI
+          sortOrder={sortOrder}
+          activities={herbicideProducts}
+          isAllPage={true}
+        />
+        <InsecticideUI
+          sortOrder={sortOrder}
+          activities={insecticideProducts}
+          isAllPage={true}
+        />
+        <Fungicide
+          sortOrder={sortOrder}
+          activities={diseaseControlProducts}
+          isAllPage={true}
+        />
         <AcaricideUI
           sortOrder={sortOrder}
           activities={acaricide}
           isAllPage={true}
         />
-
-        <PlantUI sortOrder={sortOrder} activities={DataPlant} />
-
-        <MollusUI sortOrder={sortOrder} activities={DataMollus} />
+        <PlantUI
+          sortOrder={sortOrder}
+          activities={DataPlant}
+          isAllPage={true}
+        />
+        <MollusUI
+          sortOrder={sortOrder}
+          activities={DataMollus}
+          isAllPage={true}
+        />
       </div>
     </section>
   );
