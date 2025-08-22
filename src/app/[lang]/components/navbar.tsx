@@ -5,15 +5,15 @@ import { ThemeContext } from "@app/context/theme-context";
 import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
 
-const Logo = () => (
-  // eslint-disable-line @typescript-eslint/no-unused-vars
-  <div className="flex items-center">
-    <img
-      src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1755747743/logo_everspring-01_uyvcpi.jpg"
-      alt="Logo"
-    />
-  </div>
-);
+// const Logo = () => (
+//   // eslint-disable-line @typescript-eslint/no-unused-vars
+//   <div className="flex items-center">
+//     <img
+//       src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1755747743/logo_everspring-01_uyvcpi.jpg"
+//       alt="Logo"
+//     />
+//   </div>
+// );
 
 export default function Navbar() {
   const { lang, themeColor1 } = useContext(ThemeContext);
