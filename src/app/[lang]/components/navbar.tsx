@@ -5,15 +5,15 @@ import { ThemeContext } from "@app/context/theme-context";
 import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
 
-// const Logo = () => (
-//   // eslint-disable-line @typescript-eslint/no-unused-vars
-//   <div className="flex items-center">
-//     <img
-//       src="https://res.cloudinary.com/dyg6r8pec/image/upload/w_130,h_100,c_fit/v1749023798/logo_everspring-01-Photoroom_lq2qb3.png"
-//       alt="Logo"
-//     />
-//   </div>
-// );
+const Logo = () => (
+  // eslint-disable-line @typescript-eslint/no-unused-vars
+  <div className="flex items-center">
+    <img
+      src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1755747743/logo_everspring-01_uyvcpi.jpg"
+      alt="Logo"
+    />
+  </div>
+);
 
 export default function Navbar() {
   const { lang, themeColor1 } = useContext(ThemeContext);
@@ -116,8 +116,14 @@ export default function Navbar() {
         >
           <div className="max-w-screen-xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2">
             <Link href={`/${lang}`} className={textColor}>
-              <div className="w-32 h-16"></div>
+              <div className="w-16 h-10"></div>
             </Link>
+            {/* 
+            <Link href={`/${lang}`} className={textColor}>
+              <div className="w-16 h-7">
+                <Logo />
+              </div>
+            </Link> */}
 
             <nav
               className={`hidden lg:flex items-center gap-10 font-light text-[16px] tracking-wide relative ${textColor}`}
@@ -144,8 +150,10 @@ export default function Navbar() {
                           // style={{
                           //   ["--theme-color1" as any]: themeColor1 || "#323296",
                           // }}
-                          style={{ backgroundColor: (themeColor1 ?? "#323296") as string }}
-
+                          style={{
+                            backgroundColor: (themeColor1 ??
+                              "#323296") as string,
+                          }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = `${
                               themeColor1 || "#3A3A9A"
@@ -193,9 +201,12 @@ export default function Navbar() {
               textColor === "text-white" ? "border-white/20" : "border-black/10"
             }`}
           >
-            <Link href={`/${lang}`} className={textColor}>
-              <div className="w-32 h-16"></div>
-            </Link>
+            {/* <Link href={`/${lang}`} className={textColor}>
+              <div className="w-32 h-16">
+                <Logo />
+              </div>
+            </Link> */}
+
             <button
               onClick={closeMobileMenu}
               className={`p-1 rounded-md ${
