@@ -1,5 +1,5 @@
 "use client";
-import ActivitiesSection from "../../components/activities-section";
+// import ActivitiesSection from "../../components/activities-section";
 
 // const sampleActivities = [
 //   {
