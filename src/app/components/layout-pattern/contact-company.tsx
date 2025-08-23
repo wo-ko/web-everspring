@@ -55,7 +55,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
   }
   return (
     <div className="bg-gray-100 py-12 px-6 font-['Tahoma',sans-serif] text-gray-800">
-      <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+      <div className="max-w-screen-xl mx-auto grid md:grid-cols-[1fr_2fr_2fr] lg:grid-cols-3 gap-12 text-left">
         {obj.map((column, index) => (
           <React.Fragment key={index}>
             <div className="flex flex-col items-center md:items-center">
@@ -100,7 +100,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
                   {column.linkscompany.map((link, linkIndex) => (
                     <li
                       key={linkIndex}
-                      className="text-base  text-gray-800 md:text-[11.5px] lg:text-xl"
+                      className="text-base  text-gray-800 md:text-[12px] lg:text-xl"
                       style={{ color: themeColor1 || '#323296' }}
                     >
                       {link.text}
