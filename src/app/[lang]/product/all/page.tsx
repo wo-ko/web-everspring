@@ -69,7 +69,13 @@ export default function AllProduct() {
       </h2>
 
       {/* Grid ของสินค้า */}
-      <div>
+      <div
+        className="w-full
+  mx-auto
+  px-2 sm:px-4 md:px-6 lg:px-8 
+  py-6 sm:py-8 md:py-12
+  grid grid-cols-1 md:grid-cols-3 gap-6"
+      >
         <HerbicideUI
           sortOrder={sortOrder}
           activities={herbicideProducts}

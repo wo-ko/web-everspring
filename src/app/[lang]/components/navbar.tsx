@@ -201,11 +201,9 @@ export default function Navbar() {
               textColor === "text-white" ? "border-white/20" : "border-black/10"
             }`}
           >
-            {/* <Link href={`/${lang}`} className={textColor}>
-              <div className="w-32 h-16">
-                <Logo />
-              </div>
-            </Link> */}
+            <Link href={`/${lang}`} className={textColor}>
+              <div className="w-32 h-16"></div>
+            </Link>
 
             <button
               onClick={closeMobileMenu}
