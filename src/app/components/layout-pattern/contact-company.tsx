@@ -54,7 +54,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
     return null;
   }
   return (
-    <div className="bg-gray-100 py-12 px-6 font-['Tahoma',sans-serif] text-gray-800">
+    <div className="bg-gray-100 py-12 px-6 text-gray-800">
       <div className="max-w-screen-xl mx-auto grid md:grid-cols-[1fr_2fr_2fr] lg:grid-cols-3 gap-12 text-left">
         {obj.map((column, index) => (
           <React.Fragment key={index}>
