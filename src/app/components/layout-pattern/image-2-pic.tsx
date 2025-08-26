@@ -11,13 +11,13 @@ export default function Image2Pic({ obj }: ImagePicProps) {
   const images = obj.map((o) => o.image);
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 px-4 sm:px-6 md:px-8 my-8 sm:my-10 md:my-12 max-w-6xl mx-auto">
+    <div className="flex flex-wrap justify-center gap-2 px-2 sm:px-4 md:px-6 my-6 sm:my-8 md:my-10 max-w-7xl mx-auto">
       {images.map((src, i) => (
         <img
           key={i}
           src={src}
           alt={`image-${i}`}
-          className="w-full sm:w-[48%] md:w-[30%] h-auto object-contain transition-transform duration-300 hover:scale-105"
+          className="w-[46.5%] h-auto object-contain transition-transform duration-300 hover:scale-105"
         />
       ))}
     </div>

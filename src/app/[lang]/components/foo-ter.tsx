@@ -20,10 +20,10 @@ const Footer = () => {
     company: lang === "th" ? "EVERSPRING AGROCHEM" : "EVERSPRING AGROCHEM",
     address:
       lang === "th"
-        ? "388/70 Biz Gallerie\nแขวงนวลจันทร์ เขตบึงกุ่ม กรุงเทพมหานคร\n10230"
-        : "388/70 Biz Gallerie\nNuanchan, Bueng Kum, Bangkok\n10230",
+        ? "ที่อยู่บริษัท เอเวอร์สปริง อโกรเคม จำกัด \n 388/70 ถนนนวลจันทร์ แขวงนวลจันทร์ \n เขตบึงกุ่ม กรุงเทพมหานคร 10230 \n โทร 02-3638560 โทรสาร 02-0420860"
+        : "Everspring Agrochem Co., Ltd. \n 388/70 Nuanchan Road, Nuanchan Subdistrict, \n Bueng Kum District, Bangkok 10230, Thailand \n Tel : 02-3638560 Fax : 02-0420860",
     hours:
-      lang === "th" ? "เวลาทำการ : 08.00-17.00" : "Working hours: 08.00-17.00",
+      lang === "th" ? "เวลาทำการ : 08.00-17.30" : "Working hours: 08.00-17.30",
     menu1:
       lang === "th"
         ? [
