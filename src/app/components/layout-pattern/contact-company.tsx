@@ -1,8 +1,8 @@
-import { useThemeContext } from "@app/context/theme-context";
-import React from "react";
+import { useThemeContext } from '@app/context/theme-context';
+import React from 'react';
 
 type Link = {
-  type: "email" | "line" | "facebook";
+  type: 'email' | 'line' | 'facebook';
   text: string;
 };
 
@@ -27,48 +27,21 @@ const ContactLink = ({ link }: { link: Link }) => {
     switch (link.type) {
       // case 'phone':
       //   return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/724/724664.png" width={20} height={20} />;
-      case "email":
-        return (
-          <img
-            className="text-xl mr-3"
-            src="https://cdn-icons-png.flaticon.com/128/9068/9068642.png"
-            width={20}
-            height={20}
-          />
-        );
-      case "line":
-        return (
-          <img
-            className="text-xl mr-3"
-            src="https://cdn-icons-png.flaticon.com/128/3670/3670089.png"
-            width={20}
-            height={20}
-          />
-        );
-      case "facebook":
-        return (
-          <img
-            className="text-xl mr-3"
-            src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
-            width={20}
-            height={20}
-          />
-        );
+      case 'email':
+        return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/9068/9068642.png" width={20} height={20} />;
+      case 'line':
+        return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/3670/3670089.png" width={20} height={20} />;
+      case 'facebook':
+        return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" width={20} height={20} />;
       default:
         return null;
     }
   };
 
   return (
-    <div
-      className="bg-white border border-gray-300 rounded-md px-4 py-2 flex items-center shadow-sm"
-      style={{ minWidth: "calc(100% + 20px)" }}
-    >
+    <div className="bg-white border border-gray-300 rounded-md px-4 py-2 flex items-center shadow-sm" style={{ minWidth: 'calc(100% + 20px)' }}>
       {getIcon()}
-      <span
-        className="text-sm font-medium ml-2 md:text-xs lg:text-xl"
-        style={{ color: themeColor1 || "#323296" }}
-      >
+      <span className="text-sm font-medium ml-2 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
         {link.text}
       </span>
     </div>
@@ -81,62 +54,37 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
     return null;
   }
   return (
-    // <div className="bg-gray-100 py-12 px-6 text-gray-800">
-    <div
-      className="bg-gray-100 
-            py-12 
-            px-4 sm:px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-24 
-            sm:text-center text-left md:text-left"
-    >
-      {/* <div className="max-w-screen-xl mx-auto grid md:grid-cols-[1fr_2fr_2fr] lg:grid-cols-3 gap-12 text-left"> */}
-      <div
-        className="max-w-screen-xl mx-auto grid 
-  grid-cols-1
-  sm:grid-cols-2
-  md:grid-cols-[1fr_2fr_2fr]
-  lg:grid-cols-[1fr_2fr_2fr]
-  xl:grid-cols-3
-  gap-8  text-left "
-      >
+    <div className="bg-gray-100 py-12 px-6 text-gray-800">
+      <div className="max-w-screen-xl mx-auto grid md:grid-cols-[1fr_2fr_2fr] lg:grid-cols-3 gap-12 text-left">
         {obj.map((column, index) => (
           <React.Fragment key={index}>
             <div className="flex flex-col items-center md:items-center">
               <div className="mb-5">
-                <img src={column.logo} alt="Logo" width={130} height={100} />
+                <img
+                  src={column.logo}
+                  alt="Logo"
+                  width={130}
+                  height={100}
+                />
               </div>
-              <h3
-                className="text-lg font-semibold text-gray-800 mb-2 md:text-xs lg:text-xl"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <h3 className="text-lg font-semibold text-gray-800 mb-2 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                 {column.titlephone}
               </h3>
-              <p
-                className="text-base  text-gray-800 mt-0 md:text-xs lg:text-xl"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <p className="text-base  text-gray-800 mt-0 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                 {column.textphone}
               </p>
             </div>
             <div className="flex flex-col items-center md:items-start">
               {column.title && (
-                <h3
-                  className="text-lg font-semibold text-gray-900 mb-4 md:text-xs lg:text-xl"
-                  style={{ color: themeColor1 || "#323296" }}
-                >
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                   {column.title}
                 </h3>
               )}
-              <div
-                className="whitespace-pre-line text-base leading-relaxed md:text-xs lg:text-xl"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <div className="whitespace-pre-line text-base leading-relaxed md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                 {column.text}
               </div>
               {column.links && (
-                <div
-                  className="mt-5 space-y-3 md:pt-6"
-                  style={{ color: themeColor1 || "#323296" }}
-                >
+                <div className="mt-5 space-y-3 md:pt-6" style={{ color: themeColor1 || '#323296' }}>
                   {column.links.map((link, linkIndex) => (
                     <ContactLink key={linkIndex} link={link} />
                   ))}
@@ -144,10 +92,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
               )}
             </div>
             <div className="flex flex-col items-center md:items-start">
-              <h3
-                className="text-lg font-semibold text-gray-800 mb-2"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ color: themeColor1 || '#323296' }}>
                 {column.titlecompany}
               </h3>
               {column.linkscompany && (
@@ -156,7 +101,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
                     <li
                       key={linkIndex}
                       className="text-base  text-gray-800 md:text-[12px] lg:text-xl"
-                      style={{ color: themeColor1 || "#323296" }}
+                      style={{ color: themeColor1 || '#323296' }}
                     >
                       {link.text}
                     </li>
