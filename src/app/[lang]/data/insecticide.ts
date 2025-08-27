@@ -8,7 +8,7 @@ export const insecticideProducts = [
   "buprofezin 25% WP",
   "cartap hydrochloride 50% SP",
   "chlorfenapyr 10% SC",
-  "cypermethrin + profenofos 4% + 40% W/V Ec", 
+  "cypermethrin + profenofos 4% + 40% W/V EC", 
   "cypermethrin 35% EC",
   "diflubenzuron 25% WP",
   "dinotefuran 20% SG",

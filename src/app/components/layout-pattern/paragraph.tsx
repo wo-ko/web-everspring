@@ -9,6 +9,7 @@ export default function Paragraph(props: {
   const highlightWords = [
     "บริษัทเอเวอร์สปริง",
     "อโกรเคม จำกัด",
+    "บริษัท เอเวอร์สปริง อโกรเคม จำกัด",
     "กลุ่มบริษัทในเครือเอเวอร์สปริง",
     "Everspring Agrochem Co., Ltd",
     "The Everspring Group",
@@ -37,7 +38,7 @@ export default function Paragraph(props: {
     <p
       className={clsx(
         "whitespace-pre-line py-4 px-6 max-w-3xl mx-auto text-gray-800 leading-relaxed mb-6 sm:mb-8 md:mb-10 " +
-          "text-sm sm:text-base md:text-lg tracking-normal font-light",
+          "text-sm sm:text-base md:text-lg tracking-normal font-regular",
         props.customClass
       )}
     >

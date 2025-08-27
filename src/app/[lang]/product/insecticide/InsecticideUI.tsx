@@ -31,7 +31,6 @@ export default function InsecticideUI({ sortOrder, isAllPage }: Props) {
         activities={insecticideProducts} // ส่งตรงไป ProductList
         sortOrder={sortOrder} // ProductList จัดเรียงเอง
       />
-      ;
     </div>
   );
 }

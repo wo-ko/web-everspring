@@ -169,8 +169,10 @@ export default function Carrier() {
 
             {/* Apply link */}
             <a
-              href={`https://mail.google.com/mail/?view=cm&to=pbl.devteam@gmail.com&su=${encodeURIComponent(
+              href={`https://mail.google.com/mail/?view=cm&to=bandit.t@everspring.co.th&su=${encodeURIComponent(
                 job.title[lang as "th" | "en"]
+              )}&body=${encodeURIComponent(
+                `จาก HR - Everspring,\n\nกรุณาแนบเอกสารสมัครงานเพื่อพิจารณาค่ะ\nแนบเอกสารดังนี้:\n1. CV / ประวัติย่อ\n2. จดหมายสมัครงาน (Cover Letter)\n3. ใบรับรองที่เกี่ยวข้อง (ถ้ามี)\n\nขอบคุณค่ะ`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

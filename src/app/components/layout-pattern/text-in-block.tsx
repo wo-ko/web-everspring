@@ -27,8 +27,8 @@ export default function TextInBlock({ text }: TextInBlockProps) {
         <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(0,0,0,0.02) 12px,rgba(0,0,0,0.02) 24px)] rounded-2xl pointer-events-none"></div>
 
         <p
-          className="relative font-inter text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed tracking-wide"
-          style={{ color: mainColor }}
+          className="relative font-inter text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl tracking-wide"
+          style={{ color: mainColor, lineHeight: "1.5em" }}
         >
           {text?.split("\n").map((line, i) => (
             <React.Fragment key={i}>
