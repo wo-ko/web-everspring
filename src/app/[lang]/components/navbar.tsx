@@ -146,14 +146,14 @@ export default function Navbar() {
                         <Link
                           key={subIndex}
                           href={`/${lang}/${sub.path}`}
-                          className="block px-6 py-3 text-gray-700 whitespace-nowrap text-[15px] transition-all duration-200 rounded-md hover:text-white hover:font-bold"
+                          className="block px-6 py-3 text-gray-900 whitespace-nowrap text-[15px] transition-all duration-200 rounded-md hover:text-white hover:font-bold"
                           // style={{
                           //   ["--theme-color1" as any]: themeColor1 || "#323296",
                           // }}
-                          style={{
-                            backgroundColor: (themeColor1 ??
-                              "#323296") as string,
-                          }}
+                          // style={{
+                          //   backgroundColor: (themeColor1 ??
+                          //     "#323296") as string,
+                          // }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = `${
                               themeColor1 || "#3A3A9A"
@@ -164,7 +164,7 @@ export default function Navbar() {
                               "transparent";
                           }}
                         >
-                          {sub.name}
+                         {sub.name}
                         </Link>
                       ))}
                     </div>
