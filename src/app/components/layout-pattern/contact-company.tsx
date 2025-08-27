@@ -1,9 +1,11 @@
 import { useThemeContext } from '@app/context/theme-context';
+import Link from 'next/link';
 import React from 'react';
 
-type Link = {
+type CompanyData = {
   type: 'email' | 'line' | 'facebook';
   text: string;
+  link: string;
 };
 
 type ColumnData = {
@@ -12,19 +14,19 @@ type ColumnData = {
   textphone?: string;
   title?: string;
   text: string;
-  links?: Link[];
+  links?: CompanyData[];
   titlecompany?: string;
-  linkscompany?: Link[];
+  linkscompany?: CompanyData[];
 };
 
 type ContactCompanyProps = {
   obj: ColumnData[];
 };
 
-const ContactLink = ({ link }: { link: Link }) => {
+const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
   const { themeColor1 } = useThemeContext();
   const getIcon = () => {
-    switch (link.type) {
+    switch (linksData.type) {
       // case 'phone':
       //   return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/724/724664.png" width={20} height={20} />;
       case 'email':
@@ -39,11 +41,16 @@ const ContactLink = ({ link }: { link: Link }) => {
   };
 
   return (
-    <div className="bg-white border border-gray-300 rounded-md px-4 py-2 flex items-center shadow-sm" style={{ minWidth: 'calc(100% + 20px)' }}>
-      {getIcon()}
-      <span className="text-sm font-medium ml-2 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
-        {link.text}
-      </span>
+
+    <div className="bg-white border border-gray-300 rounded-md px-4 py-2 " style={{ minWidth: 'calc(100% + 20px)' }}>
+      <Link href={linksData?.link} target="_blank">
+        <div className='flex items-center shadow-sm'>
+          {getIcon()}
+          <span className="text-sm font-medium ml-2 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
+            {linksData.text}
+          </span>
+        </div>
+      </Link>
     </div>
   );
 };
@@ -85,8 +92,8 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
               </div>
               {column.links && (
                 <div className="mt-5 space-y-3 md:pt-6" style={{ color: themeColor1 || '#323296' }}>
-                  {column.links.map((link, linkIndex) => (
-                    <ContactLink key={linkIndex} link={link} />
+                  {column.links.map((linksData, linkIndex) => (
+                    <ContactLink key={linkIndex} linksData={linksData} />
                   ))}
                 </div>
               )}
