@@ -6,7 +6,7 @@ import Carrier from "./carrier/page";
 import { generateMetadata } from "@app/utils/seo";
 
 export const metadata = generateMetadata({
-  title: "ข่าวสาร | News / เอเวอร์สปริง อโกรเคม",
+  title: "ข่าวสาร | News ",
   description: "รวมข่าวสาร บทความ กิจกรรม และโอกาสร่วมงานกับบริษัท / News, articles, events and career opportunities at Everspring Agrochem.",
   keywords: "ข่าวสาร, news, บทความ, events, กิจกรรม, careers, เอเวอร์สปริง"
 });

@@ -4,7 +4,7 @@ import PatternComponents from "@app/components/pattern-components";
 import { generateMetadata } from "@app/utils/seo";
 
 export const metadata = generateMetadata({
-  title: "บริษัท เอเวอร์สปริง อโกรเคม จำกัด | สารป้องกันศัตรูพืช / Everspring Agrochem Co., Ltd. | Crop Protection & Fertilizers",
+  title: "บริษัท เอเวอร์สปริง อโกรเคม จำกัด / Everspring Agrochem Co., Ltd.",
   description: "บริษัท เอเวอร์สปริง อโกรเคม ผลิตและจำหน่ายสารป้องกันศัตรูพืชและปุ๋ยคุณภาพมาตรฐานสากล / Everspring Agrochem produces and sells high-quality crop protection products and fertilizers meeting international standards.",
   keywords: "สารป้องกันศัตรูพืช, ปุ๋ย, ธาตุอาหารพืช, Everspring, crop protection, fertilizers"
 });
