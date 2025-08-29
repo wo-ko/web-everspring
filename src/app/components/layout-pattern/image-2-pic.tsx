@@ -20,7 +20,8 @@ export default function Image2Pic({ obj }: ImagePicProps) {
           <Image
             src={src}
             alt={`image-${i}`}
-            fill
+            width={600}
+            height={200}
             className="object-contain"
           />
         </div>
