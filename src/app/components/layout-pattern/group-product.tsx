@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useThemeContext } from "@app/context/theme-context";
-
+import Image from "next/image";
 type Category = {
   productCategoryId: number;
   productCategoryImgUrl: string;
@@ -70,9 +70,9 @@ const GroupProduct: React.FC<GroupProductProps> = ({ categories, text }) => {
                 href={getLinkForCategory(category.productCategoryName.en)}
                 passHref
               >
-                <div className="flex flex-col items-center text-center w-[150px] cursor-pointer group">
-                  <div className="w-[120px] h-[120px] rounded-full flex justify-center items-center mb-4  border-2 border-transparent">
-                    <img
+                <div className="flex flex-col items-center text-center w-[150px] cursor-pointer group ">
+                  <div className="w-[120px] h-[120px] rounded-full flex justify-center items-center mb-4  border-2 border-transparent hover:scale-105">
+                    {/* <Image
                       src={category.productCategoryImgUrl}
                       alt={category.productCategoryName[currentLang]}
                       className="w-[95%] h-[95%] hover:w-[100%] hover:h-[100%] object-contain"
@@ -80,7 +80,20 @@ const GroupProduct: React.FC<GroupProductProps> = ({ categories, text }) => {
                         e.currentTarget.src =
                           "https://placehold.co/84x84/e0e0e0/757575?text=Image";
                       }}
+                    /> */}
+                    <Image
+                      src={category.productCategoryImgUrl}
+                      alt="logo"
+                      width={200}
+                      height={200}
+                      className="object-contain"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://placehold.co/84x84/e0e0e0/757575?text=Image";
+                      }}
+                      unoptimized
                     />
+
                   </div>
                   <p
                     className="font-semibold hover:from-neutral-800"

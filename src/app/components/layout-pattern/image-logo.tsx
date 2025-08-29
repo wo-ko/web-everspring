@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-
+import Image from "next/image";
 type ImageLogoProps = {
   obj?: { image: string }[];
 };
@@ -13,11 +13,13 @@ export default function ImageLogo({ obj }: ImageLogoProps) {
   return (
     <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 my-6 sm:my-8 md:my-10">
       {images.map((src, i) => (
-        <img
+        <Image
           key={i}
           src={src}
           alt={`image-logo-${i}`}
-          className="max-w-[100px] sm:max-w-[120px] md:max-w-[150px] h-auto object-contain"
+          width={200}   // กำหนดขนาดตามต้องการ
+          height={100}  // ปรับให้คงสัดส่วนรูป
+        // className="max-w-[100px] sm:max-w-[120px] md:max-w-[150px] h-auto object-contain"
         />
       ))}
     </div>
