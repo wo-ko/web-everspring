@@ -4,9 +4,9 @@ import { generateMetadata } from "@app/utils/seo";
 import AllProduct from "./all/page";
 
 export const metadata = generateMetadata({
-  title: "สินค้าของเรา | Products",
+  title: "บริษัท เอเวอร์สปริง อโกรเคม จำกัด | สารป้องกันศัตรูพืช / Everspring Agrochem Co., Ltd.",
   description: "รายชื่อสินค้าและสารป้องกันศัตรูพืช รวมถึงปุ๋ยและธาตุอาหารพืชที่บริษัทผลิตและจำหน่าย / Our products including crop protection, fertilizers and plant nutrients.",
-  keywords: "สารป้องกันศัตรูพืช, ปุ๋ย, ธาตุอาหารพืช, Everspring, Products, crop protection, fertilizers"
+  keywords: "เอเวอร์สปริง ,เอเวอร์สปริง อโกรเคม, บริษัทเอเวอร์สปริงค์ อโกรเคม, บริษัท เอเวอร์สปริงค์ อโกรเคม"
 });
 
 export default function Product() {
