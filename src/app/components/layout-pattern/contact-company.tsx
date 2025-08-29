@@ -46,6 +46,7 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
           width={20}
           height={20}
           className="mr-3"
+          unoptimized
         />
       );
     case "line":
@@ -56,6 +57,7 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
           width={20}
           height={20}
           className="mr-3"
+          unoptimized
         />
       );
     case "facebook":
@@ -66,6 +68,7 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
           width={20}
           height={20}
           className="mr-3"
+          unoptimized
         />
       );
     default:

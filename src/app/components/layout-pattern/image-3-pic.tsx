@@ -24,6 +24,7 @@ export default function Image3Pic({ obj }: ImagePicProps) {
               alt={`left-${idx}`}
               fill
               className="object-contain"
+              unoptimized 
             />
           </div>
         ))}
@@ -38,6 +39,7 @@ export default function Image3Pic({ obj }: ImagePicProps) {
             width={600}
             height={200}
             className="object-contain w-full h-auto"
+            unoptimized 
           />
         </div>
       </div>

@@ -46,6 +46,7 @@ const ImageSwiper: React.FC<SwiperProps> = ({ obj }) => {
                                     width={1920}
                                     height={1080}
                                     className="object-cover"
+                                    unoptimized 
                                 />
                             </div>
 

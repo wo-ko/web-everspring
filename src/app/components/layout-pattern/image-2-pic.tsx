@@ -23,6 +23,7 @@ export default function Image2Pic({ obj }: ImagePicProps) {
             width={600}
             height={200}
             className="object-contain"
+            unoptimized 
           />
         </div>
       ))}
