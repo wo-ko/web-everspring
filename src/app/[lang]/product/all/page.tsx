@@ -17,6 +17,7 @@ import MollusUI from "../mollus/MollusUI";
 import PlantUI from "../plant/PlantUI";
 
 export default function AllProduct() {
+  
   const { lang } = useContext(ThemeContext);
   const { themeColor1 } = useThemeContext();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");

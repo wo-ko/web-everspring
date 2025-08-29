@@ -12,9 +12,12 @@ export const metadata = generateMetadata({
 export default function Product() {
   return (
     
-    <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-      <h1 className="sr-only">สินค้าของบริษัท เอเวอร์สปริง อโกรเคม / Our Products</h1>
+    // <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      
+    // </section>
+    <>
+    <h1 className="sr-only">สินค้าของบริษัท เอเวอร์สปริง อโกรเคม / Our Products</h1>
       <AllProduct />
-    </section>
+    </>
   );
 }
