@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 type ImageLeftTextBlockProps = {
     obj: {
         image: string;
@@ -18,7 +18,7 @@ export default function ContactPhone({ obj }: ImageLeftTextBlockProps) {
             <div className="max-w-screen-xl mx-auto flex justify-between gap-10 flex-wrap">
                 <div className="flex flex-col items-center flex-1 min-w-[250px] mb-8 md:mb-0">
                     <div className="mb-5">
-                        {!image ? null :<img
+                        {!image ? null :<Image
                             src={image}
                             alt="Logo"
                             width={130}

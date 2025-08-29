@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "next/image";
 type ImageLeftTextBlockProps = {
   obj: {
     image: string;
@@ -18,13 +18,14 @@ export default function ImageLeftTextBlock({ obj }: ImageLeftTextBlockProps) {
       <div className="flex flex-col md:flex-row items-center gap-10 max-w-6xl mx-auto px-6">
         {/* รูปภาพด้านซ้าย */}
         <div className="md:w-1/2 flex justify-center">
-          <img
+          <Image
             src={image}
             alt={title || "image"}
-            className="w-full max-w-[400px] object-contain shadow-sm"
+            className="w-full h-auto object-contain shadow-sm max-w-full"
+            width={800}
+            height={600}
           />
         </div>
-
         {/* ข้อความด้านขวา */}
         <div className="md:w-1/2">
           {title && (

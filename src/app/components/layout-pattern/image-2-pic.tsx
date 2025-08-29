@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-
+import Image from "next/image";
 type ImagePicProps = {
   obj?: { image: string }[];
 };
@@ -13,13 +13,19 @@ export default function Image2Pic({ obj }: ImagePicProps) {
   return (
     <div className="flex flex-wrap justify-center gap-2 px-2 sm:px-4 md:px-6 my-6 sm:my-8 md:my-10 max-w-7xl mx-auto">
       {images.map((src, i) => (
-        <img
+        <div
           key={i}
-          src={src}
-          alt={`image-${i}`}
-          className="w-[46.5%] h-auto object-contain transition-transform duration-300 hover:scale-105"
-        />
+          className="relative w-[46.5%] aspect-[4/3] transition-transform duration-300 "
+        >
+          <Image
+            src={src}
+            alt={`image-${i}`}
+            fill
+            className="object-contain"
+          />
+        </div>
       ))}
     </div>
+
   );
 }

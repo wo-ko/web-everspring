@@ -1,6 +1,7 @@
 import { useThemeContext } from '@app/context/theme-context';
 import Link from 'next/link';
 import React from 'react';
+import Image from "next/image";
 
 type CompanyData = {
   type: 'email' | 'line' | 'facebook';
@@ -26,19 +27,51 @@ type ContactCompanyProps = {
 const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
   const { themeColor1 } = useThemeContext();
   const getIcon = () => {
-    switch (linksData.type) {
-      // case 'phone':
-      //   return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/724/724664.png" width={20} height={20} />;
-      case 'email':
-        return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/9068/9068642.png" width={20} height={20} />;
-      case 'line':
-        return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/3670/3670089.png" width={20} height={20} />;
-      case 'facebook':
-        return <img className="text-xl mr-3" src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" width={20} height={20} />;
-      default:
-        return null;
-    }
-  };
+  switch (linksData.type) {
+    // case 'phone':
+    //   return (
+    //     <Image
+    //       src="https://cdn-icons-png.flaticon.com/128/724/724664.png"
+    //       alt="phone icon"
+    //       width={20}
+    //       height={20}
+    //       className="mr-3"
+    //     />
+    //   );
+    case "email":
+      return (
+        <Image
+          src="https://cdn-icons-png.flaticon.com/128/9068/9068642.png"
+          alt="email icon"
+          width={20}
+          height={20}
+          className="mr-3"
+        />
+      );
+    case "line":
+      return (
+        <Image
+          src="https://cdn-icons-png.flaticon.com/128/3670/3670089.png"
+          alt="line icon"
+          width={20}
+          height={20}
+          className="mr-3"
+        />
+      );
+    case "facebook":
+      return (
+        <Image
+          src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
+          alt="facebook icon"
+          width={20}
+          height={20}
+          className="mr-3"
+        />
+      );
+    default:
+      return null;
+  }
+};
 
   return (
 
