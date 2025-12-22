@@ -1,51 +1,31 @@
-// import { NextResponse } from 'next/server'
-// import type { NextRequest } from 'next/server'
- 
-// // This function can be marked `async` if using `await` inside
-// export function middleware(request: NextRequest) {
-//   const pathnames = request.nextUrl.pathname.split('/');
-  
-//   switch (pathnames[1]) {
-//     case 'th':
-//     case 'en':
-//       return NextResponse.next();
-//     default:
-//       return NextResponse.redirect(new URL('/th', request.url))
-//   }
-// }
- 
-// // See "Matching Paths" below to learn more
-// export const config = {
-//   matcher: ['/', '/:lang'],
-// }
-
+import NextAuth, { NextAuthRequest } from 'next-auth';
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import authConfig from './app/configs/auth.config';
 
-export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const segments = pathname.split("/");
+const { auth } = NextAuth(authConfig);
+// This function can be marked `async` if using `await` inside
+export default auth(async function middleware(request: NextRequest & NextAuthRequest) {
+  const pathnames = request.nextUrl.pathname.split('/');
 
-  // ข้ามไฟล์พิเศษ (public หรือ auto gen จาก app)
-  if (
-    pathname === "/sitemap.xml" ||
-    pathname === "/robots.txt" ||
-    pathname.endsWith(".ico")
-  ) {
-    return NextResponse.next();
-  }
+  switch (pathnames[1]) {
+    case 'th':
+    case 'en':
+      return NextResponse.next();
+    case 'admin':
+      if (pathnames.length > 2 && !request?.auth) {
+        return NextResponse.redirect(new URL('/admin', request.url));
+      }
 
-  switch (segments[1]) {
-    case "th":
-    case "en":
       return NextResponse.next();
     case "": // root → redirect ไป /th
       return NextResponse.redirect(new URL("/th", request.url));
     default:
-      return NextResponse.redirect(new URL("/th", request.url));
+      return NextResponse.redirect(new URL('/th', request.url));
   }
-}
+})
 
+// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/((?!_next|api|static|.*\\..*).*)"],
-};
+  matcher: ['/', '/:lang', '/admin/:path*'],
+}
