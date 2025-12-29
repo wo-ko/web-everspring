@@ -74,6 +74,7 @@
 //     </>
 //   )
 // }
+
 "use client";
 import clsx from "clsx";
 import { signIn } from "next-auth/react";
@@ -111,7 +112,7 @@ export function SignIn() {
     if (res?.error) {
       setIsIncorrect(true);
     } else {
-      router.push("/admin/th");
+      router.push("/admin/home");
     }
   };
 
