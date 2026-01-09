@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import SignOutButton from "./SignOutButton";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const type = searchParams.get("type");
 
   return (
     <aside className="w-64 bg-white border-r p-4 flex flex-col">
@@ -31,16 +33,41 @@ export default function Sidebar() {
           <Nav href="/admin/product" pathname={pathname}>
             ผลิตภัณฑ์ทั้งหมด
           </Nav>
-          <Nav href="/admin/news" pathname={pathname}>
-            ข่าว/กิจกรรม
-          </Nav>
-          <Nav href="/admin/contact" pathname={pathname}>
+
+          {/* ===== News Group ===== */}
+          <div className="mt-2 space-y-1">
+            <div className="px-3 text-[11px] font-semibold text-gray-400 uppercase">
+              News & Career
+            </div>
+
+            <SubNav
+              href="/admin/news?type=press"
+              active={pathname === "/admin/news" && type === "press"}
+            >
+              ข่าวสาร
+            </SubNav>
+
+            <SubNav
+              href="/admin/news?type=events"
+              active={pathname === "/admin/news" && type === "events"}
+            >
+              กิจกรรม
+            </SubNav>
+
+            <SubNav
+              href="/admin/news?type=career"
+              active={pathname === "/admin/news" && type === "career"}
+            >
+              ตำแหน่งงาน
+            </SubNav>
+          </div>
+
+          {/* <Nav href="/admin/contact" pathname={pathname}>
             ติดต่อเรา
-          </Nav>
+          </Nav> */}
         </nav>
       </div>
 
-      {/* ===== Media Section ===== */}
       <div className="mb-6">
         <div className="text-xs font-semibold text-gray-400 uppercase mb-2">
           Media
@@ -77,6 +104,28 @@ function Nav({
       className={clsx(
         "block px-3 py-2 rounded-lg font-medium transition text-sm",
         isActive ? "bg-gray-900 text-white" : "text-gray-700 hover:bg-gray-100"
+      )}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function SubNav({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={clsx(
+        "block px-6 py-2 rounded-md text-sm transition",
+        active ? "bg-gray-800 text-white" : "text-gray-600 hover:bg-gray-100"
       )}
     >
       {children}

@@ -1,6 +1,12 @@
-import { diseaseControlProducts } from "@app/[lang]/data/fungicide";
-import Fungicide from "./Fungicide";
 
-export default function Page() {
-  return <Fungicide sortOrder="asc" activities={diseaseControlProducts} />;
+import Fungicide from "./Fungicide";
+import { getProductsByCategoryId } from "@app/lib/products";
+import { PRODUCT_CATEGORY } from "@app/constants/productCategory";
+
+export default async function Page() {
+  const fungicide = await getProductsByCategoryId(
+    PRODUCT_CATEGORY.FUNGICIDE // = 3
+  );
+
+  return <Fungicide sortOrder="asc" activities={fungicide} />;
 }

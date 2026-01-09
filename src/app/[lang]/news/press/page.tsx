@@ -1,63 +1,57 @@
 "use client";
-// import ActivitiesSection from "../../components/activities-section";
 
-// const sampleActivities = [
-//   {
-//     id: 1,
-//     imageUrl: "",
-//     title: {
-//       th: "",
-//       en: "",
-//     },
-//     description: {
-//       th: "",
-//       en: "",
-//     },
-//     linkUrl: "",
-//   },
-  // {
-  //   id: 2,
-  //   imageUrl:
-  //     "http://anubandamnoen.com/_files_school/70102030/data/70102030_0_20210212-195024.jpg",
-  //   title: {
-  //     th: "กิจกรรม AG-GRO NEW GEN 2023 : ศึกษาดูงานนอกสถานที่",
-  //     en: "AG-GRO NEW GEN 2023: Off-site Study Visit",
-  //   },
-  //   description: {
-  //     th: "กิจกรรม AG-GRO NEW GEN 2023 : ศึกษาดูงานนอกสถานที่",
-  //     en: "AG-GRO NEW GEN 2023: Students visited off-site locations for study purposes",
-  //   },
-  //   linkUrl: "#",
-  // },
-  // {
-  //   id: 3,
-  //   imageUrl:
-  //     "https://fth0.com/uppic/22102176/activity/22102176_0_20240524-102930.jpg",
-  //   title: {
-  //     th: "หัวข้อกิจกรรมใหม่ที่น่าสนใจ",
-  //     en: "Interesting New Activity Topics",
-  //   },
-  //   description: {
-  //     th: "คำอธิบายสั้นๆ เกี่ยวกับกิจกรรมนี้",
-  //     en: "A brief description about this activity",
-  //   },
-  //   linkUrl: "#",
-  // },
-// ];
+import { ActivityUI, EventPressItem } from "@/types/jobcontent";
+import ActivitiesSection from "@app/[lang]/components/activities-section";
+import { useEffect, useState } from "react";
+
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
 
 export default function Peess() {
-  // const hasActivities = sampleActivities && sampleActivities.length > 0;
+  const [activities, setActivities] = useState<ActivityUI[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const res = await fetch(API_URL, { cache: "no-store" });
+        const data: EventPressItem[] = await res.json();
+
+        const filtered = (data ?? []).filter(
+          (i) => i.isEvents === 1 && Number(i.isEnabled) === 0
+        );
+
+        const mapped: ActivityUI[] = filtered.map((i) => ({
+          id: i.newsId,
+          imageUrl: i.imgUrl ?? "",
+          title: { th: i.newsTitle ?? "", en: i.newsTitle ?? "" },
+          description: {
+            th: i.preview ?? "",
+            en: i.preview ?? "",
+          },
+          // linkUrl: `/events/${i.newsId}`,
+        }));
+
+        setActivities(mapped);
+      } catch (error) {
+        console.error("fetch events error:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
+  if (loading) {
+    return <div className="text-sm text-gray-500">กำลังโหลดข้อมูล…</div>;
+  }
 
   return (
-    <div>
-      {/* <main>
-        {hasActivities && (
-          <ActivitiesSection
-            titles={{ th: "ข่าวสาร", en: "News" }}
-            activities={sampleActivities}
-          />
-        )}
-      </main> */}
-    </div>
+    <main>
+      <ActivitiesSection
+        titles={{ th: "ข่าวสาร", en: "News" }}
+        activities={activities}
+      />
+    </main>
   );
 }
