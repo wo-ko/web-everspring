@@ -79,6 +79,7 @@ export type EventNewsItem = {
   updatedAt: string | null;
 };
 
+// สมัครงาน
 export type EventCareerItem = {
   newsId: string;
   newsTitle: string;
@@ -88,6 +89,28 @@ export type EventCareerItem = {
 
   isEnabled: boolean;
   isEvents: 3;
+
+  publishedAt: string | null;
+  expriedAt: string | null;
+
+  createdAt: string | null;
+  updatedAt: string | null;
+};
+
+// ข่าวสาร
+export type EventItem = {
+  newsId: string;
+  newsTitle: string;
+  preview: string | null;
+  newsContent?:
+    | string
+    | {
+        images?: string[];
+      };
+  imgUrl: string | null;
+
+  isEnabled: boolean;
+  isEvents: 2;
 
   publishedAt: string | null;
   expriedAt: string | null;
