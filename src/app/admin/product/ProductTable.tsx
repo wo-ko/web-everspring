@@ -38,7 +38,7 @@ export default function ProductTable({
       });
 
       onDeleted();
-    } catch (err) {
+    } catch {
       Swal.fire({
         title: "เกิดข้อผิดพลาด",
         text: "ไม่สามารถลบสินค้าได้",
@@ -48,34 +48,54 @@ export default function ProductTable({
   }
 
   return (
-    <table className="w-full border rounded">
-      <thead className="bg-gray-100">
-        <tr>
-          <th className="p-2 text-left">ชื่อสินค้า</th>
-          <th className="p-2">หมวด</th>
-          <th className="p-2">จัดการ</th>
-        </tr>
-      </thead>
-      <tbody>
-        {products.map((p) => (
-          <tr key={p.productId} className="border-t">
-            <td className="p-2">{p.productName?.th}</td>
-            <td className="p-2 text-center">{p.productCategoryName?.th}</td>
-            <td className="p-2 text-center space-x-2">
-              <button onClick={() => onEdit(p)} className="text-blue-600">
-                แก้ไข
-              </button>
-
-              <button
-                onClick={() => handleDelete(p.productId, p.productName?.th)}
-                className="text-red-600"
-              >
-                ลบ
-              </button>
-            </td>
+    <div className="w-full overflow-x-auto rounded-lg border bg-white">
+      <table className="min-w-[600px] w-full border-collapse">
+        <thead className="bg-gray-100 text-sm">
+          <tr>
+            <th className="p-3 text-left">ชื่อสินค้า</th>
+            <th className="p-3 text-center">หมวด</th>
+            <th className="p-3 text-center">จัดการ</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody className="text-sm">
+          {products.map((p) => (
+            <tr key={p.productId} className="border-t hover:bg-gray-50">
+              <td className="p-3">{p.productName?.th ?? "-"}</td>
+
+              <td className="p-3 text-center">
+                {p.productCategoryName?.th ?? "-"}
+              </td>
+
+              <td className="p-3 text-center">
+                <div className="inline-flex gap-3">
+                  <button
+                    onClick={() => onEdit(p)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    แก้ไข
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(p.productId, p.productName?.th)}
+                    className="text-red-600 hover:underline"
+                  >
+                    ลบ
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+
+          {products.length === 0 && (
+            <tr>
+              <td colSpan={3} className="p-6 text-center text-gray-400">
+                ไม่มีข้อมูลสินค้า
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }
