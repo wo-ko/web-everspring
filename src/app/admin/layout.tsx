@@ -18,6 +18,7 @@
 
 import { SessionProvider } from "next-auth/react";
 import Sidebar from "./(components)/Sidebar";
+import { Suspense } from "react";
 
 export default function AdminLayout({
   children,
@@ -26,10 +27,12 @@ export default function AdminLayout({
 }) {
   return (
     <SessionProvider refetchInterval={5}>
-      <div className="flex h-screen bg-gray-100">
-        <Sidebar />
-        <main className="flex-1 overflow-auto p-6">{children}</main>
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="flex h-screen bg-gray-100">
+          <Sidebar />
+          <main className="flex-1 overflow-auto p-6">{children}</main>
+        </div>
+      </Suspense>
     </SessionProvider>
   );
 }
