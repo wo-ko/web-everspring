@@ -43,31 +43,34 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
       case "email":
         return (
           <Image
-            src="https://cdn-icons-png.flaticon.com/128/9068/9068642.png"
+            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/9068642_n5hnpn.png"
             alt="email icon"
             width={20}
             height={20}
             className="mr-3"
+            unoptimized
           />
         );
       case "line":
         return (
           <Image
-            src="https://cdn-icons-png.flaticon.com/128/3670/3670089.png"
+            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/3670089_dy2nuc.png"
             alt="line icon"
             width={20}
             height={20}
             className="mr-3"
+            unoptimized
           />
         );
       case "facebook":
         return (
           <Image
-            src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
+            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/5968764_h1kwjl.png"
             alt="facebook icon"
             width={20}
             height={20}
             className="mr-3"
+            unoptimized
           />
         );
       default:
