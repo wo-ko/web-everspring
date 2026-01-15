@@ -24,6 +24,7 @@ export default function ImageLeftTextBlock({ obj }: ImageLeftTextBlockProps) {
             className="w-full h-auto object-contain shadow-sm max-w-full"
             width={800}
             height={600}
+            unoptimized 
           />
         </div>
         {/* ข้อความด้านขวา */}

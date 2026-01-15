@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.everspringagrochem.com
+
+# Sitemaps
+Sitemap: https://www.everspringagrochem.com/sitemap.xml

@@ -11,8 +11,8 @@ export default async function LoginPage() {
       <>
         <SignIn />
       </>
-    )
+    );
   }
 
-  redirect('/admin/dashboard');
+  redirect("/admin/home");
 }

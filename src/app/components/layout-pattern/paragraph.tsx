@@ -2,10 +2,9 @@ import clsx from "clsx";
 import React from "react";
 
 export default function Paragraph(props: {
-  text: string;
+  text?: string;
   customClass?: string;
 }) {
-  
   const highlightWords = [
     "บริษัทเอเวอร์สปริง",
     "อโกรเคม จำกัด",
@@ -13,10 +12,11 @@ export default function Paragraph(props: {
     "กลุ่มบริษัทในเครือเอเวอร์สปริง",
     "Everspring Agrochem Co., Ltd",
     "The Everspring Group",
-    "บริษัท เอเวอร์สปริง อโกรเคม จำกัด และ บริษัท เอฟ แอนด์ ดับบลิว อะโกรเคม จำกัด"
+    "บริษัท เอเวอร์สปริง อโกรเคม จำกัด และ บริษัท เอฟ แอนด์ ดับบลิว อะโกรเคม จำกัด",
   ];
 
-  const renderText = (text: string) => {
+  const renderText = (text?: string) => {
+    if (!text) return null;
     const regex = new RegExp(`(${highlightWords.join("|")})`, "g");
 
     return text.split("\n").map((line, idx) => (

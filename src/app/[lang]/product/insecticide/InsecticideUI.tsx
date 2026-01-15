@@ -1,15 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import ProductList from "@app/[lang]/components/product-list";
-import { insecticideProducts } from "@app/[lang]/data/insecticide";
 
 type Props = {
   sortOrder: "asc" | "desc";
-  activities?: string[];
+  activities: any[]; // รับ data จาก API
   isAllPage?: boolean;
 };
 
-export default function InsecticideUI({ sortOrder, isAllPage }: Props) {
+export default function InsecticideUI({
+  sortOrder,
+  activities,
+  isAllPage,
+}: Props) {
   return (
     <div
       className={`
@@ -18,7 +23,7 @@ export default function InsecticideUI({ sortOrder, isAllPage }: Props) {
         ${
           isAllPage
             ? "px-2 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12"
-            : "flex flex-col  px-8 sm:px-4 md:px-8 lg:px-8 py-6 sm:py-8 md:py-12"
+            : "flex flex-col px-8 sm:px-4 md:px-8 lg:px-8 py-6 sm:py-8 md:py-12"
         }
         max-w-full
         sm:max-w-xl
@@ -27,9 +32,9 @@ export default function InsecticideUI({ sortOrder, isAllPage }: Props) {
       `}
     >
       <ProductList
-        titles={"Insecticide (แมลงศัตรูพืช)"}
-        activities={insecticideProducts} // ส่งตรงไป ProductList
-        sortOrder={sortOrder} // ProductList จัดเรียงเอง
+        titles="Insecticide (แมลงศัตรูพืช)"
+        activities={activities}
+        sortOrder={sortOrder}
       />
     </div>
   );

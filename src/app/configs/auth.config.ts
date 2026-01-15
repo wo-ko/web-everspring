@@ -3,6 +3,8 @@ import Credentials from "next-auth/providers/credentials"
 import { NextResponse } from "next/server";
 
 export default {
+  trustHost: true,
+  secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
   providers: [
     Credentials({
       credentials: {

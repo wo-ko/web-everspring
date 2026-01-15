@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import ProductList from "@app/[lang]/components/product-list";
-import { diseaseControlProducts } from "@app/[lang]/data/fungicide";
 
 type Props = {
   sortOrder: "asc" | "desc";
-  activities?: string[];
+  activities: any[]; // data จาก API
   isAllPage?: boolean;
 };
 
-export default function Fungicide({ sortOrder, isAllPage }: Props) {
+export default function Fungicide({ sortOrder, activities, isAllPage }: Props) {
   return (
     <div
       className={`
@@ -17,7 +18,7 @@ export default function Fungicide({ sortOrder, isAllPage }: Props) {
         ${
           isAllPage
             ? "px-2 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12"
-            : "flex flex-col  px-8 sm:px-4 md:px-8 lg:px-8 py-6 sm:py-8 md:py-12"
+            : "flex flex-col px-8 sm:px-4 md:px-8 lg:px-8 py-6 sm:py-8 md:py-12"
         }
         max-w-full
         sm:max-w-xl
@@ -26,9 +27,9 @@ export default function Fungicide({ sortOrder, isAllPage }: Props) {
       `}
     >
       <ProductList
-        titles={"Fungicide (โรคพืช)"}
-        activities={diseaseControlProducts}
-        sortOrder={sortOrder} // ให้ ProductList ทำการ sort
+        titles="Fungicide (โรคพืช)"
+        activities={activities}
+        sortOrder={sortOrder}
       />
     </div>
   );

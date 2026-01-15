@@ -1,0 +1,8 @@
+export const PRODUCT_CATEGORY = {
+  HERBICIDE: 1,
+  INSECTICIDE: 2,
+  FUNGICIDE: 3,
+  ACARICIDE: 4,
+  PLANT: 5,
+  MOLLUS: 6,
+} as const;

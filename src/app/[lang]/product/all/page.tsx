@@ -1,14 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useContext, useState, useMemo } from "react";
+
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { ThemeContext, useThemeContext } from "@app/context/theme-context";
 import clsx from "clsx";
 
-import { herbicideProducts } from "@app/[lang]/data/herbicide";
-import { insecticideProducts } from "@app/[lang]/data/insecticide";
-import { diseaseControlProducts } from "@app/[lang]/data/fungicide";
-import { acaricide } from "@app/[lang]/data/acaricide";
-import { DataPlant } from "@app/[lang]/data/plant";
-import { DataMollus } from "@app/[lang]/data/mollus";
+import { getProductsByCategoryId } from "@app/lib/products";
+import { PRODUCT_CATEGORY } from "@app/constants/productCategory";
+
 import AcaricideUI from "../acaricide/AcaricideUI";
 import Fungicide from "../fungicide/Fungicide";
 import HerbicideUI from "../herbicide/HerbicideUI";
@@ -21,16 +20,38 @@ export default function AllProduct() {
   const { themeColor1 } = useThemeContext();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+  const [herbicide, setHerbicide] = useState<any[]>([]);
+  const [insecticide, setInsecticide] = useState<any[]>([]);
+  const [fungicide, setFungicide] = useState<any[]>([]);
+  const [acaricide, setAcaricide] = useState<any[]>([]);
+  const [plant, setPlant] = useState<any[]>([]);
+  const [mollus, setMollus] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadProducts() {
+      setHerbicide(await getProductsByCategoryId(PRODUCT_CATEGORY.HERBICIDE));
+      setInsecticide(
+        await getProductsByCategoryId(PRODUCT_CATEGORY.INSECTICIDE)
+      );
+      setFungicide(await getProductsByCategoryId(PRODUCT_CATEGORY.FUNGICIDE));
+      setAcaricide(await getProductsByCategoryId(PRODUCT_CATEGORY.ACARICIDE));
+      setPlant(await getProductsByCategoryId(PRODUCT_CATEGORY.PLANT));
+      setMollus(await getProductsByCategoryId(PRODUCT_CATEGORY.MOLLUS));
+    }
+
+    loadProducts();
+  }, []);
+
   const totalProducts = useMemo(() => {
     return (
-      herbicideProducts.length +
-      insecticideProducts.length +
-      diseaseControlProducts.length +
+      herbicide.length +
+      insecticide.length +
+      fungicide.length +
       acaricide.length +
-      DataPlant.length +
-      DataMollus.length
+      plant.length +
+      mollus.length
     );
-  }, []);
+  }, [herbicide, insecticide, fungicide, acaricide, plant, mollus]);
 
   return (
     <section className="max-w-full px-4 sm:px-6 lg:px-12 py-8 sm:py-12 md:py-16 mx-auto">
@@ -41,18 +62,13 @@ export default function AllProduct() {
             ? `| แสดงผลิตภัณฑ์ทั้งหมด (${totalProducts} รายการ)`
             : `| Showing all products (${totalProducts} items)`}
         </span>
+
         <button
           onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
           className="px-3 py-1 sm:px-4 sm:py-2 text-white font-light rounded transition-colors duration-200 text-xs sm:text-sm md:text-base"
           style={{ backgroundColor: "#0286C2" }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#026699")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "#0286C2")
-          }
         >
-          {lang === "th" ? `เรียงตาม ` : `Sort by `}
+          {lang === "th" ? "เรียงตาม " : "Sort by "}
           {sortOrder === "asc" ? "A-Z" : "Z-A"}
         </button>
       </div>
@@ -70,42 +86,23 @@ export default function AllProduct() {
 
       {/* Grid ของสินค้า */}
       <div
-        className="w-full
-  mx-auto
-  px-2 sm:px-4 md:px-6 lg:px-8 
-  py-6 sm:py-8 md:py-12
-  grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="
+          w-full mx-auto
+          px-2 sm:px-4 md:px-6 lg:px-8 
+          py-6 sm:py-8 md:py-12
+          grid grid-cols-1 md:grid-cols-3 gap-6
+        "
       >
-        <HerbicideUI
-          sortOrder={sortOrder}
-          activities={herbicideProducts}
-          isAllPage={true}
-        />
+        <HerbicideUI sortOrder={sortOrder} activities={herbicide} isAllPage />
         <InsecticideUI
           sortOrder={sortOrder}
-          activities={insecticideProducts}
-          isAllPage={true}
+          activities={insecticide}
+          isAllPage
         />
-        <Fungicide
-          sortOrder={sortOrder}
-          activities={diseaseControlProducts}
-          isAllPage={true}
-        />
-        <AcaricideUI
-          sortOrder={sortOrder}
-          activities={acaricide}
-          isAllPage={true}
-        />
-        <PlantUI
-          sortOrder={sortOrder}
-          activities={DataPlant}
-          isAllPage={true}
-        />
-        <MollusUI
-          sortOrder={sortOrder}
-          activities={DataMollus}
-          isAllPage={true}
-        />
+        <Fungicide sortOrder={sortOrder} activities={fungicide} isAllPage />
+        <AcaricideUI sortOrder={sortOrder} activities={acaricide} isAllPage />
+        <PlantUI sortOrder={sortOrder} activities={plant} isAllPage />
+        <MollusUI sortOrder={sortOrder} activities={mollus} isAllPage />
       </div>
     </section>
   );

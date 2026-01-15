@@ -25,6 +25,7 @@ export default function ImageRightTextBlock({ obj }: ImageRightTextBlockProps) {
             className="w-full h-auto object-contain shadow-sm max-w-full"
             width={800}
             height={600}
+            unoptimized 
           />
         </div>
         {/* ข้อความด้านซ้าย */}

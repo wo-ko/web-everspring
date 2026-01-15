@@ -13,6 +13,7 @@ export default function ImageFull(props: { image?: string }) {
     priority
     width={1920} 
     height={1080}
+    unoptimized 
   />
 </div>
 

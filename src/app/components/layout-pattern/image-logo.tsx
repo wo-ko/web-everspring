@@ -20,6 +20,7 @@ export default function ImageLogo({ obj }: ImageLogoProps) {
           width={150}   // ค่าใหญ่สุดของ md
           height={150}  // ให้เป็นสี่เหลี่ยมจัตุรัส
           className="w-full max-w-[100px] sm:max-w-[120px] md:max-w-[150px] h-auto object-contain"
+          unoptimized 
         />
       ))}
     </div>
