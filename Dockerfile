@@ -1,9 +1,9 @@
 FROM node:22.16.0-slim AS deps
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN apk add --no-cache openssl && npm ci
+RUN  npm i
 
 FROM node:22.16.0-slim AS builder
 WORKDIR /app
