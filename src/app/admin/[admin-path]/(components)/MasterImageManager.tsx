@@ -32,7 +32,7 @@ export default function MasterImageManager() {
   const [lastUploaded, setLastUploaded] = useState<number | null>(null);
 
   async function fetchFiles() {
-    const res = await fetch(`${API_URL}/images`);
+    const res = await fetch(`http://212.80.215.83:8520/images`);
     const json = await res.json();
 
     const list: ServerFile[] = Array.isArray(json)

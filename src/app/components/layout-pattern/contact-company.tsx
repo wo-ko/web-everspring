@@ -27,56 +27,6 @@ type ContactCompanyProps = {
 const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
   const { themeColor1 } = useThemeContext();
   const getIcon = () => {
-<<<<<<< HEAD
-  switch (linksData.type) {
-    // case 'phone':
-    //   return (
-    //     <Image
-    //       src="https://cdn-icons-png.flaticon.com/128/724/724664.png"
-    //       alt="phone icon"
-    //       width={20}
-    //       height={20}
-    //       className="mr-3"
-    //     />
-    //   );
-    case "email":
-      return (
-        <Image
-          src="https://cdn-icons-png.flaticon.com/128/9068/9068642.png"
-          alt="email icon"
-          width={20}
-          height={20}
-          className="mr-3"
-          unoptimized
-        />
-      );
-    case "line":
-      return (
-        <Image
-          src="https://cdn-icons-png.flaticon.com/128/3670/3670089.png"
-          alt="line icon"
-          width={20}
-          height={20}
-          className="mr-3"
-          unoptimized
-        />
-      );
-    case "facebook":
-      return (
-        <Image
-          src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
-          alt="facebook icon"
-          width={20}
-          height={20}
-          className="mr-3"
-          unoptimized
-        />
-      );
-    default:
-      return null;
-  }
-};
-=======
     switch (linksData.type) {
       // case 'phone':
       //   return (
@@ -125,7 +75,6 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
         return null;
     }
   };
->>>>>>> c7b745c7b9e20144ccbeace2cfa644679b0d8ebc
 
   return (
 
