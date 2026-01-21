@@ -30,18 +30,32 @@ export default function ProductFormModal({
     if (!nameTh.trim()) return;
 
     setLoading(true);
-    await fetch("/api/admin/products", {
-      method: product ? "PUT" : "POST",
+
+    const base = process.env.NEXT_PUBLIC_API_URL;
+
+    const isEdit = !!product?.productId;
+
+    const url = isEdit
+      ? `${base}/products/${product.productId}`
+      : `${base}/products`;
+
+    const method = isEdit ? "PUT" : "POST";
+
+    await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        productId: product?.productId,
-        productName: { th: nameTh, en: nameEn },
         productCategoryId: categoryId,
+        productName: {
+          th: nameTh,
+          en: nameEn,
+        },
       }),
     });
 
     setLoading(false);
     onSaved();
+    onClose();
   }
 
   return (

@@ -4,11 +4,15 @@ export default function ProductTable({
   products,
   onEdit,
   onDeleted,
+  mode,
 }: {
   products: any[];
   onEdit: (p: any) => void;
   onDeleted: () => void;
+  mode: "active" | "deleted";
 }) {
+  const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+
   async function handleDelete(productId: number, productName?: string) {
     const result = await Swal.fire({
       title: "ยืนยันการลบ",
@@ -26,9 +30,14 @@ export default function ProductTable({
     if (!result.isConfirmed) return;
 
     try {
-      await fetch(`/api/admin/products/${productId}`, {
+      const res = await fetch(`${API_URL}/products/${productId}`, {
         method: "DELETE",
       });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.message || "Delete failed");
+      }
 
       await Swal.fire({
         title: "ลบสำเร็จ",
@@ -38,12 +47,43 @@ export default function ProductTable({
       });
 
       onDeleted();
-    } catch {
+    } catch (error: any) {
       Swal.fire({
         title: "เกิดข้อผิดพลาด",
-        text: "ไม่สามารถลบสินค้าได้",
+        text: error.message || "ไม่สามารถลบสินค้าได้",
         icon: "error",
       });
+    }
+  }
+
+  async function handleRestore(productId: number) {
+    const result = await Swal.fire({
+      title: "กู้คืนสินค้า?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "กู้คืน",
+      cancelButtonText: "ยกเลิก",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`${API_URL}/products/${productId}/restore`, {
+        method: "PATCH",
+      });
+
+      if (!res.ok) throw new Error("Restore failed");
+
+      await Swal.fire({
+        title: "กู้คืนสำเร็จ",
+        icon: "success",
+        timer: 1200,
+        showConfirmButton: false,
+      });
+
+      onDeleted();
+    } catch (e: any) {
+      Swal.fire("ผิดพลาด", e.message, "error");
     }
   }
 
@@ -76,12 +116,23 @@ export default function ProductTable({
                     แก้ไข
                   </button>
 
-                  <button
-                    onClick={() => handleDelete(p.productId, p.productName?.th)}
-                    className="text-red-600 hover:underline"
-                  >
-                    ลบ
-                  </button>
+                  {mode === "deleted" ? (
+                    <button
+                      onClick={() => handleRestore(p.productId)}
+                      className="text-green-600 hover:underline"
+                    >
+                      กู้คืน
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        handleDelete(p.productId, p.productName?.th)
+                      }
+                      className="text-red-600 hover:underline"
+                    >
+                      ลบ
+                    </button>
+                  )}
                 </div>
               </td>
             </tr>
