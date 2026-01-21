@@ -27,6 +27,7 @@ type ContactCompanyProps = {
 const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
   const { themeColor1 } = useThemeContext();
   const getIcon = () => {
+<<<<<<< HEAD
   switch (linksData.type) {
     // case 'phone':
     //   return (
@@ -75,6 +76,56 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
       return null;
   }
 };
+=======
+    switch (linksData.type) {
+      // case 'phone':
+      //   return (
+      //     <Image
+      //       src="https://cdn-icons-png.flaticon.com/128/724/724664.png"
+      //       alt="phone icon"
+      //       width={20}
+      //       height={20}
+      //       className="mr-3"
+      //     />
+      //   );
+      case "email":
+        return (
+          <Image
+            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/9068642_n5hnpn.png"
+            alt="email icon"
+            width={20}
+            height={20}
+            className="mr-3"
+            unoptimized
+          />
+        );
+      case "line":
+        return (
+          <Image
+            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/3670089_dy2nuc.png"
+            alt="line icon"
+            width={20}
+            height={20}
+            className="mr-3"
+            unoptimized
+          />
+        );
+      case "facebook":
+        return (
+          <Image
+            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/5968764_h1kwjl.png"
+            alt="facebook icon"
+            width={20}
+            height={20}
+            className="mr-3"
+            unoptimized
+          />
+        );
+      default:
+        return null;
+    }
+  };
+>>>>>>> c7b745c7b9e20144ccbeace2cfa644679b0d8ebc
 
   return (
 

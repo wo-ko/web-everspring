@@ -6,6 +6,7 @@ import { createEmptyJob } from "@app/utils/job";
 import { JobContent } from "@/types/jobcontent";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
+const MEDIA_API = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/media`;
 
 type Props = {
   news: any;
@@ -14,9 +15,16 @@ type Props = {
   onSaved: () => void;
 };
 
-function buildNewsContent(type: number, content: string | JobContent) {
+type EventContent = {
+  images: string[];
+};
+
+function buildNewsContent(type: number, content: any) {
   if (type === 3) {
     return Array.isArray(content) ? content : [content];
+  }
+  if (type === 2) {
+    return content ?? { images: [] };
   }
   return content;
 }
@@ -29,16 +37,31 @@ export default function NewsFormModal({
 }: Props) {
   const [title, setTitle] = useState("");
   const [preview, setPreview] = useState("");
-  const [content, setContent] = useState<string | JobContent>("");
+  const [content, setContent] = useState<string | JobContent | EventContent>(
+    defaultType === 2 ? { images: [] } : ""
+  );
+
   const [isEnabled, setIsEnabled] = useState(true);
-
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-
   const [loading, setLoading] = useState(false);
 
   const currentType = news?.isEvents ?? defaultType;
-  const isImageSupported = currentType !== 3; // สมัครงานไม่ใช้รูป
+
+  const [mediaImages, setMediaImages] = useState<string[]>([]);
+  const [mediaOpen, setMediaOpen] = useState(false);
+
+  useEffect(() => {
+    async function fetchMedia() {
+      try {
+        const res = await fetch(MEDIA_API);
+        const data = await res.json();
+        setMediaImages(data ?? []);
+      } catch (e) {
+        console.error("load media error", e);
+      }
+    }
+
+    fetchMedia();
+  }, []);
 
   useEffect(() => {
     if (!news) return;
@@ -47,61 +70,56 @@ export default function NewsFormModal({
     setPreview(news.preview ?? "");
     setIsEnabled(Boolean(news.isEnabled));
 
-    if (isImageSupported && news.imageUrl) {
-      setImagePreview(news.imageUrl);
-    }
-
+    // สมัครงาน
     if (currentType === 3) {
-      if (news.newsContent) {
-        const parsed =
-          typeof news.newsContent === "string"
-            ? JSON.parse(news.newsContent)
-            : news.newsContent;
+      const parsed =
+        typeof news.newsContent === "string"
+          ? JSON.parse(news.newsContent)
+          : news.newsContent;
 
-        // backend เก็บเป็น array → editor ใช้ตัวเดียว
-        setContent(Array.isArray(parsed) ? parsed[0] : parsed);
-      } else {
-        setContent(createEmptyJob());
-      }
-    } else {
-      // ข่าว / กิจกรรม
-      setContent(news.newsContent ?? "");
+      setContent(
+        Array.isArray(parsed) ? parsed[0] : parsed ?? createEmptyJob()
+      );
+      return;
     }
-  }, [news, currentType, isImageSupported]);
 
+    // กิจกรรม
+    if (currentType === 2) {
+      const parsed =
+        typeof news.newsContent === "string"
+          ? JSON.parse(news.newsContent)
+          : news.newsContent;
+
+      setContent({ images: parsed?.images ?? [] });
+      return;
+    }
+
+    // ข่าวทั่วไป
+    setContent(news.newsContent ?? "");
+  }, [news, currentType]);
+
+  /* ---------------- submit ---------------- */
   async function submit() {
     if (!title.trim()) return;
 
     setLoading(true);
 
     const isEdit = Boolean(news?.newsId);
-    const isJob = currentType === 3;
 
     const formData = new FormData();
-
     formData.append("newsTitle", title);
     formData.append("preview", preview);
-
-    const payloadContent = buildNewsContent(currentType, content);
-    formData.append("newsContent", JSON.stringify(payloadContent));
-
+    formData.append(
+      "newsContent",
+      JSON.stringify(buildNewsContent(currentType, content))
+    );
     formData.append("isEnabled", String(isEnabled ? 0 : 1));
     formData.append("isEvents", String(currentType));
 
-    if (isJob) {
-      formData.append("imgUrl", "");
-    } else {
-      if (imageFile) {
-        formData.append("image", imageFile);
-      }
-    }
-
     const url = isEdit ? `${API_URL}/update/${news.newsId}` : `${API_URL}/add`;
 
-    const method = isEdit ? "PUT" : "POST";
-
     await fetch(url, {
-      method,
+      method: isEdit ? "PUT" : "POST",
       body: formData,
     });
 
@@ -116,43 +134,10 @@ export default function NewsFormModal({
           <h2 className="font-semibold text-lg">
             {news?.newsId ? "แก้ไขรายการ" : "เพิ่มรายการ"}
           </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-black text-xl"
-            type="button"
-          >
-            ✕
-          </button>
+          <button onClick={onClose}>✕</button>
         </div>
 
         <div className="px-6 py-5 space-y-4 max-h-[70vh] overflow-y-auto">
-          {isImageSupported && (
-            <div>
-              <label className="text-sm text-gray-500">รูปภาพ</label>
-
-              {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="preview"
-                  className="mt-2 h-40 rounded-lg object-cover border"
-                />
-              )}
-
-              <input
-                type="file"
-                accept="image/*"
-                className="mt-2 block text-sm"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (!file) return;
-
-                  setImageFile(file);
-                  setImagePreview(URL.createObjectURL(file));
-                }}
-              />
-            </div>
-          )}
-
           <div>
             <label className="text-sm text-gray-500">ชื่อ</label>
             <textarea
@@ -176,9 +161,48 @@ export default function NewsFormModal({
           <div>
             <label className="text-sm text-gray-500">เนื้อหา</label>
 
-            {currentType === 3 ? (
+            {/* สมัครงาน */}
+            {currentType === 3 && (
               <JobEditor value={content as JobContent} onChange={setContent} />
-            ) : (
+            )}
+
+            {/* กิจกรรม */}
+            {currentType === 2 && (
+              <>
+                <button
+                  type="button"
+                  className="text-sm text-blue-600 mb-2"
+                  onClick={() => setMediaOpen(true)}
+                >
+                  เลือกรูปจากคลัง
+                </button>
+
+                <div className="grid grid-cols-4 gap-3">
+                  {(content as EventContent).images.map((img, idx) => (
+                    <div key={img} className="relative">
+                      <img
+                        src={img}
+                        className="h-32 w-full object-cover rounded border"
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 bg-black/60 text-white rounded-full px-2"
+                        onClick={() => {
+                          const images = [...(content as EventContent).images];
+                          images.splice(idx, 1);
+                          setContent({ images });
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* ข่าว */}
+            {currentType !== 2 && currentType !== 3 && (
               <textarea
                 className="mt-1 w-full border rounded-lg px-3 py-2"
                 rows={6}
@@ -198,24 +222,50 @@ export default function NewsFormModal({
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 px-6 py-4 border-t bg-gray-50 rounded-b-2xl">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 rounded-lg border"
-          >
+        <div className="flex justify-end gap-3 px-6 py-4 border-t bg-gray-50">
+          <button onClick={onClose} className="px-4 py-2 border rounded">
             ยกเลิก
           </button>
           <button
-            type="button"
             onClick={submit}
             disabled={loading}
-            className="px-5 py-2 rounded-lg bg-black text-white disabled:opacity-50"
+            className="px-5 py-2 bg-black text-white rounded disabled:opacity-50"
           >
             {loading ? "กำลังบันทึก..." : "บันทึก"}
           </button>
         </div>
       </div>
+
+      {mediaOpen && (
+        <div className="fixed inset-0 z-60 bg-black/40 flex items-center justify-center">
+          <div className="bg-white rounded-xl w-full max-w-4xl p-4">
+            <div className="flex justify-between mb-3">
+              <h3 className="font-semibold">เลือกรูปจากคลัง</h3>
+              <button onClick={() => setMediaOpen(false)}>✕</button>
+            </div>
+
+            <div className="grid grid-cols-4 gap-3 max-h-[60vh] overflow-auto">
+              {mediaImages.map((img) => (
+                <button
+                  key={img}
+                  type="button"
+                  onClick={() => {
+                    setContent({
+                      images: [...(content as EventContent).images, img],
+                    });
+                    setMediaOpen(false);
+                  }}
+                >
+                  <img
+                    src={img}
+                    className="h-32 w-full object-cover rounded border hover:ring-2 ring-black"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

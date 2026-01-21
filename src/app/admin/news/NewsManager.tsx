@@ -81,7 +81,12 @@ export default function NewsManager({
               isEvents: TYPE_MAP[type],
               newsTitle: "",
               preview: "",
-              newsContent: type === "career" ? createEmptyJob() : "",
+              newsContent:
+                type === "career"
+                  ? createEmptyJob()
+                  : type === "events"
+                  ? { images: [] }
+                  : "",
               isEnabled: true,
             });
           }}
