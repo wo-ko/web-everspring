@@ -27,3 +27,39 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: "https",
+//         hostname: "cdn-icons-png.flaticon.com",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "res.cloudinary.com",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "everspringagrochem.com",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "images.alphacoders.com",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "images3.alphacoders.com",
+//         pathname: "/**",
+//       },
+//     ],
+//   },
+// };
+
+// export default nextConfig;

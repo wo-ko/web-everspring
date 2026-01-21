@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 FROM node:22.16.0-alpine AS deps
 WORKDIR /app
 
@@ -31,15 +30,3 @@ RUN npm install --only=production
 
 EXPOSE 3000
 CMD ["npm", "start"]
-=======
-FROM node:22.16.0-alpine
-
-WORKDIR /app
-
-COPY . /app
-RUN npm ci
-
-EXPOSE 3000
-
-CMD ["npm", "run", "dev"]
->>>>>>> love
