@@ -5,3 +5,9 @@ export type ImageItem = {
   sectionKey: string;
   sortOrder: number;
 };
+
+export interface ServerFile {
+  id: string;
+  createdAt?: string;
+  imagePath: string;
+}
