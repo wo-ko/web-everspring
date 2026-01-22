@@ -1,13 +1,12 @@
-import { useThemeContext } from "@app/context/theme-context";
-import Link from "next/link";
-import React from "react";
+import { useThemeContext } from '@app/context/theme-context';
+import Link from 'next/link';
+import React from 'react';
 import Image from "next/image";
 
 type CompanyData = {
-  type: "email" | "line" | "facebook";
+  type: 'email' | 'line' | 'facebook';
   text: string;
   link: string;
-  contact: string;
 };
 
 type ColumnData = {
@@ -17,7 +16,6 @@ type ColumnData = {
   title?: string;
   text: string;
   links?: CompanyData[];
-  // contact: string;
   titlecompany?: string;
   linkscompany?: CompanyData[];
 };
@@ -79,17 +77,12 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
   };
 
   return (
-    <div
-      className="bg-white border border-gray-300 rounded-md px-4 py-2 "
-      style={{ minWidth: "calc(100% + 20px)" }}
-    >
+
+    <div className="bg-white border border-gray-300 rounded-md px-4 py-2 " style={{ minWidth: 'calc(100% + 20px)' }}>
       <Link href={linksData?.link} target="_blank">
-        <div className="flex items-center shadow-sm">
+        <div className='flex items-center shadow-sm'>
           {getIcon()}
-          <span
-            className="text-sm font-medium ml-2 md:text-xs lg:text-xl"
-            style={{ color: themeColor1 || "#323296" }}
-          >
+          <span className="text-sm font-medium ml-2 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
             {linksData.text}
           </span>
         </div>
@@ -110,41 +103,31 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
           <React.Fragment key={index}>
             <div className="flex flex-col items-center md:items-center">
               <div className="mb-5">
-                <img src={column.logo} alt="Logo" width={130} height={100} />
+                <img
+                  src={column.logo}
+                  alt="Logo"
+                  width={130}
+                  height={100}
+                />
               </div>
-              <h3
-                className="text-lg font-semibold text-gray-800 mb-2 md:text-xs lg:text-xl"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <h3 className="text-lg font-semibold text-gray-800 mb-2 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                 {column.titlephone}
               </h3>
-              <p
-                className="text-base  text-gray-800 mt-0 md:text-xs lg:text-xl"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <p className="text-base  text-gray-800 mt-0 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                 {column.textphone}
               </p>
             </div>
             <div className="flex flex-col items-center md:items-start">
               {column.title && (
-                <h3
-                  className="text-lg font-semibold text-gray-900 mb-4 md:text-xs lg:text-xl"
-                  style={{ color: themeColor1 || "#323296" }}
-                >
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                   {column.title}
                 </h3>
               )}
-              <div
-                className="whitespace-pre-line text-base leading-relaxed md:text-xs lg:text-xl"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <div className="whitespace-pre-line text-base leading-relaxed md:text-xs lg:text-xl" style={{ color: themeColor1 || '#323296' }}>
                 {column.text}
               </div>
               {column.links && (
-                <div
-                  className="mt-5 space-y-3 md:pt-6"
-                  style={{ color: themeColor1 || "#323296" }}
-                >
+                <div className="mt-5 space-y-3 md:pt-6" style={{ color: themeColor1 || '#323296' }}>
                   {column.links.map((linksData, linkIndex) => (
                     <ContactLink key={linkIndex} linksData={linksData} />
                   ))}
@@ -152,10 +135,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
               )}
             </div>
             <div className="flex flex-col items-center md:items-start">
-              <h3
-                className="text-lg font-semibold text-gray-800 mb-2"
-                style={{ color: themeColor1 || "#323296" }}
-              >
+              <h3 className="text-lg font-semibold text-gray-800 mb-2" style={{ color: themeColor1 || '#323296' }}>
                 {column.titlecompany}
               </h3>
               {column.linkscompany && (
@@ -164,12 +144,9 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
                     <li
                       key={linkIndex}
                       className="text-base  text-gray-800 md:text-[12px] lg:text-xl"
-                      style={{ color: themeColor1 || "#323296" }}
+                      style={{ color: themeColor1 || '#323296' }}
                     >
                       {link.text}
-                      <p className="mt-1 text-xs md:text-[11px] lg:text-sm text-gray-400 leading-relaxed">
-                        {link.contact}
-                      </p>
                     </li>
                   ))}
                 </ul>

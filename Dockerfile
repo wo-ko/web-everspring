@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+FROM node:22.16.0-alpine AS deps
+=======
 FROM node:22.16.0-slim AS deps
+>>>>>>> c7b745c7b9e20144ccbeace2cfa644679b0d8ebc
 WORKDIR /app
 
 COPY package.json ./
@@ -26,4 +30,8 @@ COPY --from=builder --chown=nextjs_user:nextjs /app/.next ./.next
 COPY --from=builder --chown=nextjs_user:nextjs /app/public ./public
 
 EXPOSE 3000
+<<<<<<< HEAD
+CMD ["npm", "start"]
+=======
 CMD ["npm", "run", "start"]
+>>>>>>> c7b745c7b9e20144ccbeace2cfa644679b0d8ebc
