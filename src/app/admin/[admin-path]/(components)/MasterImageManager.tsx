@@ -4,12 +4,8 @@ import { useState } from "react";
 import ImageUploadBox from "./ImageUploadBox";
 import { useImageManager } from "@app/admin/hooks/useImageManager";
 
-// ไม่ต้องประกาศ API_URL, Interface ซ้ำแล้ว เพราะอยู่ใน Hook
-
 export default function MasterImageManager() {
-  // State สำหรับ UI input (ยังคงอยู่ที่นี่เพราะเป็นเรื่องของ UI Form)
   const [file, setFile] = useState<File | null>(null);
-
   // เรียกใช้ Logic จาก Hook
   const {
     files,
@@ -28,7 +24,6 @@ export default function MasterImageManager() {
       setFile(null);
     }
   };
-
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
