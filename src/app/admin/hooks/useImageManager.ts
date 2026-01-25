@@ -2,7 +2,7 @@ import { ServerFile } from "@/types/image";
 import { useState, useEffect, useCallback } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const MAX_FILE_MB = process.env.IMAGE_FILE_SIZE_LIMIT_MB || "5";
+const MAX_FILE_MB = 1;
 
 export function useImageManager() {
   const [files, setFiles] = useState<ServerFile[]>([]);
@@ -35,7 +35,7 @@ export function useImageManager() {
   }, [fetchFiles]);
 
   const uploadImage = async (file: File) => {
-    const MAX_SIZE_BYTES = Number(MAX_FILE_MB) * 1024 * 1024;
+    const MAX_SIZE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
     if (file.size > MAX_SIZE_BYTES) {
       const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
