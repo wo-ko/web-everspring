@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import { ThemeContext } from "@app/context/theme-context";
 import { ActivityUI } from "@/types/jobcontent";
+import { resolveImageUrl } from "@app/admin/hook/useMediaImages";
 
 type Props = {
   titles?: { th: string; en: string };
@@ -36,8 +37,11 @@ class ActivitiesSection extends Component<Props> {
                 >
                   <div className="overflow-hidden h-70">
                     <img
-                      src={activity.imageUrl}
+                      src={resolveImageUrl(activity.imageUrl)}
                       alt={activity.title[lang as "th" | "en"]}
+                      onError={() =>
+                        console.log("โหลดรูปไม่ได้:", activity.imageUrl)
+                      }
                       className="w-full h-full object-cover object-center transition-transform duration-200 group-hover:scale-102"
                     />
                   </div>

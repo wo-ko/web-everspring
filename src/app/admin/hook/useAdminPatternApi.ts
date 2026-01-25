@@ -20,7 +20,6 @@ export function useAdminPatternApi(pageName: string) {
       r.json(),
     );
 
-    /* ===== BUILD COMPONENT MAP ===== */
     const components = patternRes.reduce(
       (acc: Record<number, ComponentType<any>>, p: any) => {
         const cleanPath = p.patternLayoutPath.replace(/^\//, "");
@@ -65,7 +64,7 @@ export function useAdminPatternApi(pageName: string) {
     });
   };
 
-  /* ================= SAVE IMAGE (เดิม) ================= */
+  /* ================= SAVE IMAGE ================= */
   const savePatternImage = async (
     pageTranslationId: string,
     imageId: number,
@@ -87,7 +86,7 @@ export function useAdminPatternApi(pageName: string) {
     });
   };
 
-  /* ================= SAVE PAGE (save ทั้งหน้า) ================= */
+  /* ================= SAVE PAGE ================= */
   const savePage = async (
     pageName: string,
     layouts: {
@@ -103,7 +102,6 @@ export function useAdminPatternApi(pageName: string) {
     });
   };
 
-  /* ================= EXPORT ================= */
   return {
     fetchAll,
     savePatternImage,

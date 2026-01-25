@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ImageUploadBox from "./ImageUploadBox";
-import { useImageManager } from "@app/admin/hooks/useImageManager";
+import { useImageManager } from "@app/admin/hook/useImageManager";
 
 export default function MasterImageManager() {
   const [file, setFile] = useState<File | null>(null);

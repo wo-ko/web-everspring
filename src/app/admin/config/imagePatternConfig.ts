@@ -1,6 +1,9 @@
 export type ImageField = {
   key: string;
   label: string;
+  isObject?: boolean;
+  multiple?: boolean;
+  limit?: number;
 };
 
 export type PatternConfig = {
@@ -15,30 +18,61 @@ type InternalPatternConfig = PatternConfig & {
 };
 
 export const IMAGE_PATTERN_CONFIG: Record<string, InternalPatternConfig> = {
-  imageLeftTextRight: {
-    ids: [7],
-    imageFields: [{ key: "imageLeft", label: "รูปซ้าย" }],
+  sideImageText: {
+    ids: [7, 8],
+    imageFields: [
+      {
+        key: "obj",
+        label: "รูปภาพ",
+        isObject: true,
+      },
+    ],
     hasText: true,
   },
 
-  textLeftImageRight: {
-    ids: [8],
-    imageFields: [{ key: "imageRight", label: "รูปขวา" }],
-    hasText: true,
-  },
-
-  imageOnly: {
-    ids: [3, 5, 10],
+  imageOnlySingle: {
+    ids: [3],
     imageFields: [{ key: "image1", label: "รูปภาพ" }],
     hasText: false,
   },
 
-  triple: {
-    ids: [13],
+  imageOnlyMultiple: {
+    ids: [10],
     imageFields: [
-      { key: "image1", label: "รูปที่ 1" },
-      { key: "image2", label: "รูปที่ 2" },
-      { key: "image3", label: "รูปที่ 3" },
+      {
+        key: "obj",
+        label: "รูปภาพ",
+        isObject: true,
+        multiple: true,
+      },
+    ],
+    hasText: false,
+  },
+
+  double: {
+    ids: [11],
+    imageFields: [
+      {
+        key: "obj",
+        label: "รูปภาพ",
+        isObject: true,
+        multiple: true,
+        limit: 2,
+      },
+    ],
+    hasText: false,
+  },
+
+  triple: {
+    ids: [5, 13],
+    imageFields: [
+      {
+        key: "obj",
+        label: "รูปภาพ",
+        isObject: true,
+        multiple: true,
+        limit: 3,
+      },
     ],
     hasText: false,
   },
@@ -47,7 +81,7 @@ export const IMAGE_PATTERN_CONFIG: Record<string, InternalPatternConfig> = {
 export function getPatternConfig(patternId: number): PatternConfig {
   for (const cfg of Object.values(IMAGE_PATTERN_CONFIG)) {
     if (cfg.ids.includes(patternId)) {
-      return cfg; // ✅ return type ตรง PatternConfig
+      return cfg; // return type ตรง PatternConfig
     }
   }
 

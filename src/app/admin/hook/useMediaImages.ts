@@ -31,3 +31,20 @@ export function useMediaImages() {
 
   return { files, fetchFiles, API_URL };
 }
+
+export function resolveImageUrl(path?: string) {
+  if (!path) return "";
+
+  if (path.startsWith("http")) return path;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  if (path.includes("images-upload")) {
+    return `${API_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+  }
+  return `${API_URL}/images-upload/${path.replace(/^\//, "")}`;
+}
+
+export function renderImageUrl(path?: string, key?: string | number) {
+  if (!path) return undefined;
+  const base = resolveImageUrl(path);
+  return `${base}?v=${key ?? Date.now()}`;
+}

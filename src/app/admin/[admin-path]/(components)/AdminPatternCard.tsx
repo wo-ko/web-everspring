@@ -18,9 +18,9 @@ export default function AdminPatternCard({
   Component: React.ComponentType<any>;
   lang: string;
   onEditText: (layout: any) => void;
-  onEditImage: (layout: any, field: string) => void;
+  // onEditImage: (layout: any, field: string, index?: number) => void;
+  onEditImage: (layout: any, field: ImageField, index?: number) => void;
 }) {
-  /** ===== DND ===== */
   const {
     setNodeRef,
     attributes,
@@ -79,12 +79,18 @@ export default function AdminPatternCard({
         </button>
       )}
 
-      {/* 🔥 Image buttons */}
       {config.imageFields.length > 0 && (
         <div onClick={(e) => e.stopPropagation()}>
+          {/* <PatternImageButtons
+            fields={config.imageFields}
+            obj={props.obj}
+            onEdit={(field, index) => onEditImage(layout, field.key, index)}
+          /> */}
           <PatternImageButtons
             fields={config.imageFields}
-            onEdit={(field: ImageField) => onEditImage(layout, field.key)}
+            patternLayoutId={layout.patternLayoutId}
+            obj={props.obj}
+            onEdit={(field, index) => onEditImage(layout, field, index)}
           />
         </div>
       )}

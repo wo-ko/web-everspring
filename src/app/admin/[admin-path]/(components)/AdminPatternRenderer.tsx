@@ -405,6 +405,11 @@ import PatternImageModal from "./PatternImageModal";
 import { PatternLayout } from "@app/admin/types/pattern";
 import { useAdminLang } from "@app/admin/(components)/AdminLangContext";
 import Swal from "sweetalert2";
+import {
+  renderImageUrl,
+  resolveImageUrl,
+} from "@app/admin/hook/useMediaImages";
+import { ImageField } from "@app/admin/config/imagePatternConfig";
 
 export default function AdminPatternRenderer({
   pageName,
@@ -412,6 +417,7 @@ export default function AdminPatternRenderer({
   pageName: string;
 }) {
   const { lang } = useAdminLang();
+
   const [_layouts, setLayouts] = useState<PatternLayout[]>([]);
   const [draftLayouts, setDraftLayouts] = useState<PatternLayout[]>([]);
   const [hasChange, setHasChange] = useState(false);
@@ -430,7 +436,8 @@ export default function AdminPatternRenderer({
   /** ===== IMAGE EDIT ===== */
   const [editingImage, setEditingImage] = useState<{
     layout: PatternLayout;
-    field: string;
+    field: ImageField;
+    index?: number; // ใช้เฉพาะ obj
   } | null>(null);
 
   const api = useAdminPatternApi(pageName);
@@ -440,7 +447,7 @@ export default function AdminPatternRenderer({
     api.fetchAll().then((res) => {
       if (!res) return;
       setLayouts(res.layouts); // snapshot
-      setDraftLayouts(res.layouts); // ตัวแก้จริง
+      setDraftLayouts(res.layouts); // ตัวที่แก้จริง
       setComponents(res.components);
       setCategories(res.categories);
     });
@@ -456,7 +463,7 @@ export default function AdminPatternRenderer({
     "pageTranslationId",
   );
 
-  /* ================= SAVE PAGE (ใหญ่) ================= */
+  /* ================= SAVE PAGE ================= */
   async function handleSavePage() {
     if (isSaving) return;
 
@@ -467,9 +474,7 @@ export default function AdminPatternRenderer({
         title: "กำลังบันทึก...",
         text: "กรุณารอสักครู่",
         allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
+        didOpen: () => Swal.showLoading(),
       });
 
       const payload = draftLayouts.map((l, index) => ({
@@ -480,6 +485,7 @@ export default function AdminPatternRenderer({
 
       await api.savePage(pageName, payload);
 
+      console.log(payload);
       setLayouts(draftLayouts);
       setHasChange(false);
 
@@ -491,7 +497,6 @@ export default function AdminPatternRenderer({
       });
     } catch (err) {
       console.error(err);
-
       Swal.fire({
         icon: "error",
         title: "บันทึกไม่สำเร็จ",
@@ -517,16 +522,37 @@ export default function AdminPatternRenderer({
         </div>
       )}
 
-      <DndContext onDragEnd={handleDragEnd}>
+      {/* <DndContext onDragEnd={handleDragEnd}>
         <div className="space-y-8">
           {draftLayouts.map((layout) => {
             const Component = components[layout.patternLayoutId];
             if (!Component) return null;
 
+            const translated = layout.translation?.[lang];
+
+            const renderTranslated = { ...translated };
+
+            Object.keys(renderTranslated || {}).forEach((key) => {
+              if (key.toLowerCase().includes("image")) {
+                renderTranslated[key] = renderImageUrl(
+                  renderTranslated[key],
+                  `${layout.pageTranslationId}-${key}-${hasChange ? "draft" : "saved"}`,
+                );
+              }
+            });
+
+            const layoutForRender: PatternLayout = {
+              ...layout,
+              translation: {
+                ...layout.translation,
+                [lang]: renderTranslated,
+              },
+            };
+
             return (
               <AdminPatternCard
                 key={layout.pageTranslationId}
-                layout={layout}
+                layout={layoutForRender} // ⭐ ใช้ตัว render แล้ว
                 Component={(props: any) => (
                   <Component {...props} categories={categories} />
                 )}
@@ -541,6 +567,110 @@ export default function AdminPatternRenderer({
                 }}
                 onEditImage={(l, field) =>
                   setEditingImage({ layout: l, field })
+                }
+              />
+            );
+          })}
+        </div>
+      </DndContext> */}
+
+      <DndContext onDragEnd={handleDragEnd}>
+        <div className="space-y-8">
+          {draftLayouts.map((layout) => {
+            const Component = components[layout.patternLayoutId];
+            if (!Component) return null;
+
+            const translated = layout.translation?.[lang];
+
+            let renderTranslated: any = { ...translated };
+
+            // if (renderTranslated?.obj && Array.isArray(renderTranslated.obj)) {
+            //   const outerImage =
+            //     renderTranslated.image || renderTranslated.image1;
+
+            //   if (outerImage) {
+            //     renderTranslated.obj = renderTranslated.obj.map(
+            //       (item: any) => ({
+            //         ...item,
+            //         image: outerImage,
+            //       }),
+            //     );
+            //   }
+            // }
+
+            //image / image1
+            Object.keys(renderTranslated || {}).forEach((key) => {
+              if (key.toLowerCase().includes("image")) {
+                renderTranslated[key] = renderImageUrl(
+                  renderTranslated[key],
+                  `${layout.pageTranslationId}-${key}-${hasChange ? "draft" : "saved"}`,
+                );
+              }
+            });
+
+            // obj[].image
+            if (Array.isArray(renderTranslated.obj)) {
+              renderTranslated.obj = renderTranslated.obj.map(
+                (item: any, index: number) => ({
+                  ...item,
+                  image: renderImageUrl(
+                    item.image,
+                    `${layout.pageTranslationId}-obj-${index}-${hasChange ? "draft" : "saved"}`,
+                  ),
+                }),
+              );
+            }
+
+            const layoutForRender: PatternLayout = {
+              ...layout,
+              translation: {
+                ...layout.translation,
+                [lang]: renderTranslated,
+              },
+            };
+
+            return (
+              // <AdminPatternCard
+              //   key={layout.pageTranslationId}
+              //   layout={layoutForRender}
+              //   Component={(props: any) => (
+              //     <Component {...props} categories={categories} />
+              //   )}
+              //   lang={lang}
+              //   onEditText={(l) => {
+              //     const text =
+              //       l.translation?.[lang]?.text ??
+              //       l.translation?.["th"]?.text ??
+              //       "";
+              //     setDraftText(text);
+              //     setEditingTextLayout(l);
+              //   }}
+              //   onEditImage={(l, field) =>
+              //     setEditingImage({ layout: l, field })
+              //   }
+              // />
+              <AdminPatternCard
+                key={layout.pageTranslationId}
+                layout={layoutForRender}
+                Component={(props: any) => (
+                  <Component {...props} categories={categories} />
+                )}
+                lang={lang}
+                // onEditText={(l) => {
+                //   const text =
+                //     l.translation?.[lang]?.text ??
+                //     l.translation?.["th"]?.text ??
+                //     "";
+                //   setDraftText(text);
+                //   setEditingTextLayout(l);
+                // }}
+                onEditText={(l) => {
+                  const current = l.translation?.[lang] ?? {};
+                  setDraftText(JSON.stringify(current, null, 2));
+                  setEditingTextLayout(l);
+                }}
+                onEditImage={(layout, field, index) =>
+                  setEditingImage({ layout, field, index })
                 }
               />
             );
@@ -568,7 +698,7 @@ export default function AdminPatternRenderer({
                 Cancel
               </button>
 
-              <button
+              {/* <button
                 onClick={() => {
                   setDraftLayouts((prev) =>
                     prev.map((l) =>
@@ -594,6 +724,40 @@ export default function AdminPatternRenderer({
                 className="px-4 py-2 bg-black text-white rounded"
               >
                 Save
+              </button> */}
+              <button
+                onClick={() => {
+                  try {
+                    const parsed = JSON.parse(draftText);
+
+                    setDraftLayouts((prev) =>
+                      prev.map((l) =>
+                        l.pageTranslationId ===
+                        editingTextLayout.pageTranslationId
+                          ? {
+                              ...l,
+                              translation: {
+                                ...l.translation,
+                                [lang]: parsed,
+                              },
+                            }
+                          : l,
+                      ),
+                    );
+
+                    setHasChange(true);
+                    setEditingTextLayout(null);
+                  } catch (e) {
+                    Swal.fire(
+                      "ข้อมูลไม่ถูกต้อง",
+                      "กรุณาตรวจสอบรูปแบบข้อความ",
+                      "error",
+                    );
+                  }
+                }}
+                className="px-4 py-2 bg-black text-white rounded"
+              >
+                Save
               </button>
             </div>
           </div>
@@ -602,25 +766,130 @@ export default function AdminPatternRenderer({
 
       {/* ===== IMAGE MODAL ===== */}
       {editingImage && (
+        // <PatternImageModal
+        //   target={editingImage}
+        //   onClose={() => setEditingImage(null)}
+        //   onSelect={(image) => {
+        //     setDraftLayouts((prev) =>
+        //       prev.map((l) => {
+        //         if (
+        //           l.pageTranslationId !== editingImage.layout.pageTranslationId
+        //         )
+        //           return l;
+
+        //         const current = l.translation?.[lang] ?? {};
+
+        //         let nextTranslation: any = {
+        //           ...current,
+        //           image: image.imagePath,
+        //         };
+
+        //         if (Array.isArray(current.obj)) {
+        //           nextTranslation.obj = current.obj.map((item: any) => ({
+        //             ...item,
+        //             image: image.imagePath,
+        //           }));
+        //         }
+
+        //         return {
+        //           ...l,
+        //           translation: {
+        //             ...l.translation,
+        //             [lang]: nextTranslation,
+        //           },
+        //         };
+        //       }),
+        //     );
+
+        //     setHasChange(true);
+        //     setEditingImage(null);
+        //   }}
+        // />
         <PatternImageModal
           target={editingImage}
           onClose={() => setEditingImage(null)}
+          // onSelect={(image) => {
+          //   if (!editingImage) return;
+
+          //   const { layout, field, index } = editingImage;
+
+          //   setDraftLayouts((prev) =>
+          //     prev.map((l) => {
+          //       if (l.pageTranslationId !== layout.pageTranslationId) return l;
+
+          //       const current = l.translation?.[lang] ?? {};
+          //       const next = { ...current };
+
+          //       // 🔥 MULTIPLE IMAGE (pattern 10)
+          //       if (field.multiple && field.isObject) {
+          //         const objArr = Array.isArray(current.obj)
+          //           ? [...current.obj]
+          //           : [];
+          //         console.log("EDIT IMAGE", {
+          //           index,
+          //           before: current.obj,
+          //         });
+
+          //         const targetIndex = index ?? objArr.length;
+
+          //         objArr[targetIndex] = {
+          //           ...(objArr[targetIndex] ?? {}),
+          //           image: image.imagePath, // ✅ ทับตาม index จริง
+          //         };
+
+          //         next.obj = objArr;
+          //       }
+          //       // 🔹 SINGLE IMAGE
+          //       else {
+          //         next[field.key] = image.imagePath;
+          //       }
+
+          //       return {
+          //         ...l,
+          //         translation: {
+          //           ...l.translation,
+          //           [lang]: next,
+          //         },
+          //       };
+          //     }),
+          //   );
+
+          //   setHasChange(true);
+          //   setEditingImage(null);
+          // }}
           onSelect={(image) => {
+            if (!editingImage) return;
+
+            const { layout, index } = editingImage;
+
             setDraftLayouts((prev) =>
-              prev.map((l) =>
-                l.pageTranslationId === editingImage.layout.pageTranslationId
-                  ? {
-                      ...l,
-                      translation: {
-                        ...l.translation,
-                        [lang]: {
-                          ...l.translation?.[lang],
-                          [editingImage.field]: image.imagePath,
-                        },
-                      },
-                    }
-                  : l,
-              ),
+              prev.map((l) => {
+                if (l.pageTranslationId !== layout.pageTranslationId) return l;
+
+                const current = l.translation?.[lang] ?? {};
+
+                const objArr = Array.isArray(current.obj)
+                  ? [...current.obj]
+                  : [];
+
+                const targetIndex = index ?? 0; // 🔥 รูปเดียว = index 0
+
+                objArr[targetIndex] = {
+                  ...(objArr[targetIndex] ?? {}),
+                  image: image.imagePath,
+                };
+
+                return {
+                  ...l,
+                  translation: {
+                    ...l.translation,
+                    [lang]: {
+                      ...current,
+                      obj: objArr,
+                    },
+                  },
+                };
+              }),
             );
 
             setHasChange(true);
