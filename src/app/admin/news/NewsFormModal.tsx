@@ -7,7 +7,7 @@ import { JobContent } from "@/types/jobcontent";
 import { resolveImageUrl, useMediaImages } from "../hook/useMediaImages";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
-const MAX_IMAGES = 12;
+const MAX_IMAGES = 20;
 
 type Props = {
   news: any;

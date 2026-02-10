@@ -21,7 +21,7 @@ export default function Sidebar({
       className={clsx(
         "fixed inset-y-0 left-0 z-40 w-64 bg-white border-r p-4 flex flex-col transition-transform",
         "md:static md:translate-x-0",
-        open ? "translate-x-0" : "-translate-x-full"
+        open ? "translate-x-0" : "-translate-x-full",
       )}
     >
       <div className="flex items-center justify-between mb-6 md:hidden">
@@ -78,6 +78,9 @@ export default function Sidebar({
               ตำแหน่งงาน
             </SubNav>
           </div>
+          <Nav href="/admin/contact" pathname={pathname}>
+            ติดต่อเรา
+          </Nav>
         </nav>
       </div>
 
@@ -115,7 +118,7 @@ function Nav({
       href={href}
       className={clsx(
         "block px-3 py-2 rounded-lg font-medium transition text-sm",
-        isActive ? "bg-gray-900 text-white" : "text-gray-700 hover:bg-gray-100"
+        isActive ? "bg-gray-900 text-white" : "text-gray-700 hover:bg-gray-100",
       )}
     >
       {children}
@@ -137,7 +140,7 @@ function SubNav({
       href={href}
       className={clsx(
         "block px-6 py-2 rounded-md text-sm transition",
-        active ? "bg-gray-800 text-white" : "text-gray-600 hover:bg-gray-100"
+        active ? "bg-gray-800 text-white" : "text-gray-600 hover:bg-gray-100",
       )}
     >
       {children}

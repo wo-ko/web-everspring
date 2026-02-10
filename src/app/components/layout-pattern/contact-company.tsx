@@ -2,6 +2,8 @@ import { useThemeContext } from '@app/context/theme-context';
 import Link from 'next/link';
 import React from 'react';
 import Image from "next/image";
+import { Mail } from 'lucide-react';
+import { renderImageUrl } from '@app/admin/hook/useMediaImages';
 
 type CompanyData = {
   type: 'email' | 'line' | 'facebook';
@@ -40,19 +42,20 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
       //   );
       case "email":
         return (
-          <Image
-            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/9068642_n5hnpn.png"
-            alt="email icon"
-            width={20}
-            height={20}
-            className="mr-3"
-            unoptimized
-          />
+          // <Image
+          //   src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/9068642_n5hnpn.png"
+          //   alt="email icon"
+          //   width={20}
+          //   height={20}
+          //   className="mr-3"
+          //   unoptimized
+          // />
+          <Mail />
         );
       case "line":
         return (
           <Image
-            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/3670089_dy2nuc.png"
+            src="https://upload.wikimedia.org/wikipedia/commons/2/2e/LINE_New_App_Icon_%282020-12%29.png"
             alt="line icon"
             width={20}
             height={20}
@@ -63,13 +66,14 @@ const ContactLink = ({ linksData }: { linksData: CompanyData }) => {
       case "facebook":
         return (
           <Image
-            src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1768243323/5968764_h1kwjl.png"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1280px-Facebook_Logo_%282019%29.png"
             alt="facebook icon"
             width={20}
             height={20}
             className="mr-3"
             unoptimized
           />
+          
         );
       default:
         return null;
@@ -104,7 +108,7 @@ export default function ContactCompany({ obj }: ContactCompanyProps) {
             <div className="flex flex-col items-center md:items-center">
               <div className="mb-5">
                 <img
-                  src={column.logo}
+                  src={renderImageUrl(column.logo)}
                   alt="Logo"
                   width={130}
                   height={100}

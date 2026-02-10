@@ -63,6 +63,7 @@ function PageContent({ pageKey }: { pageKey: AdminPageKey }) {
     case "about":
     case "company":
     case "product":
+    case "contact":
     case "news":
       return (
         <div className="bg-white rounded-xl border p-6 space-y-4">
@@ -70,9 +71,6 @@ function PageContent({ pageKey }: { pageKey: AdminPageKey }) {
           <AdminPatternRenderer pageName={pageKey} />
         </div>
       );
-
-    case "contact":
-      return <div>ข้อมูลติดต่อ (TODO)</div>;
     case "media":
       return (
         <div>

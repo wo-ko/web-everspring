@@ -3,6 +3,7 @@ import { useThemeContext } from "@app/context/theme-context";
 import BtnChangeLanguage from "./btn-change-language";
 import BtnColorPicker from "./btn-color-picker";
 import { Phone } from "lucide-react";
+import Image from "next/image";
 
 export default function Title() {
   const { changeThemeColor1 } = useThemeContext();
@@ -39,10 +40,14 @@ export default function Title() {
         </div>
       </div>
       <div className="hidden md:flex justify-center items-center">
-        <img
-          src="https://res.cloudinary.com/dyg6r8pec/image/upload/w_130,h_100,c_fit/v1749023798/logo_everspring-01-Photoroom_lq2qb3.png"
+        {/* <Image src="/public/icon/logo-everspring-solid-01.png" alt="Logo" width={100} className="h-auto" unoptimized/> */}
+        <Image
+          src="/icon/logo-everspring-solid-01.png"
           alt="Logo"
-          className="w-[100px] h-auto"
+          width={100}
+          height={100}
+          className="h-auto"
+          unoptimized
         />
       </div>
       <div className="flex flex-row justify-between md:justify-end items-center gap-2 md:gap-4 text-sm">

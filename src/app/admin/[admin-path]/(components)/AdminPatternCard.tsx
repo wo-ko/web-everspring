@@ -18,7 +18,6 @@ export default function AdminPatternCard({
   Component: React.ComponentType<any>;
   lang: string;
   onEditText: (layout: any) => void;
-  // onEditImage: (layout: any, field: string, index?: number) => void;
   onEditImage: (layout: any, field: ImageField, index?: number) => void;
 }) {
   const {
@@ -39,6 +38,8 @@ export default function AdminPatternCard({
   };
 
   const config = getPatternConfig(layout.patternLayoutId);
+
+  // ✅ props คือ data หลักของ pattern (image / images / text)
   const props = layout.translation?.[lang] ?? layout.translation?.["th"] ?? {};
 
   return (
@@ -62,10 +63,8 @@ export default function AdminPatternCard({
         <span className="text-xs">ลากเพื่อจัดเรียง</span>
       </div>
 
-      {/* 🔥 Content (ไม่ trigger drag) */}
       <Component {...props} />
 
-      {/* 🔥 Edit text button */}
       {config.hasText && (
         <button
           type="button"
@@ -73,7 +72,7 @@ export default function AdminPatternCard({
             e.stopPropagation();
             onEditText(layout);
           }}
-          className="text-sm text-blue-600 underline pointer-events-auto"
+          className="text-sm text-blue-600 underline"
         >
           แก้ไขข้อความ
         </button>
@@ -81,15 +80,10 @@ export default function AdminPatternCard({
 
       {config.imageFields.length > 0 && (
         <div onClick={(e) => e.stopPropagation()}>
-          {/* <PatternImageButtons
-            fields={config.imageFields}
-            obj={props.obj}
-            onEdit={(field, index) => onEditImage(layout, field.key, index)}
-          /> */}
           <PatternImageButtons
             fields={config.imageFields}
             patternLayoutId={layout.patternLayoutId}
-            obj={props.obj}
+            data={props}
             onEdit={(field, index) => onEditImage(layout, field, index)}
           />
         </div>

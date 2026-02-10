@@ -4,6 +4,7 @@ export type ImageField = {
   isObject?: boolean;
   multiple?: boolean;
   limit?: number;
+  imageKey?: string;
 };
 
 export type PatternConfig = {
@@ -32,7 +33,7 @@ export const IMAGE_PATTERN_CONFIG: Record<string, InternalPatternConfig> = {
 
   imageOnlySingle: {
     ids: [3],
-    imageFields: [{ key: "image1", label: "รูปภาพ" }],
+    imageFields: [{ key: "image", label: "รูปภาพ" }],
     hasText: false,
   },
 
@@ -75,6 +76,19 @@ export const IMAGE_PATTERN_CONFIG: Record<string, InternalPatternConfig> = {
       },
     ],
     hasText: false,
+  },
+
+  contactCompany: {
+    ids: [15],
+    imageFields: [
+      {
+        key: "obj",
+        label: "ข้อมูลติดต่อ / โลโก้",
+        isObject: true,
+        imageKey: "logo",
+      },
+    ],
+    hasText: true,
   },
 };
 
