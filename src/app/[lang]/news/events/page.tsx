@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ActivitiesSection from "../../components/activities-section";
 import ImageViewerModal from "@app/[lang]/components/ImageViewerModal";
 import { ActivityUI, EventNewsItem } from "@/types/jobcontent";
+import { resolveImageUrl } from "@app/admin/hook/useMediaImages";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
 
@@ -24,14 +25,14 @@ export default function Events() {
         const data: EventNewsItem[] = await res.json();
 
         const filtered = (data ?? []).filter(
-          (i) => i.isEvents === 2 && Number(i.isEnabled) === 0
+          (i) => i.isEvents === 2 && Number(i.isEnabled) === 0,
         );
 
         const mapped: ActivityUI[] = filtered.map((i) => {
           const content =
             typeof i.newsContent === "string"
               ? JSON.parse(i.newsContent)
-              : i.newsContent ?? {};
+              : (i.newsContent ?? {});
 
           return {
             id: i.newsId,
@@ -126,7 +127,7 @@ export default function Events() {
                   "
                 >
                   <img
-                    src={img}
+                    src={resolveImageUrl(img)}
                     alt=""
                     className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                   />

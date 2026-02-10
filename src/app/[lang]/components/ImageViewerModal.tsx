@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { resolveImageUrl } from "@app/admin/hook/useMediaImages";
 
 type Props = {
   open: boolean;
@@ -45,7 +46,7 @@ export default function ImageViewerModal({
           <SwiperSlide key={idx}>
             <div className="w-full h-screen flex items-center justify-center">
               <img
-                src={img}
+                src={resolveImageUrl(img)}
                 alt=""
                 className="max-w-full max-h-full object-contain bg-black"
               />
