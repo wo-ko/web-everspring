@@ -1,9 +1,9 @@
-FROM node:22.16.0-alpine AS deps
+FROM node:22.16.0-slim AS deps
 WORKDIR /app
 
-COPY package.json ./
+COPY package*.json ./
 
-RUN  npm i
+RUN npm i
 
 FROM node:22.16.0-slim AS builder
 WORKDIR /app
@@ -26,4 +26,4 @@ COPY --from=builder --chown=nextjs_user:nextjs /app/.next ./.next
 COPY --from=builder --chown=nextjs_user:nextjs /app/public ./public
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
