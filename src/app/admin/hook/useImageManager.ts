@@ -2,7 +2,7 @@ import { ServerFile } from "@/types/image";
 import { useState, useEffect, useCallback } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const MAX_FILE_MB = 1
+const MAX_FILE_MB = 3
 
 export function useImageManager() {
   const [files, setFiles] = useState<ServerFile[]>([]);
