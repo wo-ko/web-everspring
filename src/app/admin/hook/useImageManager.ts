@@ -38,7 +38,7 @@ export function useImageManager() {
   }, [fetchFiles]);
 
   const uploadImage = async (file: File) => {
-    const MAX_SIZE_BYTES = Number(MAX_FILE_MB) * 1024 * 1024;
+    const MAX_SIZE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
     if (file.size > MAX_SIZE_BYTES) {
       const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
