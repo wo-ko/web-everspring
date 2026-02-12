@@ -1,8 +1,10 @@
+"use client";
+
 import { ServerFile } from "@/types/image";
 import { useState, useEffect, useCallback } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const MAX_FILE_MB = 3
+const MAX_FILE_MB = 2;
 
 export function useImageManager() {
   const [files, setFiles] = useState<ServerFile[]>([]);
@@ -10,7 +12,7 @@ export function useImageManager() {
   const [lastUploaded, setLastUploaded] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  console.log("55", MAX_FILE_MB);
+  // console.log("55", MAX_FILE_MB);
   const fetchFiles = useCallback(async () => {
     try {
       const res = await fetch(`${API_URL}/images`);
@@ -43,7 +45,7 @@ export function useImageManager() {
       alert(
         `❌ อัปโหลดไม่ได้: ไฟล์มีขนาดใหญ่เกินไป\n\nขนาดไฟล์ของคุณ: ${fileSizeMB} MB\nขนาดที่อนุญาตสูงสุด: ${MAX_FILE_MB} MB`
       );
-      return false; 
+      return false;
     }
 
     setLoading(true);
@@ -72,10 +74,10 @@ export function useImageManager() {
       const newFileId = result.images
         ? result.images[0].id
         : result.image?.id || result.id;
-        
+
       setLastUploaded(newFileId);
       await fetchFiles();
-      return true; 
+      return true;
 
     } catch (err: any) {
       console.error(err);
@@ -85,6 +87,43 @@ export function useImageManager() {
       setLoading(false);
     }
   };
+
+  // const uploadImage = async (file: File) => {
+  //   setLoading(true);
+  //   try {
+  //     // บีบรูปก่อน (เฉพาะไฟล์ใหญ่)
+  //     const fileToUpload =
+  //       file.size > 1024 * 1024 ? await compressImage(file, 1) : file;
+
+  //     const formData = new FormData();
+  //     formData.append("images", fileToUpload);
+
+  //     const res = await fetch(`${API_URL}/images`, {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (!res.ok) {
+  //       if (res.status === 413) {
+  //         throw new Error("ไฟล์ใหญ่เกินกว่าที่ Server จะรับได้ (HTTP 413)");
+  //       }
+  //       throw new Error("อัปโหลดไม่สำเร็จ");
+  //     }
+
+  //     const result = await res.json();
+  //     const newFileId = result.images?.[0]?.id || result.image?.id || result.id;
+
+  //     setLastUploaded(newFileId);
+  //     await fetchFiles();
+  //     return true;
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     alert(`❌ ${err.message}`);
+  //     return false;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const deleteImage = async (id: string) => {
     if (!confirm("คุณต้องการลบรูปภาพนี้ใช่หรือไม่?")) return;
@@ -117,6 +156,6 @@ export function useImageManager() {
     fetchFiles,
     uploadImage,
     deleteImage,
-    API_URL 
+    API_URL,
   };
 }
