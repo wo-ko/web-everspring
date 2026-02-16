@@ -11,21 +11,43 @@ export default function ImageLogo({ obj }: ImageLogoProps) {
   if (!obj || obj.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 my-6 sm:my-8 md:my-10">
+    // <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 my-6 sm:my-8 md:my-10">
+    //   {obj.map((o, i) => {
+    //     const src = renderImageUrl(o.image);
+    //     if (!src) return null;
+
+    //     return (
+    //       <Image
+    //         key={i}
+    //         src={src}
+    //         alt={`image-logo-${i}`}
+    //         width={150}
+    //         height={150}
+    //         className="w-full max-w-[100px] sm:max-w-[120px] md:max-w-[150px] h-auto object-contain"
+    //         unoptimized
+    //       />
+    //     );
+    //   })}
+    // </div>
+    <div className="flex flex-wrap justify-center gap-6 my-8">
       {obj.map((o, i) => {
         const src = renderImageUrl(o.image);
         if (!src) return null;
 
         return (
-          <Image
+          <div
             key={i}
-            src={src}
-            alt={`image-logo-${i}`}
-            width={150}
-            height={150}
-            className="w-full max-w-[100px] sm:max-w-[120px] md:max-w-[150px] h-auto object-contain"
-            unoptimized
-          />
+            className="w-[140px] h-[140px] bg-white flex items-center justify-center"
+          >
+            <Image
+              src={src}
+              alt={`image-logo-${i}`}
+              width={140}
+              height={140}
+              className="w-full h-full object-contain p-2"
+              unoptimized
+            />
+          </div>
         );
       })}
     </div>

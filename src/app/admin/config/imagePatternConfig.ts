@@ -90,6 +90,21 @@ export const IMAGE_PATTERN_CONFIG: Record<string, InternalPatternConfig> = {
     ],
     hasText: true,
   },
+
+  groupProduct: {
+    ids: [6],
+    imageFields: [
+      // {
+      //   key: "obj",
+      //   label: "ไอคอนสินค้า",
+      //   isObject: true,
+      //   multiple: true,
+      //   limit: 6,
+      //   imageKey: "icon",
+      // },
+    ],
+    hasText: true, // หรือ false ถ้าไม่มี text
+  },
 };
 
 export function getPatternConfig(patternId: number): PatternConfig {
