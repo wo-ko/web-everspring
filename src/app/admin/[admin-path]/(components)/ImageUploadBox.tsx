@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface Props {
   file: File | null;
@@ -23,22 +23,26 @@ export default function ImageUploadBox({ file, onChange }: Props) {
 
   return (
     <div>
-      <label className="block text-sm font-medium mb-1">
-        เลือกรูปใหม่
-      </label>
+      <label className='block text-sm font-medium mb-1'>เลือกรูปใหม่</label>
 
       <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => onChange(e.target.files?.[0] ?? null)}
+        type='file'
+        accept='image/*'
+        onChange={(e) => {
+          const selectedFile = e.target.files?.[0] ?? null;
+          onChange(selectedFile);
+        }}
+        onClick={(e) => {
+          (e.target as HTMLInputElement).value = '';
+        }}
       />
 
       {preview && (
-        <div className="mt-3 border rounded-lg p-2">
+        <div className='mt-3 border rounded-lg p-2'>
           <img
             src={preview}
-            alt="preview"
-            className="max-h-48 object-contain mx-auto"
+            alt='preview'
+            className='max-h-48 object-contain mx-auto'
           />
         </div>
       )}
