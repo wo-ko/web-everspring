@@ -30,18 +30,12 @@ export function SignIn() {
     setLoading(true);
     setIsIncorrect(false);
 
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/admin/home",
     });
-
-    if (res?.error) {
-      setIsIncorrect(true);
-      setLoading(false);
-    } else {
-      router.push("/admin/home");
-    }
   };
 
   return (
