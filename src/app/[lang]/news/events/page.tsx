@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "next/navigation";
 import ActivitiesSection from "../../components/activities-section";
 import ImageViewerModal from "@app/[lang]/components/ImageViewerModal";
 import { ActivityUI, EventNewsItem } from "@/types/jobcontent";
@@ -8,12 +9,17 @@ import { resolveImageUrl } from "@app/admin/hook/useMediaImages";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
 
+type EventContent = {
+  images?: string[];
+};
+
 export default function Events() {
+  const params = useParams();
+  const lang = params?.lang === "en" ? "en" : "th";
+
   const [activities, setActivities] = useState<ActivityUI[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [selected, setSelected] = useState<ActivityUI | null>(null);
-
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
@@ -21,30 +27,41 @@ export default function Events() {
   useEffect(() => {
     async function fetchEvents() {
       try {
+        setLoading(true);
+
         const res = await fetch(API_URL, { cache: "no-store" });
         const data: EventNewsItem[] = await res.json();
 
         const filtered = (data ?? []).filter(
-          (i) => i.isEvents === 2 && Number(i.isEnabled) === 0,
+          (item) => item.isEvents === 2 && Number(item.isEnabled) === 0,
         );
 
-        const mapped: ActivityUI[] = filtered.map((i) => {
-          const content =
-            typeof i.newsContent === "string"
-              ? JSON.parse(i.newsContent)
-              : (i.newsContent ?? {});
+        const mapped: ActivityUI[] = filtered.map((item) => {
+          let parsedContent: EventContent = {};
+
+          try {
+            parsedContent =
+              typeof item.newsContent === "string"
+                ? JSON.parse(item.newsContent)
+                : (item.newsContent ?? {});
+          } catch (error) {
+            console.error("parse event content error:", error);
+            parsedContent = {};
+          }
 
           return {
-            id: i.newsId,
-
-            imageUrl: i.imgUrl ?? "",
-
-            images: Array.isArray(content.images) ? content.images : [],
-
-            title: { th: i.newsTitle ?? "", en: i.newsTitle ?? "" },
+            id: item.newsId,
+            imageUrl: item.imgUrl ?? "",
+            images: Array.isArray(parsedContent.images)
+              ? parsedContent.images
+              : [],
+            title: {
+              th: item.newsTitle ?? "",
+              en: item.newsTitleEn ?? "",
+            },
             description: {
-              th: i.preview ?? "",
-              en: i.preview ?? "",
+              th: item.preview ?? "",
+              en: item.previewEn ?? "",
             },
           };
         });
@@ -60,12 +77,18 @@ export default function Events() {
     fetchEvents();
   }, []);
 
+  const selectedImages = useMemo(() => selected?.images ?? [], [selected]);
+
   if (loading) {
-    return <div className="text-sm text-gray-500">กำลังโหลดข้อมูล…</div>;
+    return (
+      <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-500">
+        {lang === "en" ? "Loading events..." : "กำลังโหลดข้อมูล..."}
+      </div>
+    );
   }
 
   return (
-    <main>
+    <main className="space-y-6">
       <ActivitiesSection
         titles={{ th: "กิจกรรม", en: "Events" }}
         activities={activities}
@@ -74,79 +97,84 @@ export default function Events() {
           setGalleryOpen(true);
         }}
       />
+
       {galleryOpen && selected && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm overflow-y-auto">
-          <div className="max-w-7xl mx-auto p-6">
-            <div className="flex items-center justify-between mb-6">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm">
+          <div className="mx-auto max-w-7xl p-6">
+            <div className="mb-6 flex items-start justify-between gap-4">
               <div>
-                <h3 className="text-white text-xl font-semibold">
-                  {selected.title.th}
+                <h3 className="text-xl font-semibold text-white">
+                  {lang === "en" ? selected.title.en : selected.title.th}
                 </h3>
-                <p className="text-white/70 text-sm">
-                  {selected.images?.length ?? 0} รูป
-                </p>
+
+                {!!(lang === "en"
+                  ? selected.description.en
+                  : selected.description.th) && (
+                  <p className="mt-2 max-w-2xl text-sm text-white/70">
+                    {lang === "en"
+                      ? selected.description.en
+                      : selected.description.th}
+                  </p>
+                )}
+
+                <span className="mt-3 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/80">
+                  {lang === "en"
+                    ? `${selectedImages.length} images`
+                    : `${selectedImages.length} รูป`}
+                </span>
               </div>
 
               <button
-                onClick={() => setGalleryOpen(false)}
-                className="
-                text-white text-xl
-                w-10 h-10 rounded-full
-                flex items-center justify-center 
-                hover:bg-white/20 transition
-                "
+                type="button"
+                onClick={() => {
+                  setGalleryOpen(false);
+                  setSelected(null);
+                }}
+                className="flex h-10 w-10 items-center justify-center rounded-full text-xl text-white transition hover:bg-white/20"
               >
                 ✕
               </button>
             </div>
 
-            <div
-              className="
-              grid gap-4
-              grid-cols-2
-              sm:grid-cols-3
-              md:grid-cols-4
-              lg:grid-cols-5
-              "
-            >
-              {selected.images?.map((img, index) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setViewerIndex(index);
-                    setViewerOpen(true);
-                  }}
-                  className="
-                  group relative cursor-pointer
-                  rounded-xl overflow-hidden
-                  bg-white
-                  aspect-[4/3]
-                  shadow-md
-                  hover:shadow-xl
-                  transition-all duration-200
-                  "
-                >
-                  <img
-                    src={resolveImageUrl(img)}
-                    alt=""
-                    className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-                  />
-
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition flex items-center justify-center">
-                    <span className="text-white text-sm opacity-0 group-hover:opacity-100 transition">
-                      คลิกเพื่อดูรูป
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {selectedImages.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                {selectedImages.map((img, index) => (
+                  <button
+                    key={`${img}-${index}`}
+                    type="button"
+                    onClick={() => {
+                      setViewerIndex(index);
+                      setViewerOpen(true);
+                    }}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-white text-left shadow-md transition-all duration-200 hover:scale-[1.01] hover:shadow-xl"
+                  >
+                    <img
+                      src={resolveImageUrl(img)}
+                      alt={`event-image-${index + 1}`}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition group-hover:bg-black/30">
+                      <span className="text-sm text-white opacity-0 transition group-hover:opacity-100">
+                        {lang === "en" ? "Click to view" : "คลิกเพื่อดูรูป"}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-white/10 bg-white/10 px-4 py-8 text-center text-sm text-white/70">
+                {lang === "en"
+                  ? "No images available for this event."
+                  : "ไม่พบรูปภาพสำหรับกิจกรรมนี้"}
+              </div>
+            )}
           </div>
         </div>
       )}
 
       <ImageViewerModal
         open={viewerOpen}
-        images={selected?.images ?? []}
+        images={selectedImages}
         startIndex={viewerIndex}
         onClose={() => setViewerOpen(false)}
       />
