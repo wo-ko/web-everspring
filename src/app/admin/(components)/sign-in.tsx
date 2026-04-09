@@ -1,8 +1,8 @@
 "use client";
-import clsx from "clsx";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { Lock, User, ShieldAlert, ArrowRight } from "lucide-react";
 
 export function SignIn() {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -10,6 +10,7 @@ export function SignIn() {
   const router = useRouter();
 
   const [isIncorrect, setIsIncorrect] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +27,9 @@ export function SignIn() {
       return;
     }
 
+    setLoading(true);
+    setIsIncorrect(false);
+
     const res = await signIn("credentials", {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
@@ -34,82 +38,118 @@ export function SignIn() {
 
     if (res?.error) {
       setIsIncorrect(true);
+      setLoading(false);
     } else {
       router.push("/admin/home");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-md bg-white border border-slate-200 shadow-md rounded-lg p-8">
-        <div className="mb-6 text-center">
-          <h1 className="text-xl font-semibold text-slate-800">
-            Company Internal System
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Authorized personnel only
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-indigo-50/50 blur-3xl" />
+        <div className="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-blue-50/50 blur-3xl" />
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label
-              htmlFor="credentials-username"
-              className="block text-sm font-medium text-slate-700 mb-1"
-            >
-              Username
-            </label>
-            <input
-              ref={usernameRef}
-              type="text"
-              id="credentials-username"
-              className="w-full rounded-md border border-slate-300 px-3 py-2
-                         text-sm
-                         focus:outline-none focus:ring-1 focus:ring-slate-500
-                         focus:border-slate-500 transition"
-              placeholder="Corporate username"
-            />
+      <div className="relative z-10 w-full max-w-md">
+        <div className="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-3xl p-8 md:p-10">
+          <div className="mb-10 text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 rounded-2xl mb-4 shadow-lg shadow-indigo-200">
+              <Lock className="text-white w-8 h-8" />
+            </div>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+              Internal System
+            </h1>
+            <p className="text-slate-500 mt-2 text-sm">
+              Please enter your credentials to continue
+            </p>
           </div>
 
-          <div>
-            <label
-              htmlFor="credentials-password"
-              className="block text-sm font-medium text-slate-700 mb-1"
-            >
-              Password
-            </label>
-            <input
-              ref={passwordRef}
-              type="password"
-              id="credentials-password"
-              className="w-full rounded-md border border-slate-300 px-3 py-2
-                         text-sm
-                         focus:outline-none focus:ring-1 focus:ring-slate-500
-                         focus:border-slate-500 transition"
-              placeholder="Password"
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label
+                htmlFor="credentials-username"
+                className="block text-sm font-semibold text-slate-700 ml-1"
+              >
+                Username
+              </label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                  <User size={18} />
+                </div>
+                <input
+                  ref={usernameRef}
+                  type="text"
+                  id="credentials-username"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-11 pr-4 py-3
+                             text-sm outline-none
+                             focus:bg-white focus:ring-4 focus:ring-indigo-500/10
+                             focus:border-indigo-500 transition-all duration-200"
+                  placeholder="Corporate username"
+                />
+              </div>
+            </div>
 
-          <div
-            className={clsx(
-              "text-xs text-red-600 text-center",
-              !isIncorrect && "hidden"
+            {/* Password */}
+            <div className="space-y-2">
+              <label
+                htmlFor="credentials-password"
+                className="block text-sm font-semibold text-slate-700 ml-1"
+              >
+                Password
+              </label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                  <Lock size={18} />
+                </div>
+                <input
+                  ref={passwordRef}
+                  type="password"
+                  id="credentials-password"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 pl-11 pr-4 py-3
+                             text-sm outline-none
+                             focus:bg-white focus:ring-4 focus:ring-indigo-500/10
+                             focus:border-indigo-500 transition-all duration-200"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
+            {isIncorrect && (
+              <div className="flex items-center gap-2 bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl animate-shake">
+                <ShieldAlert size={18} className="shrink-0" />
+                <span className="text-xs font-medium">
+                  Invalid username or password
+                </span>
+              </div>
             )}
-          >
-            Invalid username or password
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="group w-full relative flex items-center justify-center rounded-xl bg-slate-900 px-4 py-3.5 
+                         text-sm font-bold text-white hover:bg-slate-800 
+                         active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span>Sign in to System</span>
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <div className="h-px w-full bg-slate-100" />
+            <div className="flex items-center gap-1.5 text-xs text-slate-400">
+              <div className="w-1 h-1 rounded-full bg-slate-300" />
+              <span>Authorized personnel only</span>
+              <div className="w-1 h-1 rounded-full bg-slate-300" />
+            </div>
           </div>
-
-          <button
-            type="submit"
-            className="w-full rounded-md bg-slate-800 py-2.5 text-sm font-medium
-                       text-white hover:bg-slate-900 transition"
-          >
-            Sign in
-          </button>
-        </form>
-
-        <div className="mt-6 border-t border-slate-200 pt-4 text-center text-xs text-slate-500">
-          Unauthorized access is prohibited and may be monitored.
         </div>
       </div>
     </div>

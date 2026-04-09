@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
 
-export default function Peess() {
+export default function Press() {
   const [activities, setActivities] = useState<ActivityUI[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ export default function Peess() {
         const data: EventPressItem[] = await res.json();
 
         const filtered = (data ?? []).filter(
-          (i) => i.isEvents === 1 && Number(i.isEnabled) === 0
+          (i) => i.isEvents === 1 && Number(i.isEnabled) === 0,
         );
 
         const mapped: ActivityUI[] = filtered.map((i) => ({
