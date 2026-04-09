@@ -9,6 +9,8 @@ type TextInBlockProps = {
 
 export default function TextInBlock({ text }: TextInBlockProps) {
   const { themeColor1 } = useThemeContext();
+  const displayColor =
+    themeColor1 === "#D9D9D9" ? "#666666" : themeColor1 || "#323296";
 
   const mainColor = themeColor1 || "#0286C2";
   const bgColor = "#f5f7fa"; // สีพื้นหลังอ่อน
@@ -28,7 +30,7 @@ export default function TextInBlock({ text }: TextInBlockProps) {
 
         <p
           className="relative font-inter text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl tracking-wide"
-          style={{ color: mainColor, lineHeight: "1.5em" }}
+          style={{ color: displayColor, lineHeight: "1.5em" }}
         >
           {text?.split("\n").map((line, i) => (
             <React.Fragment key={i}>
