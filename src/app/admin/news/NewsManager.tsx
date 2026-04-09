@@ -6,6 +6,7 @@ import NewsTable from "./NewsTable";
 import NewsFormModal from "./NewsFormModal";
 import { createEmptyJob } from "@app/utils/job";
 import { NewsType } from "@/types/jobcontent";
+import { useAdminLang } from "../(components)/AdminLangContext";
 
 const TYPE_OPTIONS: { type: NewsType; label: string }[] = [
   { type: "press", label: "ข่าวสาร" },
@@ -33,6 +34,7 @@ export default function NewsManager({
   const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
+  const { lang } = useAdminLang();
 
   useEffect(() => {
     fetchNews();
@@ -47,6 +49,7 @@ export default function NewsManager({
     try {
       const res = await fetch(API_URL);
       const data = await res.json();
+      console.log("Fetched news:", data);
       setAllNews(Array.isArray(data) ? data : []);
     } finally {
       setLoading(false);
@@ -85,8 +88,8 @@ export default function NewsManager({
                 type === "career"
                   ? createEmptyJob()
                   : type === "events"
-                  ? { images: [] }
-                  : "",
+                    ? { images: [] }
+                    : "",
               isEnabled: true,
             });
           }}

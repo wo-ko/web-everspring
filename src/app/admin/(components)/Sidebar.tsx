@@ -3,6 +3,18 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import clsx from "clsx";
+import {
+  Home,
+  Info,
+  Building2,
+  Package,
+  Newspaper,
+  Image as ImageIcon,
+  MessageSquare,
+  X,
+  ChevronRight,
+  LayoutDashboard,
+} from "lucide-react";
 import SignOutButton from "./SignOutButton";
 
 export default function Sidebar({
@@ -17,133 +29,191 @@ export default function Sidebar({
   const type = searchParams.get("type");
 
   return (
-    <aside
-      className={clsx(
-        "fixed inset-y-0 left-0 z-40 w-64 bg-white border-r p-4 flex flex-col transition-transform",
-        "md:static md:translate-x-0",
-        open ? "translate-x-0" : "-translate-x-full",
+    <>
+      {/* Mobile Overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 z-30 bg-slate-900/40 backdrop-blur-sm md:hidden transition-opacity"
+          onClick={onClose}
+        />
       )}
-    >
-      <div className="flex items-center justify-between mb-6 md:hidden">
-        <h2 className="text-lg font-bold">Admin</h2>
-        <button onClick={onClose} className="text-xl">
-          ✕
-        </button>
-      </div>
 
-      <h2 className="text-lg font-bold mb-6 hidden md:block">Admin</h2>
-
-      <div className="mb-6">
-        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">
-          Content
-        </div>
-
-        <nav className="space-y-1">
-          <Nav href="/admin/home" pathname={pathname}>
-            หน้าหลัก
-          </Nav>
-          <Nav href="/admin/about" pathname={pathname}>
-            เกี่ยวกับเรา
-          </Nav>
-          <Nav href="/admin/company" pathname={pathname}>
-            บริษัทในเครือ
-          </Nav>
-          <Nav href="/admin/product" pathname={pathname}>
-            ผลิตภัณฑ์ทั้งหมด
-          </Nav>
-
-          <div className="mt-2 space-y-1">
-            <div className="px-3 text-[11px] font-semibold text-gray-400 uppercase">
-              News & Career
+      <aside
+        className={clsx(
+          "fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-slate-100 flex flex-col transition-transform duration-300 ease-in-out h-screen",
+          "md:static md:translate-x-0",
+          open ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        {/* Header - ลดความสูงลงเล็กน้อย */}
+        <div className="h-14 flex items-center justify-between px-5 border-b border-slate-50">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center shadow-sm shadow-indigo-200">
+              <LayoutDashboard size={16} className="text-white" />
             </div>
-
-            <SubNav
-              href="/admin/news?type=press"
-              active={pathname === "/admin/news" && type === "press"}
-            >
-              ข่าวสาร
-            </SubNav>
-
-            <SubNav
-              href="/admin/news?type=events"
-              active={pathname === "/admin/news" && type === "events"}
-            >
-              กิจกรรม
-            </SubNav>
-
-            <SubNav
-              href="/admin/news?type=career"
-              active={pathname === "/admin/news" && type === "career"}
-            >
-              ตำแหน่งงาน
-            </SubNav>
+            <span className="text-lg font-bold tracking-tight text-slate-800">
+              AdminPanel
+            </span>
           </div>
-          <Nav href="/admin/contact" pathname={pathname}>
-            ติดต่อเรา
-          </Nav>
-        </nav>
-      </div>
-
-      <div className="mb-6">
-        <div className="text-xs font-semibold text-gray-400 uppercase mb-2">
-          Media
+          <button
+            onClick={onClose}
+            className="md:hidden p-1.5 hover:bg-slate-50 rounded-lg transition-colors text-slate-400"
+          >
+            <X size={18} />
+          </button>
         </div>
 
-        <nav className="space-y-1">
-          <Nav href="/admin/media" pathname={pathname}>
-            จัดการรูปภาพ
-          </Nav>
-        </nav>
-      </div>
+        {/* Navigation Content - ปรับ Spacing ให้กระชับขึ้น */}
+        <div className="flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar">
+          {/* Main Content Group */}
+          <div>
+            <h3 className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-2">
+              Main Menu
+            </h3>
+            <nav className="space-y-0.5">
+              <NavItem
+                href="/admin/home"
+                icon={<Home size={17} />}
+                label="หน้าหลัก"
+                active={pathname === "/admin/home"}
+              />
+              <NavItem
+                href="/admin/about"
+                icon={<Info size={17} />}
+                label="เกี่ยวกับเรา"
+                active={pathname === "/admin/about"}
+              />
+              <NavItem
+                href="/admin/company"
+                icon={<Building2 size={17} />}
+                label="บริษัทในเครือ"
+                active={pathname === "/admin/company"}
+              />
+              <NavItem
+                href="/admin/product"
+                icon={<Package size={17} />}
+                label="ผลิตภัณฑ์"
+                active={pathname === "/admin/product"}
+              />
 
-      <div className="flex-1" />
-      <SignOutButton />
-    </aside>
+              {/* News Section Grouped */}
+              <div className="mt-2">
+                <div className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <Newspaper size={14} />
+                  <span>News & Career</span>
+                </div>
+                <div className="ml-3 pl-2 border-l border-slate-100 space-y-0.5 mt-1">
+                  <SubNavItem
+                    href="/admin/news?type=press"
+                    label="ข่าวสาร"
+                    active={pathname === "/admin/news" && type === "press"}
+                  />
+                  <SubNavItem
+                    href="/admin/news?type=events"
+                    label="กิจกรรม"
+                    active={pathname === "/admin/news" && type === "events"}
+                  />
+                  <SubNavItem
+                    href="/admin/news?type=career"
+                    label="ตำแหน่งงาน"
+                    active={pathname === "/admin/news" && type === "career"}
+                  />
+                </div>
+              </div>
+
+              <NavItem
+                href="/admin/contact"
+                icon={<MessageSquare size={17} />}
+                label="ติดต่อเรา"
+                active={pathname === "/admin/contact"}
+              />
+            </nav>
+          </div>
+
+          {/* Assets Group */}
+          <div>
+            <h3 className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-2">
+              System Assets
+            </h3>
+            <nav>
+              <NavItem
+                href="/admin/media"
+                icon={<ImageIcon size={17} />}
+                label="จัดการรูปภาพ"
+                active={pathname === "/admin/media"}
+              />
+            </nav>
+          </div>
+        </div>
+
+        {/* Footer - Sign Out */}
+        <div className="p-3 border-t border-slate-50 bg-slate-50/30">
+          <SignOutButton />
+        </div>
+      </aside>
+    </>
   );
 }
 
-function Nav({
+function NavItem({
   href,
-  pathname,
-  children,
+  icon,
+  label,
+  active,
 }: {
   href: string;
-  pathname: string | null;
-  children: React.ReactNode;
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
 }) {
-  const isActive = pathname === href || pathname?.startsWith(href + "/");
-
   return (
     <Link
       href={href}
       className={clsx(
-        "block px-3 py-2 rounded-lg font-medium transition text-sm",
-        isActive ? "bg-gray-900 text-white" : "text-gray-700 hover:bg-gray-100",
+        "flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-semibold transition-all duration-200",
+        active
+          ? "bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-100/50"
+          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
       )}
     >
-      {children}
+      <span className={clsx(active ? "text-indigo-600" : "text-slate-400")}>
+        {icon}
+      </span>
+      {label}
+      {active && (
+        <div className="ml-auto w-1 h-3 rounded-full bg-indigo-600 animate-in fade-in slide-in-from-right-1" />
+      )}
     </Link>
   );
 }
 
-function SubNav({
+function SubNavItem({
   href,
+  label,
   active,
-  children,
 }: {
   href: string;
+  label: string;
   active: boolean;
-  children: React.ReactNode;
 }) {
   return (
     <Link
       href={href}
       className={clsx(
-        "block px-6 py-2 rounded-md text-sm transition",
-        active ? "bg-gray-800 text-white" : "text-gray-600 hover:bg-gray-100",
+        "flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px] transition-all duration-200",
+        active
+          ? "text-indigo-600 font-bold bg-indigo-50/30"
+          : "text-slate-500 hover:text-slate-900 hover:bg-slate-50",
       )}
     >
-      {children}
+      <ChevronRight
+        size={12}
+        className={clsx(
+          "transition-transform",
+          active ? "rotate-90 text-indigo-500" : "text-slate-300",
+        )}
+      />
+      {label}
     </Link>
   );
 }

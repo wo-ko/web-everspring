@@ -1,6 +1,7 @@
 "use client";
 
 import Swal from "sweetalert2";
+import { useAdminLang } from "../(components)/AdminLangContext";
 
 export default function NewsTable({
   news,
@@ -14,6 +15,7 @@ export default function NewsTable({
   onDeleted: () => void;
 }) {
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+  const { lang } = useAdminLang();
 
   async function deleteNews(n: any) {
     const result = await Swal.fire({
@@ -86,7 +88,9 @@ export default function NewsTable({
         <tbody>
           {news.map((n) => (
             <tr key={n.newsId} className="border-b hover:bg-gray-50">
-              <td className="p-3 max-w-[420px] truncate">{n.newsTitle}</td>
+              <td className="p-3 max-w-[420px] truncate">
+                {lang === "en" ? n.newsTitleEn || n.newsTitle : n.newsTitle}
+              </td>
 
               <td className="p-3 text-center">
                 <TypeBadge value={n.isEvents} />
