@@ -81,9 +81,10 @@ const getLinkForCategory = (enName: string, lang: string): string => {
 const CategoryItem = ({ category, currentLang, themeColor1 }: any) => {
   const rawUrl = category.productCategoryImgUrl?.trim();
 
-  const fallbackImage =
-    fallbackMap[category.productCategoryName.en];
-
+  const fallbackImage = fallbackMap[category.productCategoryName.en];
+  const displayColor =
+    themeColor1 === "#D9D9D9" ? "#666666" : themeColor1 || "#323296";
+    
   const imgSrc = rawUrl
     ? resolveImageUrl(
         `${API_URL || ""}${rawUrl.startsWith("/") ? "" : "/"}${rawUrl}`,
@@ -111,7 +112,8 @@ const CategoryItem = ({ category, currentLang, themeColor1 }: any) => {
 
         <p
           className="font-semibold"
-          style={{ color: themeColor1 || "#323296" }}
+          // style={{ color: themeColor1 || "#323296" }}
+          style={{ color: displayColor }}
         >
           {category.productCategoryName[currentLang]}
         </p>
@@ -126,6 +128,8 @@ const GroupProduct: React.FC<GroupProductProps> = ({
 }) => {
   const { themeColor1, lang } = useThemeContext();
   const currentLang: "th" | "en" = lang === "en" || lang === "th" ? lang : "th";
+  const displayColor =
+    themeColor1 === "#D9D9D9" ? "#666666" : themeColor1 || "#323296";
 
   return (
     <div>
@@ -134,7 +138,8 @@ const GroupProduct: React.FC<GroupProductProps> = ({
           <Link href={`/${currentLang}/product`}>
             <h1
               className="mb-10 text-4xl font-bold cursor-pointer hover:opacity-80 transition-opacity"
-              style={{ color: themeColor1 || "#323296" }}
+              // style={{ color: themeColor1 || "#323296" }}
+              style={{ color: displayColor }}
             >
               {text}
             </h1>

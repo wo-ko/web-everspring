@@ -4,7 +4,8 @@ import { useThemeContext } from "@app/context/theme-context";
 
 export default function TextTitle(props: { text?: string }) {
   const { themeColor1 } = useThemeContext();
-
+  const displayColor =
+    themeColor1 === "#D9D9D9" ? "#666666" : themeColor1 || "#323296";
   return (
     <div className="flex items-center justify-center mt-6 mb-6 gap-4">
       {/* ขีดซ้ายสั้น */}
@@ -13,7 +14,7 @@ export default function TextTitle(props: { text?: string }) {
       {/* ข้อความ */}
       <h2
         className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center leading-snug"
-        style={{ color: themeColor1 || "#323296" }}
+        style={{ color: displayColor }}
       >
         {props?.text}
       </h2>

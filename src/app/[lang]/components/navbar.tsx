@@ -5,16 +5,6 @@ import { ThemeContext } from "@app/context/theme-context";
 import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
 
-// const Logo = () => (
-//   // eslint-disable-line @typescript-eslint/no-unused-vars
-//   <div className="flex items-center">
-//     <img
-//       src="https://res.cloudinary.com/dyg6r8pec/image/upload/v1755747743/logo_everspring-01_uyvcpi.jpg"
-//       alt="Logo"
-//     />
-//   </div>
-// );
-
 export default function Navbar() {
   const { lang, themeColor1 } = useContext(ThemeContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -147,13 +137,6 @@ export default function Navbar() {
                           key={subIndex}
                           href={`/${lang}/${sub.path}`}
                           className="block px-6 py-3 text-gray-900 whitespace-nowrap text-[15px] transition-all duration-200 rounded-md hover:text-white hover:font-bold"
-                          // style={{
-                          //   ["--theme-color1" as any]: themeColor1 || "#323296",
-                          // }}
-                          // style={{
-                          //   backgroundColor: (themeColor1 ??
-                          //     "#323296") as string,
-                          // }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.backgroundColor = `${
                               themeColor1 || "#3A3A9A"
@@ -164,7 +147,7 @@ export default function Navbar() {
                               "transparent";
                           }}
                         >
-                         {sub.name}
+                          {sub.name}
                         </Link>
                       ))}
                     </div>
@@ -221,18 +204,31 @@ export default function Navbar() {
           <nav className="flex-grow p-4 overflow-y-auto">
             <ul className="space-y-1">
               {menuItems.map((item) => (
-                <li key={item.name}>
+                <li
+                  key={item.name}
+                  className="border-b border-white/5 last:border-0"
+                >
                   {item.submenu ? (
-                    <div
-                      className={`flex items-center justify-between w-full px-4 py-3 rounded-md cursor-pointer ${textColor} hover:opacity-80`}
-                      onClick={() => handleMobileSubmenuToggle(item.name)}
-                    >
-                      <span className="text-lg font-medium">{item.name}</span>
-                      <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-300 ${
-                          openSubmenu === item.name ? "rotate-180" : ""
-                        }`}
-                      />
+                    <div className="flex items-center justify-between w-full">
+                      <Link
+                        href={`/${lang}/${item.path}`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`flex-grow px-4 py-3 text-lg font-medium ${textColor} hover:opacity-80`}
+                      >
+                        {item.name}
+                      </Link>
+
+                      <button
+                        onClick={() => handleMobileSubmenuToggle(item.name)}
+                        className={`px-6 py-3 ${textColor} border-l border-white/10`}
+                        aria-label="Toggle Submenu"
+                      >
+                        <ChevronDown
+                          className={`w-5 h-5 transition-transform duration-300 ${
+                            openSubmenu === item.name ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
                     </div>
                   ) : (
                     <Link
@@ -250,13 +246,13 @@ export default function Navbar() {
                         openSubmenu === item.name ? "max-h-96" : "max-h-0"
                       }`}
                     >
-                      <ul className="pl-6 pt-2 pb-1 space-y-1 bg-white/10 rounded-md shadow-md backdrop-blur-sm">
+                      <ul className="pl-6 pt-2 pb-1 space-y-1 bg-white/10 rounded-md shadow-inner">
                         {item.submenu.map((subItem) => (
                           <li key={subItem.name}>
                             <Link
                               href={`/${lang}/${subItem.path}`}
                               onClick={() => setIsMobileMenuOpen(false)}
-                              className={`block px-4 py-2 rounded-md ${textColor} hover:opacity-80`}
+                              className={`block px-4 py-2 rounded-md ${textColor} hover:bg-white/10`}
                             >
                               - {subItem.name}
                             </Link>
