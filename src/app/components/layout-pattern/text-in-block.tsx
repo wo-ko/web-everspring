@@ -61,52 +61,52 @@ export default function TextInBlock({ text }: TextInBlockProps) {
     themeColor1 === "#D9D9D9" ? "#666666" : themeColor1 || "#323296";
 
   return (
-    <div className="relative w-full py-20 sm:py-32 px-4 overflow-hidden">
+    <div className="relative w-full py-6 md:py-10 px-4 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none">
         <div
-          className="absolute top-10 left-10 w-64 h-64 blur-[120px] rounded-full opacity-10"
+          className="absolute top-0 left-10 w-64 h-64 blur-[100px] rounded-full opacity-[0.05]"
           style={{ backgroundColor: mainColor }}
         />
         <div
-          className="absolute bottom-10 right-10 w-80 h-80 blur-[120px] rounded-full opacity-10"
+          className="absolute bottom-0 right-10 w-80 h-80 blur-[100px] rounded-full opacity-[0.05]"
           style={{ backgroundColor: mainColor }}
         />
       </div>
 
-      <div className="max-w-5xl mx-auto relative group">
+      <div className="max-w-6xl mx-auto relative group">
+        {" "}
         <div
-          className="relative z-10 rounded-[2.5rem] p-10 sm:p-16 md:p-24 
-                     backdrop-blur-sm bg-white/80
-                     border border-white
-                     shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)]
+          className="relative z-10 rounded-[1.5rem] p-8 sm:p-12 md:p-16 
+                     backdrop-blur-sm bg-white/70
+                     border border-white/50
+                     shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]
                      transition-all duration-700 ease-out
-                     hover:shadow-[0_40px_80px_-16px_rgba(0,0,0,0.15)]
-                     hover:-translate-y-2"
+                     hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.12)]"
           style={{
             borderColor: `${mainColor}20`,
           }}
         >
           <div
-            className="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 opacity-20 rounded-tl-xl"
+            className="absolute top-6 left-6 w-8 h-8 border-t border-l opacity-30"
             style={{ borderColor: mainColor }}
           />
           <div
-            className="absolute bottom-8 right-8 w-12 h-12 border-b-2 border-r-2 opacity-20 rounded-br-xl"
+            className="absolute bottom-6 right-6 w-8 h-8 border-b border-r opacity-30"
             style={{ borderColor: mainColor }}
           />
 
-          {/* <div className="flex justify-center mb-10">
+          <div className="flex justify-center mb-6">
             <span
-              className="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] bg-white shadow-sm border"
-              style={{ color: mainColor, borderColor: `${mainColor}30` }}
+              className="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.2em] bg-white/50 shadow-sm border"
+              style={{ color: mainColor, borderColor: `${mainColor}20` }}
             >
               Highlight
             </span>
-          </div> */}
+          </div>
 
           <div className="relative">
             <span
-              className="absolute -top-10 -left-6 text-8xl font-serif opacity-[0.08] select-none pointer-events-none"
+              className="absolute -top-6 -left-4 text-6xl font-serif opacity-[0.1] select-none pointer-events-none"
               style={{ color: mainColor }}
             >
               “
@@ -116,30 +116,29 @@ export default function TextInBlock({ text }: TextInBlockProps) {
               className="relative font-inter font-semibold tracking-tight text-center italic"
               style={{
                 color: displayColor,
-                lineHeight: "1.5",
-                fontSize: "clamp(1.5rem, 3.5vw, 2.75rem)",
+                lineHeight: "1.4",
+                fontSize: "clamp(1.25rem, 3vw, 2.25rem)", // ลดขนาดลงเล็กน้อยให้ดูหรู
               }}
             >
               {text?.split("\n").map((line, i) => (
                 <React.Fragment key={i}>
                   {line}
                   {i !== text.split("\n").length - 1 && (
-                    <span className="block mb-6" />
+                    <span className="block mb-4" />
                   )}
                 </React.Fragment>
               ))}
             </p>
 
             <span
-              className="absolute -bottom-16 -right-6 text-8xl font-serif opacity-[0.08] select-none pointer-events-none"
+              className="absolute -bottom-10 -right-4 text-6xl font-serif opacity-[0.1] select-none pointer-events-none"
               style={{ color: mainColor }}
             >
               ”
             </span>
           </div>
         </div>
-
-        <div className="absolute inset-x-10 -bottom-6 h-20 bg-white/50 rounded-[2.5rem] -z-10 blur-sm border border-black/5" />
+        <div className="absolute inset-x-6 -bottom-4 h-16 bg-white/30 rounded-[1.5rem] -z-10 blur-sm border border-black/5" />
       </div>
     </div>
   );
