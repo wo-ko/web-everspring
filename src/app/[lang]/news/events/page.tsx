@@ -272,7 +272,7 @@ export default function Events() {
   }
 
   return (
-    <main className="min-h-screen bg-transparent">
+    <main className="min-h-[60vh] bg-transparent">
       {/* 1. รายการกิจกรรม */}
       <ActivitiesSection
         titles={{ th: "กิจกรรมล่าสุด", en: "Latest Events" }}
