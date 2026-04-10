@@ -42,14 +42,20 @@ export function isNewsType(value: unknown): value is NewsType {
     (VALID_NEWS_TYPES as readonly string[]).includes(value)
   );
 }
+
 export type EventPressItem = {
   newsId: string;
   newsTitle: string;
+  newsTitleEn?: string | null;
+
   preview: string | null;
+  previewEn?: string | null;
+
+  newsContent?: string;
   imgUrl: string | null;
 
-  isEnabled: boolean;
-  isEvents: 1;
+  isEnabled: boolean | number;
+  isEvents: number;
 
   publishedAt: string | null;
   expriedAt: string | null;
@@ -61,12 +67,17 @@ export type EventPressItem = {
 export type EventNewsItem = {
   newsId: string;
   newsTitle: string;
+  newsTitleEn?: string | null;
+
   preview: string | null;
+  previewEn?: string | null;
+
   newsContent?:
     | string
     | {
         images?: string[];
       };
+
   imgUrl: string | null;
 
   isEnabled: boolean;

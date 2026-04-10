@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   title: "บริษัท เอเวอร์สปริง อโกรเคม จำกัด - Everspring Agrochem",
   description: "บริษัท เอเวอร์สปริง อโกรเคม จำกัด - Everspring Agrochem",
   icons: {
-    icon: "/favicon.ico?v=2",
-    apple: "/icon/logo-everspring-solid-01.png?v=2",
-    shortcut: "/favicon.ico?v=2",
+    icon: "/icon/logo-everspring-solid-01.png",
+    apple: "/icon/logo-everspring-solid-01.png",
+    shortcut: "/icon/logo-everspring-solid-01.png",
   },
 };
 

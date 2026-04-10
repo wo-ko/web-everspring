@@ -22,7 +22,9 @@ class ActivitiesSection extends Component<Props> {
     if (!activities || activities.length === 0) return null;
 
     return (
-      <section className="py-10 md:py-16">
+      <section 
+      // className="py-10 md:py-16"
+      >
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-medium mb-8 text-gray-800">
             {titles?.[lang as "th" | "en"]}

@@ -1,57 +1,180 @@
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import { useParams } from "next/navigation";
+// import { Newspaper, Loader2 } from "lucide-react";
+// import { ActivityUI, EventPressItem } from "@/types/jobcontent";
+// import ActivitiesSection from "@app/[lang]/components/activities-section";
+
+// const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
+
+// export default function Press() {
+//   const params = useParams();
+//   const lang = params?.lang === "en" ? "en" : "th";
+
+//   const [activities, setActivities] = useState<ActivityUI[]>([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     async function fetchPress() {
+//       try {
+//         setLoading(true);
+//         const res = await fetch(API_URL, { cache: "no-store" });
+//         const data: EventPressItem[] = await res.json();
+
+//         // กรองข้อมูล: isEvents === 1 คือ ข่าวสาร, isEnabled === 0 คือ เปิดใช้งาน
+//         const filtered = (data ?? []).filter(
+//           (item) => item.isEvents === 1 && Number(item.isEnabled) === 0,
+//         );
+
+//         const mapped: ActivityUI[] = filtered.map((item) => ({
+//           id: item.newsId,
+//           imageUrl: item.imgUrl ?? "",
+//           title: {
+//             th: item.newsTitle ?? "",
+//             en: item.newsTitleEn || item.newsTitle || "",
+//           },
+//           description: {
+//             th: item.preview ?? "",
+//             en: item.previewEn || item.preview || "",
+//           },
+//         }));
+
+//         setActivities(mapped);
+//       } catch (error) {
+//         console.error("fetch press error:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     }
+
+//     fetchPress();
+//   }, []);
+
+//   if (loading) {
+//     return (
+//       <div className="max-w-screen-xl mx-auto px-6 py-12 animate-pulse space-y-10">
+//         <div className="h-10 w-48 bg-gray-200 rounded-full"></div>
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+//           {[1, 2, 3].map((n) => (
+//             <div key={n} className="space-y-4">
+//               <div className="aspect-[16/9] bg-gray-200 rounded-2xl w-full"></div>
+//               <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+//               <div className="h-4 bg-gray-100 rounded w-full"></div>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <main className="min-h-[20vh] bg-transparent">
+//       <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
+//         {activities.length > 0 ? (
+//           <div className="pt-8">
+//             <ActivitiesSection
+//               titles={{
+//                 th: "ข่าวสารและประชาสัมพันธ์",
+//                 en: "Press & News",
+//               }}
+//               activities={activities}
+//             />
+//           </div>
+//         ) : (
+//           <div className="flex flex-col items-center justify-center py-32 text-gray-400">
+//             <div className="bg-gray-50 p-6 rounded-full mb-4">
+//               <Newspaper className="w-12 h-12 opacity-20" />
+//             </div>
+//             <p className="text-lg font-medium">
+//               {lang === "en" ? "No news found" : "ไม่พบข้อมูลข่าวสารในขณะนี้"}
+//             </p>
+//           </div>
+//         )}
+//       </div>
+//     </main>
+//   );
+// }
+
 "use client";
 
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { ActivityUI, EventPressItem } from "@/types/jobcontent";
 import ActivitiesSection from "@app/[lang]/components/activities-section";
-import { useEffect, useState } from "react";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/news`;
 
-export default function Peess() {
+export default function Press() {
+  const params = useParams();
+  const lang = params?.lang === "en" ? "en" : "th";
   const [activities, setActivities] = useState<ActivityUI[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchEvents() {
+    async function fetchPress() {
       try {
+        setLoading(true);
         const res = await fetch(API_URL, { cache: "no-store" });
         const data: EventPressItem[] = await res.json();
-
         const filtered = (data ?? []).filter(
-          (i) => i.isEvents === 1 && Number(i.isEnabled) === 0
+          (item) => item.isEvents === 1 && Number(item.isEnabled) === 0,
         );
-
-        const mapped: ActivityUI[] = filtered.map((i) => ({
-          id: i.newsId,
-          imageUrl: i.imgUrl ?? "",
-          title: { th: i.newsTitle ?? "", en: i.newsTitle ?? "" },
-          description: {
-            th: i.preview ?? "",
-            en: i.preview ?? "",
+        const mapped: ActivityUI[] = filtered.map((item) => ({
+          id: item.newsId,
+          imageUrl: item.imgUrl ?? "",
+          title: {
+            th: item.newsTitle ?? "",
+            en: item.newsTitleEn || item.newsTitle || "",
           },
-          // linkUrl: `/events/${i.newsId}`,
+          description: {
+            th: item.preview ?? "",
+            en: item.previewEn || item.preview || "",
+          },
         }));
-
         setActivities(mapped);
       } catch (error) {
-        console.error("fetch events error:", error);
+        console.error("fetch error:", error);
       } finally {
         setLoading(false);
       }
     }
-
-    fetchEvents();
+    fetchPress();
   }, []);
 
-  if (loading) {
-    return <div className="text-sm text-gray-500">กำลังโหลดข้อมูล…</div>;
-  }
+  if (loading) return null;
 
   return (
-    <main>
-      <ActivitiesSection
-        titles={{ th: "ข่าวสาร", en: "News" }}
-        activities={activities}
-      />
-    </main>
+    <section className="bg-[#F8FAFC] py-12">
+      <div className="max-w-screen-xl mx-auto px-6">
+        <div className="mb-6 flex items-start gap-4 border-b border-slate-200 pb-4">
+          <div className="w-1 h-10 bg-slate-400 rounded-full"></div>
+          <div>
+            <span className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.2em] block mb-0.5">
+              Press Release
+            </span>
+            <h2 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight">
+              {activities.length > 0 ? (
+                <div className="pt-1">
+                  <ActivitiesSection
+                    activities={activities}
+                    titles={{
+                      th: "ข่าวสารและประชาสัมพันธ์",
+                      en: "Press & News",
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="text-center py-12 text-slate-300 italic text-sm">
+                  {lang === "en"
+                    ? "No news found"
+                    : "ไม่พบข้อมูลข่าวสารในขณะนี้"}
+                </div>
+              )}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

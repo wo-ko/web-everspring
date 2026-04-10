@@ -1,12 +1,12 @@
 import { JobContent } from "@/types/jobcontent";
 
-export function JobEditor({
-  value,
-  onChange,
-}: {
+type JobEditorProps = {
   value: JobContent;
   onChange: (v: JobContent) => void;
-}) {
+  errors?: Record<string, string>;
+};
+
+export function JobEditor({ value, onChange, errors = {} }: JobEditorProps) {
   if (!value) return null;
 
   return (
@@ -25,6 +25,10 @@ export function JobEditor({
             })
           }
         />
+        {errors["jobTitle.th"] && (
+          <p className="text-red-500 text-xs">{errors["jobTitle.th"]}</p>
+        )}
+
         <input
           className="w-full border rounded px-2 py-1"
           placeholder="EN"
@@ -36,6 +40,9 @@ export function JobEditor({
             })
           }
         />
+        {errors["jobTitle.en"] && (
+          <p className="text-red-500 text-xs">{errors["jobTitle.en"]}</p>
+        )}
       </div>
 
       {/* ================= ประเภทงาน ================= */}
@@ -52,6 +59,10 @@ export function JobEditor({
             })
           }
         />
+        {errors["jobType.th"] && (
+          <p className="text-red-500 text-xs">{errors["jobType.th"]}</p>
+        )}
+
         <input
           className="w-full border rounded px-2 py-1"
           placeholder="EN"
@@ -63,6 +74,9 @@ export function JobEditor({
             })
           }
         />
+        {errors["jobType.en"] && (
+          <p className="text-red-500 text-xs">{errors["jobType.en"]}</p>
+        )}
       </div>
 
       {/* ================= จำนวนอัตรา ================= */}
@@ -79,6 +93,11 @@ export function JobEditor({
             })
           }
         />
+        {errors["numberOfPositions"] && (
+          <p className="text-red-500 text-xs mt-1">
+            {errors["numberOfPositions"]}
+          </p>
+        )}
       </div>
 
       {/* ================= สถานที่ ================= */}
@@ -102,6 +121,11 @@ export function JobEditor({
             })
           }
         />
+        {errors["location.province.th"] && (
+          <p className="text-red-500 text-xs">
+            {errors["location.province.th"]}
+          </p>
+        )}
 
         <input
           className="w-full border rounded px-2 py-1"
@@ -120,139 +144,11 @@ export function JobEditor({
             })
           }
         />
-
-        <input
-          className="w-full border rounded px-2 py-1"
-          placeholder="เขต / อำเภอ (TH)"
-          value={value.location.district.th}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              location: {
-                ...value.location,
-                district: {
-                  ...value.location.district,
-                  th: e.target.value,
-                },
-              },
-            })
-          }
-        />
-
-        <input
-          className="w-full border rounded px-2 py-1"
-          placeholder="เขต / อำเภอ (EN)"
-          value={value.location.district.en}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              location: {
-                ...value.location,
-                district: {
-                  ...value.location.district,
-                  en: e.target.value,
-                },
-              },
-            })
-          }
-        />
-      </div>
-
-      {/* ================= เงินเดือน ================= */}
-      <div className="space-y-2">
-        <label className="font-medium">เงินเดือน</label>
-        <input
-          className="w-full border rounded px-2 py-1"
-          placeholder="TH"
-          value={value.salary.th}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              salary: { ...value.salary, th: e.target.value },
-            })
-          }
-        />
-        <input
-          className="w-full border rounded px-2 py-1"
-          placeholder="EN"
-          value={value.salary.en}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              salary: { ...value.salary, en: e.target.value },
-            })
-          }
-        />
-      </div>
-
-      {/* ================= หน้าที่รับผิดชอบ ================= */}
-      <div className="space-y-2">
-        <label className="font-medium">หน้าที่รับผิดชอบ (TH)</label>
-        <textarea
-          rows={4}
-          className="w-full border rounded px-2 py-1"
-          value={value.responsibilities.th.join("\n")}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              responsibilities: {
-                ...value.responsibilities,
-                th: e.target.value.split("\n"),
-              },
-            })
-          }
-        />
-
-        <label className="font-medium">หน้าที่รับผิดชอบ (EN)</label>
-        <textarea
-          rows={4}
-          className="w-full border rounded px-2 py-1"
-          value={value.responsibilities.en.join("\n")}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              responsibilities: {
-                ...value.responsibilities,
-                en: e.target.value.split("\n"),
-              },
-            })
-          }
-        />
-      </div>
-
-      {/* ================= สวัสดิการ ================= */}
-      <div className="space-y-2">
-        <label className="font-medium">สวัสดิการ (TH)</label>
-        <textarea
-          rows={4}
-          className="w-full border rounded px-2 py-1"
-          value={value.benefits.th.join("\n")}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              benefits: {
-                ...value.benefits,
-                th: e.target.value.split("\n"),
-              },
-            })
-          }
-        />
-
-        <label className="font-medium">สวัสดิการ (EN)</label>
-        <textarea
-          rows={4}
-          className="w-full border rounded px-2 py-1"
-          value={value.benefits.en.join("\n")}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              benefits: {
-                ...value.benefits,
-                en: e.target.value.split("\n"),
-              },
-            })
-          }
-        />
+        {errors["location.province.en"] && (
+          <p className="text-red-500 text-xs">
+            {errors["location.province.en"]}
+          </p>
+        )}
       </div>
     </div>
   );
