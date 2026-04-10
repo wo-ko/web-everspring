@@ -1,0 +1,23 @@
+  GNU nano 6.2                                       docker-compose.yml
+services:
+  api:
+    container_name: backend
+    image: "212.80.215.83:5000/everspring/backend:latest"
+    ports:
+      - 4000:4000
+    restart: on-failure
+    environment:
+      - PORT=4000
+      - DATABASE_URL=mysql://pbldev:@pbldev@212.80.215.83:3306/everspring
+      - LANG_SUPPORTED=th,en
+      - IMAGE_URL_PATH=/images-upload/
+      - BACKUP_LIMIT=5
+      - IMAGE_FILE_SIZE_LIMIT_MB=1
+    volumes:
+      - /var/docker/everspring/prod/data/images-upload:/app/images-upload
+    networks:
+      - prod-network
+
+networks:
+  prod-network:
+    external: true
