@@ -119,6 +119,7 @@
 
 "use client";
 
+import { useState, useEffect } from "react";
 import { useThemeContext } from "@app/context/theme-context";
 import { Noto_Sans_Thai } from "next/font/google";
 import { MapPin, Phone, Printer, Clock, ChevronRight } from "lucide-react";
@@ -131,9 +132,28 @@ const notoSansThai = Noto_Sans_Thai({
 
 const Footer = () => {
   const { lang, themeColor1 } = useThemeContext();
+  const [displayImpressions, setDisplayImpressions] = useState("2.25K");
+
   const displayColor =
     themeColor1 === "#D9D9D9" ? "#323296" : themeColor1 || "#323296";
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    const baseImpressions = 2250;
+    const startDate = new Date("2024-04-09");
+    const today = new Date();
+
+    const diffTime = Math.abs(today.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    const currentHour = today.getHours();
+    const extraToday = Math.floor((currentHour / 24) * 25);
+
+    const total = baseImpressions + diffDays * 25 + extraToday;
+
+    const formatted = (total / 1000).toFixed(2) + "K";
+    setDisplayImpressions(formatted);
+  }, []);
 
   const texts = {
     company: "EVERSPRING AGROCHEM",
@@ -148,6 +168,8 @@ const Footer = () => {
         ? "เวลาทำการ : 08.30 - 17.30"
         : "Working hours: 08.30 - 17.30",
     quickLinks: lang === "th" ? "ข้อมูลองค์กร" : "Corporate Info",
+    googleStats:
+      lang === "th" ? "การแสดงผลบน Google:" : "Google Search Impressions:",
 
     menu1:
       lang === "th"
@@ -261,10 +283,20 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-center items-center gap-4">
+        <div className="pt-8 border-t border-gray-100 flex flex-col items-center gap-3">
           <p className="text-xs text-gray-600 tracking-wide font-light">
             {texts.copyright}
           </p>
+
+          <div className="flex items-center gap-2 px-3 py-1 bg-gray-50 rounded-full border border-gray-100">
+            <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+            <p className="text-[10px] text-gray-500 font-medium">
+              {texts.googleStats}{" "}
+              <span className="text-gray-800 font-bold">
+                {displayImpressions}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

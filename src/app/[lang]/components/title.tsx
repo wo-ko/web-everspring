@@ -50,27 +50,6 @@ export default function Title() {
           unoptimized
         />
       </div>
-      {/* <div className="flex flex-row justify-between md:justify-end items-center gap-2 md:gap-4 text-sm">
-        <div className="flex items-center gap-1 text-[#323296] font-bold">
-          <Phone size={18} />
-          <span>02-363-8560</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <BtnColorPicker
-            color="#D9D9D9"
-            changeThemeColor={changeThemeColor1}
-          />
-          <BtnColorPicker
-            color="#323296"
-            changeThemeColor={changeThemeColor1}
-          />
-          <BtnColorPicker
-            color="#009646"
-            changeThemeColor={changeThemeColor1}
-          />
-          <BtnChangeLanguage />
-        </div>
-      </div> */}
 
       <div className="flex flex-row justify-end items-center gap-6 py-2 text-sm">
         <a
@@ -86,7 +65,7 @@ export default function Title() {
         <div className="flex items-center gap-3">
           <div className="h-4 w-[1px] bg-gray-200 mx-1 hidden sm:block"></div>
 
-          <div className="hidden sm:flex items-center gap-1.5 border-r border-gray-200 pr-3">
+          <div className="flex items-center gap-1.5 border-r border-gray-200 pr-3">
             <BtnColorPicker
               color="#D9D9D9"
               changeThemeColor={changeThemeColor1}
