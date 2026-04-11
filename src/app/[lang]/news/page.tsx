@@ -1,6 +1,6 @@
 import Press from "./press/page";
 import Events from "./events/page";
-import Career from "./carrier/page";
+import Career from "./careers/page";
 import { generateMetadata } from "@app/utils/seo";
 
 export const metadata = generateMetadata({

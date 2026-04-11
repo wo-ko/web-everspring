@@ -66,7 +66,7 @@ export default function Navbar() {
         { name: lang === "th" ? "กิจกรรม" : "Events", path: "news/events" },
         {
           name: lang === "th" ? "ตำแหน่งว่าง" : "Careers",
-          path: "news/carrier",
+          path: "news/careers",
         },
       ],
     },
