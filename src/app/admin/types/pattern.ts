@@ -9,3 +9,11 @@ export interface EditingImage {
   layout: PatternLayout;
   field: string;
 }
+
+export type User = {
+  userId: string | number;
+  username: string;
+  name: string;
+  roleId: number;
+  createdAt?: string;
+};
