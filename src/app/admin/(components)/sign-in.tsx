@@ -1,13 +1,11 @@
 'use client';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Lock, User, ShieldAlert, ArrowRight } from 'lucide-react';
 
 export function SignIn() {
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   const [isIncorrect, setIsIncorrect] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -15,55 +13,32 @@ export function SignIn() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const errorClass = 'border-red-500';
+
     if (!usernameRef.current || !passwordRef.current) return;
+
     usernameRef.current.classList.remove(errorClass);
     passwordRef.current.classList.remove(errorClass);
-    const inputUsername = usernameRef.current.value;
+
+    const inputUsername = usernameRef.current.value.trim();
     const inputPassword = passwordRef.current.value;
+
     if (!inputUsername || !inputPassword) {
-      usernameRef.current.classList.add(errorClass);
-      passwordRef.current.classList.add(errorClass);
+      if (!inputUsername) usernameRef.current.classList.add(errorClass);
+      if (!inputPassword) passwordRef.current.classList.add(errorClass);
       return;
     }
+
     setLoading(true);
     setIsIncorrect(false);
+
     try {
-      //ยิง API ขอเข้าสู่ระบบ
-      const res = await signIn('credentials', {
+      await signIn('credentials', {
         username: inputUsername,
         password: inputPassword,
-        redirect: false,
+        redirect: true,
+        callbackUrl: '/admin/home',
       });
-      if (res?.error) {
-        setIsIncorrect(true);
-        setLoading(false);
-      } else {
-        // 👇 2. ล็อกอินสำเร็จ! ให้แอบไปดึงข้อมูลสิทธิ์ (roleId) จากฐานข้อมูลมาด้วย
-        try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-          const usersRes = await fetch(`${apiUrl}/api/admin/users`);
-          const usersData = await usersRes.json();
-          const loggedInUser = usersData.find(
-            (u: any) => u.username === inputUsername,
-          );
-          localStorage.setItem(
-            'user',
-            JSON.stringify({
-              username: inputUsername,
-              roleId: loggedInUser ? loggedInUser.roleId : 2,
-            }),
-          );
-        } catch (err) {
-          console.error('ดึงข้อมูล role ไม่สำเร็จ', err);
-          localStorage.setItem(
-            'user',
-            JSON.stringify({ username: inputUsername, roleId: 2 }),
-          );
-        }
-        router.push('/admin/home');
-      }
     } catch (error) {
-      //ดักจับกรณีNetworkพังหรือAPIล่ม
       console.error('เกิดข้อผิดพลาดในการล็อกอิน:', error);
       setIsIncorrect(true);
       setLoading(false);
@@ -116,7 +91,6 @@ export function SignIn() {
               </div>
             </div>
 
-            {/* Password */}
             <div className='space-y-2'>
               <label
                 htmlFor='credentials-password'

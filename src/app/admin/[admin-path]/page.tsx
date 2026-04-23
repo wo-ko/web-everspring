@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useParams, notFound } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import ImageManager from './(components)/ImageManager';
 import AdminPatternRenderer from './(components)/AdminPatternRenderer';
 import MasterImageManager from './(components)/MasterImageManager';
@@ -20,11 +22,59 @@ type AdminPageKey = (typeof ALLOWED_PAGES)[number];
 export default function AdminDynamicPage() {
   const params = useParams();
   const pageKey = params['admin-path'] as string;
+  const { data: session } = useSession();
 
-  // กัน path แปลก
   if (!ALLOWED_PAGES.includes(pageKey as AdminPageKey)) {
     notFound();
   }
+
+  useEffect(() => {
+    async function syncUserRole() {
+      try {
+        const username =
+          (session?.user as { username?: string } | undefined)?.username ||
+          session?.user?.name ||
+          '';
+
+        if (!username) return;
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+        if (!apiUrl) {
+          localStorage.setItem('user', JSON.stringify({ username, roleId: 2 }));
+          return;
+        }
+
+        const usersRes = await fetch(`${apiUrl}/api/admin/users`, {
+          cache: 'no-store',
+        });
+        const usersData = await usersRes.json();
+
+        const loggedInUser = usersData.find(
+          (u: any) => u.username === username,
+        );
+
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            username,
+            roleId: loggedInUser ? loggedInUser.roleId : 2,
+          }),
+        );
+      } catch (err) {
+        console.error('ดึงข้อมูล role ไม่สำเร็จ', err);
+
+        const username =
+          (session?.user as { username?: string } | undefined)?.username ||
+          session?.user?.name ||
+          '';
+
+        localStorage.setItem('user', JSON.stringify({ username, roleId: 2 }));
+      }
+    }
+
+    syncUserRole();
+  }, [session]);
 
   return (
     <div className='space-y-6'>
