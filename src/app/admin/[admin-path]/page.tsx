@@ -1,39 +1,89 @@
-"use client";
+'use client';
 
-import { useParams, notFound } from "next/navigation";
-import ImageManager from "./(components)/ImageManager";
-import AdminPatternRenderer from "./(components)/AdminPatternRenderer";
-import MasterImageManager from "./(components)/MasterImageManager";
+import { useEffect } from 'react';
+import { useParams, notFound } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import ImageManager from './(components)/ImageManager';
+import AdminPatternRenderer from './(components)/AdminPatternRenderer';
+import MasterImageManager from './(components)/MasterImageManager';
 
 const ALLOWED_PAGES = [
-  "home",
-  "about",
-  "company",
-  "product",
-  "news",
-  "contact",
-  "media",
+  'home',
+  'about',
+  'company',
+  'product',
+  'news',
+  'contact',
+  'media',
 ] as const;
 
 type AdminPageKey = (typeof ALLOWED_PAGES)[number];
 
 export default function AdminDynamicPage() {
   const params = useParams();
-  const pageKey = params["admin-path"] as string;
+  const pageKey = params['admin-path'] as string;
+  const { data: session } = useSession();
 
-  // กัน path แปลก
   if (!ALLOWED_PAGES.includes(pageKey as AdminPageKey)) {
     notFound();
   }
 
+  useEffect(() => {
+    async function syncUserRole() {
+      try {
+        const username =
+          (session?.user as { username?: string } | undefined)?.username ||
+          session?.user?.name ||
+          '';
+
+        if (!username) return;
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+        if (!apiUrl) {
+          localStorage.setItem('user', JSON.stringify({ username, roleId: 2 }));
+          return;
+        }
+
+        const usersRes = await fetch(`${apiUrl}/api/admin/users`, {
+          cache: 'no-store',
+        });
+        const usersData = await usersRes.json();
+
+        const loggedInUser = usersData.find(
+          (u: any) => u.username === username,
+        );
+
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            username,
+            roleId: loggedInUser ? loggedInUser.roleId : 2,
+          }),
+        );
+      } catch (err) {
+        console.error('ดึงข้อมูล role ไม่สำเร็จ', err);
+
+        const username =
+          (session?.user as { username?: string } | undefined)?.username ||
+          session?.user?.name ||
+          '';
+
+        localStorage.setItem('user', JSON.stringify({ username, roleId: 2 }));
+      }
+    }
+
+    syncUserRole();
+  }, [session]);
+
   return (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       <header>
-        <h1 className="text-2xl font-bold capitalize">จัดการหน้า: {pageKey}</h1>
-        <p className="text-sm text-gray-500">URL: /admin/{pageKey}</p>
+        <h1 className='text-2xl font-bold capitalize'>จัดการหน้า: {pageKey}</h1>
+        <p className='text-sm text-gray-500'>URL: /admin/{pageKey}</p>
       </header>
 
-      <section className="space-y-8">
+      <section className='space-y-8'>
         <PageContent pageKey={pageKey as AdminPageKey} />
       </section>
     </div>
@@ -42,22 +92,22 @@ export default function AdminDynamicPage() {
 
 function PageContent({ pageKey }: { pageKey: AdminPageKey }) {
   switch (pageKey) {
-    case "home":
-    case "about":
-    case "company":
-    case "product":
-    case "contact":
-    case "news":
+    case 'home':
+    case 'about':
+    case 'company':
+    case 'product':
+    case 'contact':
+    case 'news':
       return (
-        <div className="bg-white rounded-xl border p-6 space-y-4">
-          <h2 className="text-lg font-semibold">Preview หน้าเว็บ</h2>
+        <div className='bg-white rounded-xl border p-6 space-y-4'>
+          <h2 className='text-lg font-semibold'>Preview หน้าเว็บ</h2>
           <AdminPatternRenderer pageName={pageKey} />
         </div>
       );
-    case "media":
+    case 'media':
       return (
         <div>
-          <div className="bg-white rounded-xl border p-6 space-y-4">
+          <div className='bg-white rounded-xl border p-6 space-y-4'>
             <MasterImageManager />
           </div>
         </div>
