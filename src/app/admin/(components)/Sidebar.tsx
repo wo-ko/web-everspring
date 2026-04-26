@@ -18,6 +18,8 @@ import {
   KeyRound,
 } from 'lucide-react';
 import SignOutButton from './SignOutButton';
+import { useEffect, useState } from 'react';
+import DisabledNavItem from './DisabledNavItem';
 
 export default function Sidebar({
   open,
@@ -29,6 +31,37 @@ export default function Sidebar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
+  const [roleId, setRoleId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const syncRole = () => {
+      const savedUser = localStorage.getItem('user');
+
+      if (!savedUser) {
+        setRoleId(null);
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(savedUser);
+        setRoleId(Number(parsed.roleId));
+      } catch {
+        localStorage.removeItem('user');
+        setRoleId(null);
+      }
+    };
+
+    syncRole();
+
+    window.addEventListener('storage', syncRole);
+    window.addEventListener('user-role-updated', syncRole);
+
+    return () => {
+      window.removeEventListener('storage', syncRole);
+      window.removeEventListener('user-role-updated', syncRole);
+    };
+  }, []);
+
   return (
     <>
       {/* Mobile Overlay */}
@@ -150,12 +183,19 @@ export default function Sidebar({
               Account & Security
             </h3>
             <nav className='space-y-0.5'>
-              <NavItem
-                href='/admin/users'
-                icon={<Users size={17} />}
-                label='จัดการผู้ใช้งาน'
-                active={pathname.includes('/admin/users')}
-              />
+              {roleId === 1 ? (
+                <NavItem
+                  href='/admin/users'
+                  icon={<Users size={17} />}
+                  label='จัดการผู้ใช้งาน'
+                  active={pathname.includes('/admin/users')}
+                />
+              ) : (
+                <DisabledNavItem
+                  icon={<Users size={17} />}
+                  label='จัดการผู้ใช้งาน'
+                />
+              )}
               <NavItem
                 href='/admin/change-password'
                 icon={<KeyRound size={17} />}
