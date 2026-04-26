@@ -81,7 +81,7 @@ export function SignIn() {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-slate-50 px-4'>
+    <div className='min-h-[70vh] flex items-center justify-center px-4'>
       <div className='absolute inset-0 z-0 overflow-hidden pointer-events-none'>
         <div className='absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-indigo-50/50 blur-3xl' />
         <div className='absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-blue-50/50 blur-3xl' />

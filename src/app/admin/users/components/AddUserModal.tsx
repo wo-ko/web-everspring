@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 interface AddUserModalProps {
   isOpen: boolean;
@@ -43,15 +44,45 @@ export default function AddUserModal({
       const data = await res.json();
 
       if (res.ok || data.success) {
-        alert('เพิ่มผู้ใช้งานสำเร็จ!');
+        await Swal.fire({
+          title: 'เพิ่มผู้ใช้งานสำเร็จ',
+          text: 'บันทึกข้อมูลผู้ใช้งานเรียบร้อยแล้ว',
+          icon: 'success',
+          confirmButtonText: 'ตกลง',
+          confirmButtonColor: '#4f46e5',
+          customClass: {
+            popup: 'rounded-2xl',
+            confirmButton: 'rounded-xl px-4 py-2',
+          },
+        });
         setFormData({ username: '', password: '', name: '', roleId: 2 }); // ล้างฟอร์ม
         onSuccess();
         onClose();
       } else {
-        alert(data.message || 'เกิดข้อผิดพลาด');
+        await Swal.fire({
+          title: 'เกิดข้อผิดพลาด',
+          text: data.message || 'ไม่สามารถเพิ่มผู้ใช้งานได้',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+          confirmButtonColor: '#4f46e5',
+          customClass: {
+            popup: 'rounded-2xl',
+            confirmButton: 'rounded-xl px-4 py-2',
+          },
+        });
       }
     } catch (error) {
-      alert('ไม่สามารถติดต่อเซิร์ฟเวอร์ได้');
+      await Swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้',
+        icon: 'error',
+        confirmButtonText: 'ตกลง',
+        confirmButtonColor: '#4f46e5',
+        customClass: {
+          popup: 'rounded-2xl',
+          confirmButton: 'rounded-xl px-4 py-2',
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
