@@ -12,6 +12,7 @@ export function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const errorClass = 'border-red-500';
 
     if (!usernameRef.current || !passwordRef.current) return;
@@ -23,8 +24,11 @@ export function SignIn() {
     const inputPassword = passwordRef.current.value;
 
     if (!inputUsername || !inputPassword) {
+      setIsIncorrect(false);
+
       if (!inputUsername) usernameRef.current.classList.add(errorClass);
       if (!inputPassword) passwordRef.current.classList.add(errorClass);
+
       return;
     }
 
@@ -32,15 +36,46 @@ export function SignIn() {
     setIsIncorrect(false);
 
     try {
-      await signIn('credentials', {
+      const result = await signIn('credentials', {
         username: inputUsername,
         password: inputPassword,
-        redirect: true,
-        callbackUrl: '/admin/home',
+        redirect: false,
       });
+
+      if (result?.error) {
+        setIsIncorrect(true);
+        passwordRef.current.value = '';
+        passwordRef.current.focus();
+        return;
+      }
+
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+      const usersRes = await fetch(`${apiUrl}/api/admin/users`, {
+        cache: 'no-store',
+      });
+
+      const usersData = await usersRes.json();
+
+      const loggedInUser = usersData.find(
+        (u: any) => u.username === inputUsername,
+      );
+
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: inputUsername,
+          roleId: loggedInUser ? loggedInUser.roleId : 2,
+        }),
+      );
+
+      window.dispatchEvent(new Event('user-role-updated'));
+
+      window.location.href = '/admin/home';
     } catch (error) {
       console.error('เกิดข้อผิดพลาดในการล็อกอิน:', error);
       setIsIncorrect(true);
+    } finally {
       setLoading(false);
     }
   };
