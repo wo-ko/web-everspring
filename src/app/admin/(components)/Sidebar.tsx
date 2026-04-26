@@ -17,8 +17,8 @@ import {
   Users,
   KeyRound,
 } from 'lucide-react';
-import SignOutButton from './SignOutButton';
 import { useEffect, useState } from 'react';
+import SignOutButton from './SignOutButton';
 import DisabledNavItem from './DisabledNavItem';
 
 export default function Sidebar({
@@ -31,23 +31,32 @@ export default function Sidebar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
+
   const [roleId, setRoleId] = useState<number | null>(null);
+  const [username, setUsername] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     const syncRole = () => {
       const savedUser = localStorage.getItem('user');
 
       if (!savedUser) {
         setRoleId(null);
+        setUsername('');
         return;
       }
 
       try {
         const parsed = JSON.parse(savedUser);
+
         setRoleId(Number(parsed.roleId));
+        setUsername(parsed.username || '');
       } catch {
         localStorage.removeItem('user');
         setRoleId(null);
+        setUsername('');
       }
     };
 
@@ -55,16 +64,19 @@ export default function Sidebar({
 
     window.addEventListener('storage', syncRole);
     window.addEventListener('user-role-updated', syncRole);
+    window.addEventListener('focus', syncRole);
 
     return () => {
       window.removeEventListener('storage', syncRole);
       window.removeEventListener('user-role-updated', syncRole);
+      window.removeEventListener('focus', syncRole);
     };
   }, []);
 
+  const canManageUsers = mounted && roleId === 1;
+
   return (
     <>
-      {/* Mobile Overlay */}
       {open && (
         <div
           className='fixed inset-0 z-30 bg-slate-900/40 backdrop-blur-sm md:hidden transition-opacity'
@@ -79,7 +91,6 @@ export default function Sidebar({
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        {/* Header - ลดความสูงลงเล็กน้อย */}
         <div className='h-14 flex items-center justify-between px-5 border-b border-slate-50'>
           <div className='flex items-center gap-2.5'>
             <div className='w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center shadow-sm shadow-indigo-200'>
@@ -89,6 +100,7 @@ export default function Sidebar({
               AdminPanel
             </span>
           </div>
+
           <button
             onClick={onClose}
             className='md:hidden p-1.5 hover:bg-slate-50 rounded-lg transition-colors text-slate-400'
@@ -97,13 +109,13 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* Navigation Content - ปรับ Spacing ให้กระชับขึ้น */}
-        <div className='flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar'>
-          {/* Main Content Group */}
+        {/* <div className='flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar'> */}
+        <div className='flex-1 overflow-y-auto px-3 py-2 space-y-3'>
           <div>
             <h3 className='px-3 text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-2'>
               Main Menu
             </h3>
+
             <nav className='space-y-0.5'>
               <NavItem
                 href='/admin/home'
@@ -111,18 +123,21 @@ export default function Sidebar({
                 label='หน้าหลัก'
                 active={pathname === '/admin/home'}
               />
+
               <NavItem
                 href='/admin/about'
                 icon={<Info size={17} />}
                 label='เกี่ยวกับเรา'
                 active={pathname === '/admin/about'}
               />
+
               <NavItem
                 href='/admin/company'
                 icon={<Building2 size={17} />}
                 label='บริษัทในเครือ'
                 active={pathname === '/admin/company'}
               />
+
               <NavItem
                 href='/admin/product'
                 icon={<Package size={17} />}
@@ -130,23 +145,25 @@ export default function Sidebar({
                 active={pathname === '/admin/product'}
               />
 
-              {/* News Section Grouped */}
               <div className='mt-2'>
                 <div className='flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider'>
                   <Newspaper size={14} />
                   <span>News & Career</span>
                 </div>
+
                 <div className='ml-3 pl-2 border-l border-slate-100 space-y-0.5 mt-1'>
                   <SubNavItem
                     href='/admin/news?type=press'
                     label='ข่าวสาร'
                     active={pathname === '/admin/news' && type === 'press'}
                   />
+
                   <SubNavItem
                     href='/admin/news?type=events'
                     label='กิจกรรม'
                     active={pathname === '/admin/news' && type === 'events'}
                   />
+
                   <SubNavItem
                     href='/admin/news?type=career'
                     label='ตำแหน่งงาน'
@@ -164,11 +181,11 @@ export default function Sidebar({
             </nav>
           </div>
 
-          {/* Assets Group */}
           <div>
             <h3 className='px-3 text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-2'>
               System Assets
             </h3>
+
             <nav>
               <NavItem
                 href='/admin/media'
@@ -178,12 +195,14 @@ export default function Sidebar({
               />
             </nav>
           </div>
+
           <div>
             <h3 className='px-3 text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-2 mt-2'>
               Account & Security
             </h3>
+
             <nav className='space-y-0.5'>
-              {roleId === 1 ? (
+              {canManageUsers ? (
                 <NavItem
                   href='/admin/users'
                   icon={<Users size={17} />}
@@ -196,6 +215,7 @@ export default function Sidebar({
                   label='จัดการผู้ใช้งาน'
                 />
               )}
+
               <NavItem
                 href='/admin/change-password'
                 icon={<KeyRound size={17} />}
@@ -206,8 +226,23 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* Footer - Sign Out */}
-        <div className='p-3 border-t border-slate-50 bg-slate-50/30'>
+        {/* <div className='p-3 border-t border-slate-50 bg-slate-50/30'>
+          <SignOutButton />
+        </div> */}
+        <div className='p-2 border-t border-slate-100 bg-slate-50/40 space-y-1.5'>
+          <div className='flex items-center gap-2 px-1'>
+            <div className='w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-[11px] font-bold shrink-0'>
+              {username ? username.charAt(0).toUpperCase() : 'U'}
+            </div>
+
+            <div className='min-w-0 leading-none'>
+              <p className='text-[9px] text-slate-400'>Signed in as</p>
+              <p className='text-[11px] font-semibold text-slate-800 truncate mt-0.5'>
+                {username || 'Not Logged In'}
+              </p>
+            </div>
+          </div>
+
           <SignOutButton />
         </div>
       </aside>
@@ -239,7 +274,9 @@ function NavItem({
       <span className={clsx(active ? 'text-indigo-600' : 'text-slate-400')}>
         {icon}
       </span>
+
       {label}
+
       {active && (
         <div className='ml-auto w-1 h-3 rounded-full bg-indigo-600 animate-in fade-in slide-in-from-right-1' />
       )}
@@ -273,6 +310,7 @@ function SubNavItem({
           active ? 'rotate-90 text-indigo-500' : 'text-slate-300',
         )}
       />
+
       {label}
     </Link>
   );
