@@ -9,6 +9,7 @@ import {
   Trash2,
   Shield,
   User as UserIcon,
+  KeyRound,
 } from 'lucide-react';
 import AddUserModal from './components/AddUserModal';
 import EditUserModal from './components/EditUserModal';
@@ -26,8 +27,39 @@ export default function UsersPage() {
     username: string;
     roleId: number;
   } | null>(null);
+
   const [isAuthorized, setIsAuthorized] = useState(false);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const isAdmin = (roleId: number) => roleId === 1 || roleId === 99;
+  const isDev = (roleId: number) => roleId === 99;
+
+  const getRoleLabel = (roleId: number) => {
+    if (roleId === 99) return 'Dev';
+    if (roleId === 1) return 'Admin';
+    return 'User';
+  };
+
+  const getRoleClass = (roleId: number) => {
+    if (roleId === 99) return 'bg-purple-50 text-purple-700';
+    if (roleId === 1) return 'bg-indigo-50 text-indigo-700';
+    return 'bg-slate-100 text-slate-700';
+  };
+
+  const canEditUser = (user: User) => {
+    return user.roleId !== 99 || user.username === currentUser?.username;
+  };
+
+  const canDeleteUser = (user: User) => {
+    return user.roleId !== 99 && user.username !== currentUser?.username;
+  };
+
+  const canResetPassword = (user: User) => {
+    return (
+      isDev(Number(currentUser?.roleId)) &&
+      user.username !== currentUser?.username
+    );
+  };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -36,8 +68,7 @@ export default function UsersPage() {
       const parsedUser = JSON.parse(savedUser);
       setCurrentUser(parsedUser);
 
-      if (parsedUser.roleId !== 1) {
-        localStorage.removeItem('user');
+      if (!isAdmin(Number(parsedUser.roleId))) {
         router.replace('/admin/home');
       } else {
         setIsAuthorized(true);
@@ -49,10 +80,13 @@ export default function UsersPage() {
 
   const fetchUsers = async () => {
     setIsLoading(true);
+
     try {
       const res = await fetch(`${apiUrl}/api/admin/users`);
+
       if (res.ok) {
         const data = await res.json();
+
         if (Array.isArray(data)) setUsers(data);
         else if (data && data.data && Array.isArray(data.data))
           setUsers(data.data);
@@ -125,6 +159,133 @@ export default function UsersPage() {
     }
   };
 
+  const handleResetPassword = async (user: User) => {
+    const result = await Swal.fire({
+      title: 'Reset Password',
+      text: `ต้องการ reset password ของ ${user.username} ใช่ไหม`,
+      icon: 'warning',
+      html: `
+      <div style="text-align:left; margin-top:12px;">
+        <label style="font-size:13px; font-weight:600; color:#334155;">
+          Password ใหม่
+        </label>
+
+        <div style="position:relative; margin-top:8px;">
+          <input
+            id="reset-password-input"
+            type="password"
+            placeholder="Enter new password"
+            autocomplete="new-password"
+            style="
+              width:100%;
+              padding:12px 58px 12px 12px;
+              border:1px solid #cbd5e1;
+              border-radius:10px;
+              font-size:14px;
+              outline:none;
+            "
+          />
+
+          <button
+            id="toggle-reset-password"
+            type="button"
+            style="
+              position:absolute;
+              right:10px;
+              top:50%;
+              transform:translateY(-50%);
+              font-size:12px;
+              font-weight:600;
+              color:#7c3aed;
+              background:transparent;
+              border:none;
+              cursor:pointer;
+            "
+          >
+            Show
+          </button>
+        </div>
+      </div>
+    `,
+      showCancelButton: true,
+      confirmButtonText: 'Reset Password',
+      cancelButtonText: 'ยกเลิก',
+      confirmButtonColor: '#7c3aed',
+      cancelButtonColor: '#64748b',
+
+      didOpen: () => {
+        const input = document.getElementById(
+          'reset-password-input',
+        ) as HTMLInputElement | null;
+
+        const toggleBtn = document.getElementById(
+          'toggle-reset-password',
+        ) as HTMLButtonElement | null;
+
+        if (!input || !toggleBtn) return;
+
+        toggleBtn.onclick = () => {
+          if (input.type === 'password') {
+            input.type = 'text';
+            toggleBtn.innerText = 'Hide';
+          } else {
+            input.type = 'password';
+            toggleBtn.innerText = 'Show';
+          }
+        };
+      },
+
+      preConfirm: () => {
+        const input = document.getElementById(
+          'reset-password-input',
+        ) as HTMLInputElement | null;
+
+        const password = input?.value?.trim();
+
+        if (!password || password.length < 6) {
+          Swal.showValidationMessage('Password ต้องมีอย่างน้อย 6 ตัวอักษร');
+          return false;
+        }
+
+        return password;
+      },
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(
+        `${apiUrl}/api/admin/users/${user.userId}/reset-password`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            newPassword: result.value,
+          }),
+        },
+      );
+
+      if (!res.ok) throw new Error('Reset failed');
+
+      await Swal.fire({
+        title: 'Reset Password สำเร็จ',
+        text: `เปลี่ยน password ของ ${user.username} แล้ว`,
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch {
+      await Swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ไม่สามารถ reset password ได้',
+        icon: 'error',
+        confirmButtonColor: '#4f46e5',
+      });
+    }
+  };
+
   if (!isAuthorized) {
     return null;
   }
@@ -165,7 +326,6 @@ export default function UsersPage() {
           </div>
         </div>
 
-        {/* Mobile Card View */}
         <div className='md:hidden divide-y divide-slate-100'>
           {isLoading ? (
             <div className='text-center py-8 text-slate-400 text-sm'>
@@ -194,24 +354,30 @@ export default function UsersPage() {
                   </div>
 
                   <span
-                    className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                      user.roleId === 1
-                        ? 'bg-indigo-50 text-indigo-700'
-                        : 'bg-slate-100 text-slate-700'
-                    }`}
+                    className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${getRoleClass(
+                      Number(user.roleId),
+                    )}`}
                   >
-                    {user.roleId === 1 ? (
+                    {Number(user.roleId) === 1 || Number(user.roleId) === 99 ? (
                       <Shield size={12} />
                     ) : (
                       <UserIcon size={12} />
                     )}
-                    {user.roleId === 1 ? 'Admin' : 'User'}
+                    {getRoleLabel(Number(user.roleId))}
                   </span>
                 </div>
 
                 <div className='flex justify-end gap-2 pt-1'>
-                  {(user.roleId !== 1 ||
-                    user.username === currentUser?.username) && (
+                  {canResetPassword(user) && (
+                    <button
+                      onClick={() => handleResetPassword(user)}
+                      className='px-3 py-2 text-xs font-semibold text-purple-600 bg-purple-50 rounded-lg'
+                    >
+                      Reset
+                    </button>
+                  )}
+
+                  {canEditUser(user) && (
                     <button
                       onClick={() => setEditingUser(user)}
                       className='px-3 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 rounded-lg'
@@ -220,7 +386,7 @@ export default function UsersPage() {
                     </button>
                   )}
 
-                  {user.roleId !== 1 && (
+                  {canDeleteUser(user) && (
                     <button
                       onClick={() => handleDelete(user.userId)}
                       className='px-3 py-2 text-xs font-semibold text-red-600 bg-red-50 rounded-lg'
@@ -229,19 +395,17 @@ export default function UsersPage() {
                     </button>
                   )}
 
-                  {user.roleId === 1 &&
-                    user.username !== currentUser?.username && (
-                      <span className='text-xs text-slate-400 bg-slate-50 px-3 py-2 rounded-lg font-medium'>
-                        สงวนสิทธิ์
-                      </span>
-                    )}
+                  {!canEditUser(user) && !canDeleteUser(user) && (
+                    <span className='text-xs text-slate-400 bg-slate-50 px-3 py-2 rounded-lg font-medium'>
+                      สงวนสิทธิ์
+                    </span>
+                  )}
                 </div>
               </div>
             ))
           )}
         </div>
 
-        {/* Desktop Table View */}
         <div className='hidden md:block overflow-x-auto'>
           <table className='w-full text-left text-sm'>
             <thead className='bg-slate-50/50 text-slate-500 font-medium'>
@@ -287,25 +451,33 @@ export default function UsersPage() {
 
                     <td className='px-6 py-4'>
                       <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                          user.roleId === 1
-                            ? 'bg-indigo-50 text-indigo-700'
-                            : 'bg-slate-100 text-slate-700'
-                        }`}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${getRoleClass(
+                          Number(user.roleId),
+                        )}`}
                       >
-                        {user.roleId === 1 ? (
+                        {Number(user.roleId) === 1 ||
+                        Number(user.roleId) === 99 ? (
                           <Shield size={12} />
                         ) : (
                           <UserIcon size={12} />
                         )}
-                        {user.roleId === 1 ? 'Admin' : 'User'}
+                        {getRoleLabel(Number(user.roleId))}
                       </span>
                     </td>
 
                     <td className='px-6 py-4 text-right'>
                       <div className='flex justify-end gap-2 items-center'>
-                        {(user.roleId !== 1 ||
-                          user.username === currentUser?.username) && (
+                        {canResetPassword(user) && (
+                          <button
+                            onClick={() => handleResetPassword(user)}
+                            className='p-2 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors'
+                            title='Reset Password'
+                          >
+                            <KeyRound size={16} />
+                          </button>
+                        )}
+
+                        {canEditUser(user) && (
                           <button
                             onClick={() => setEditingUser(user)}
                             className='p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors'
@@ -315,7 +487,7 @@ export default function UsersPage() {
                           </button>
                         )}
 
-                        {user.roleId !== 1 && (
+                        {canDeleteUser(user) && (
                           <button
                             onClick={() => handleDelete(user.userId)}
                             className='p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors'
@@ -325,8 +497,9 @@ export default function UsersPage() {
                           </button>
                         )}
 
-                        {user.roleId === 1 &&
-                          user.username !== currentUser?.username && (
+                        {!canResetPassword(user) &&
+                          !canEditUser(user) &&
+                          !canDeleteUser(user) && (
                             <span className='text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded-md font-medium'>
                               สงวนสิทธิ์
                             </span>
