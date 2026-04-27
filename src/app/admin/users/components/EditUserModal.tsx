@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { User } from '@app/admin/types/pattern';
+import Swal from 'sweetalert2';
 
 interface EditUserModalProps {
   user: User | null;
@@ -48,14 +49,44 @@ export default function EditUserModal({
       const data = await res.json();
 
       if (res.ok || data.success) {
-        alert('อัปเดตข้อมูลสำเร็จ');
+        await Swal.fire({
+          title: 'อัปเดตข้อมูลสำเร็จ',
+          text: 'ข้อมูลผู้ใช้งานได้รับการอัปเดตเรียบร้อยแล้ว',
+          icon: 'success',
+          confirmButtonText: 'ตกลง',
+          confirmButtonColor: '#4f46e5',
+          customClass: {
+            popup: 'rounded-2xl',
+            confirmButton: 'rounded-xl px-4 py-2',
+          },
+        });
         onSuccess();
         onClose();
       } else {
-        alert(data.message || 'เกิดข้อผิดพลาด');
+        await Swal.fire({
+          title: 'เกิดข้อผิดพลาด',
+          text: data.message || 'ไม่สามารถเพิ่มผู้ใช้งานได้',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+          confirmButtonColor: '#4f46e5',
+          customClass: {
+            popup: 'rounded-2xl',
+            confirmButton: 'rounded-xl px-4 py-2',
+          },
+        });
       }
     } catch (error) {
-      alert('ไม่สามารถติดต่อเซิร์ฟเวอร์ได้');
+      await Swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้',
+        icon: 'error',
+        confirmButtonText: 'ตกลง',
+        confirmButtonColor: '#4f46e5',
+        customClass: {
+          popup: 'rounded-2xl',
+          confirmButton: 'rounded-xl px-4 py-2',
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }

@@ -73,7 +73,8 @@ export default function Sidebar({
     };
   }, []);
 
-  const canManageUsers = mounted && roleId === 1;
+  const canManageUsers =
+    mounted && (Number(roleId) === 1 || Number(roleId) === 99);
 
   return (
     <>
