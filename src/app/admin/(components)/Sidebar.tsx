@@ -17,7 +17,7 @@ import {
   Users,
   KeyRound,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import SignOutButton from './SignOutButton';
 import DisabledNavItem from './DisabledNavItem';
 
@@ -36,42 +36,41 @@ export default function Sidebar({
   const [username, setUsername] = useState('');
   const [mounted, setMounted] = useState(false);
 
+  // ใช้ useCallback เพื่อให้ฟังก์ชันไม่ถูกสร้างใหม่บ่อยเกินไป
+  const syncRole = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const savedUser = localStorage.getItem('user');
+    if (!savedUser) {
+      setRoleId(null);
+      setUsername('');
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(savedUser);
+      setRoleId(Number(parsed.roleId));
+      setUsername(parsed.username || '');
+    } catch {
+      localStorage.removeItem('user');
+      setRoleId(null);
+      setUsername('');
+    }
+  }, []);
+
   useEffect(() => {
     setMounted(true);
-
-    const syncRole = () => {
-      const savedUser = localStorage.getItem('user');
-
-      if (!savedUser) {
-        setRoleId(null);
-        setUsername('');
-        return;
-      }
-
-      try {
-        const parsed = JSON.parse(savedUser);
-
-        setRoleId(Number(parsed.roleId));
-        setUsername(parsed.username || '');
-      } catch {
-        localStorage.removeItem('user');
-        setRoleId(null);
-        setUsername('');
-      }
-    };
-
     syncRole();
 
+    // ฟัง Event เมื่อมีการเปลี่ยนแปลงข้อมูล
     window.addEventListener('storage', syncRole);
     window.addEventListener('user-role-updated', syncRole);
-    window.addEventListener('focus', syncRole);
 
     return () => {
       window.removeEventListener('storage', syncRole);
       window.removeEventListener('user-role-updated', syncRole);
-      window.removeEventListener('focus', syncRole);
     };
-  }, []);
+  }, [syncRole, pathname]); // ใส่ pathname เพื่อให้เช็คใหม่ทุกครั้งที่เปลี่ยนหน้า
 
   const canManageUsers =
     mounted && (Number(roleId) === 1 || Number(roleId) === 99);
@@ -110,7 +109,6 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* <div className='flex-1 overflow-y-auto py-4 px-3 space-y-5 custom-scrollbar'> */}
         <div className='flex-1 overflow-y-auto px-3 py-2 space-y-3'>
           <div>
             <h3 className='px-3 text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] mb-2'>
@@ -123,6 +121,7 @@ export default function Sidebar({
                 icon={<Home size={17} />}
                 label='หน้าหลัก'
                 active={pathname === '/admin/home'}
+                onClick={onClose}
               />
 
               <NavItem
@@ -130,6 +129,7 @@ export default function Sidebar({
                 icon={<Info size={17} />}
                 label='เกี่ยวกับเรา'
                 active={pathname === '/admin/about'}
+                onClick={onClose}
               />
 
               <NavItem
@@ -137,6 +137,7 @@ export default function Sidebar({
                 icon={<Building2 size={17} />}
                 label='บริษัทในเครือ'
                 active={pathname === '/admin/company'}
+                onClick={onClose}
               />
 
               <NavItem
@@ -144,6 +145,7 @@ export default function Sidebar({
                 icon={<Package size={17} />}
                 label='ผลิตภัณฑ์'
                 active={pathname === '/admin/product'}
+                onClick={onClose}
               />
 
               <div className='mt-2'>
@@ -157,18 +159,21 @@ export default function Sidebar({
                     href='/admin/news?type=press'
                     label='ข่าวสาร'
                     active={pathname === '/admin/news' && type === 'press'}
+                    onClick={onClose}
                   />
 
                   <SubNavItem
                     href='/admin/news?type=events'
                     label='กิจกรรม'
                     active={pathname === '/admin/news' && type === 'events'}
+                    onClick={onClose}
                   />
 
                   <SubNavItem
                     href='/admin/news?type=career'
                     label='ตำแหน่งงาน'
                     active={pathname === '/admin/news' && type === 'career'}
+                    onClick={onClose}
                   />
                 </div>
               </div>
@@ -178,6 +183,7 @@ export default function Sidebar({
                 icon={<MessageSquare size={17} />}
                 label='ติดต่อเรา'
                 active={pathname === '/admin/contact'}
+                onClick={onClose}
               />
             </nav>
           </div>
@@ -193,6 +199,7 @@ export default function Sidebar({
                 icon={<ImageIcon size={17} />}
                 label='จัดการรูปภาพ'
                 active={pathname === '/admin/media'}
+                onClick={onClose}
               />
             </nav>
           </div>
@@ -209,6 +216,7 @@ export default function Sidebar({
                   icon={<Users size={17} />}
                   label='จัดการผู้ใช้งาน'
                   active={pathname.includes('/admin/users')}
+                  onClick={onClose}
                 />
               ) : (
                 <DisabledNavItem
@@ -222,14 +230,12 @@ export default function Sidebar({
                 icon={<KeyRound size={17} />}
                 label='เปลี่ยนรหัสผ่าน'
                 active={pathname === '/admin/change-password'}
+                onClick={onClose}
               />
             </nav>
           </div>
         </div>
 
-        {/* <div className='p-3 border-t border-slate-50 bg-slate-50/30'>
-          <SignOutButton />
-        </div> */}
         <div className='p-2 border-t border-slate-100 bg-slate-50/40 space-y-1.5'>
           <div className='flex items-center gap-2 px-1'>
             <div className='w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-[11px] font-bold shrink-0'>
@@ -256,15 +262,18 @@ function NavItem({
   icon,
   label,
   active,
+  onClick,
 }: {
   href: string;
   icon: React.ReactNode;
   label: string;
   active: boolean;
+  onClick?: () => void;
 }) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={clsx(
         'flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-semibold transition-all duration-200',
         active
@@ -289,14 +298,17 @@ function SubNavItem({
   href,
   label,
   active,
+  onClick,
 }: {
   href: string;
   label: string;
   active: boolean;
+  onClick?: () => void;
 }) {
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={clsx(
         'flex items-center gap-2 px-3 py-1.5 rounded-lg text-[12px] transition-all duration-200',
         active
