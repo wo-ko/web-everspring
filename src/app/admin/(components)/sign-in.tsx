@@ -1,9 +1,11 @@
 'use client';
 import { signIn } from 'next-auth/react';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation'; // นำเข้า useRouter
 import { Lock, User, ShieldAlert, ArrowRight } from 'lucide-react';
 
 export function SignIn() {
+  const router = useRouter(); // ประกาศใช้งาน router
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -44,23 +46,25 @@ export function SignIn() {
 
       if (result?.error) {
         setIsIncorrect(true);
-        passwordRef.current.value = '';
-        passwordRef.current.focus();
+        if (passwordRef.current) {
+          passwordRef.current.value = '';
+          passwordRef.current.focus();
+        }
         return;
       }
 
+      // ดึงข้อมูล User มาเช็ค Role
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
       const usersRes = await fetch(`${apiUrl}/api/admin/users`, {
         cache: 'no-store',
       });
 
       const usersData = await usersRes.json();
-
       const loggedInUser = usersData.find(
         (u: any) => u.username === inputUsername,
       );
 
+      // บันทึกลง LocalStorage
       localStorage.setItem(
         'user',
         JSON.stringify({
@@ -69,9 +73,12 @@ export function SignIn() {
         }),
       );
 
+      // แจ้งเตือน Sidebar ให้รู้ว้าข้อมูลเปลี่ยนแล้ว
       window.dispatchEvent(new Event('user-role-updated'));
 
-      window.location.href = '/admin/home';
+      // เปลี่ยนหน้าโดยวิธีของ Next.js (ช่วยให้ลื่นไหลและเสถียรกว่าบนมือถือ)
+      router.push('/admin/home');
+      router.refresh(); // บังคับให้โหลดข้อมูลหน้าใหม่ให้ครบถ้วน
     } catch (error) {
       console.error('เกิดข้อผิดพลาดในการล็อกอิน:', error);
       setIsIncorrect(true);
